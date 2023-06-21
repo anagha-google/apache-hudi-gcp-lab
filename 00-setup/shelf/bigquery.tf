@@ -36,7 +36,7 @@ resource "time_sleep" "sleep_after_bq_objects_creation" {
     google_bigquery_dataset.bq_raw_dataset_creation,
     google_bigquery_dataset.bq_curated_dataset_creation,
     google_bigquery_dataset.bq_product_dataset_creation,
-    google_bigquery_table.bq_external_connection_creation,
+    google_bigquery_connection.bq_external_connection_creation,
     google_project_iam_member.bq_connection_gmsa_iam_role_grant
 
   ]
