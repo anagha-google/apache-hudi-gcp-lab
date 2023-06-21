@@ -105,7 +105,6 @@ resource "google_dataproc_cluster" "create_dpgce_cluster" {
 }
 
 
-}
 
 resource "time_sleep" "sleep_after_creating_dpgce" {
   create_duration = "120s"
