@@ -20,9 +20,31 @@ resource "google_storage_bucket" "create_dataproc_bucket" {
   ]
 }
 
+resource "google_storage_bucket" "create_dataproc_temp_bucket" {
+  project                           = local.project_id 
+  name                              = local.dataproc_temp_bucket
+  location                          = local.location
+  uniform_bucket_level_access       = true
+  force_destroy                     = true
+    depends_on = [
+      module.setup_foundations
+  ]
+}
+
 resource "google_storage_bucket" "create_phs_bucket" {
   project                           = local.project_id 
-  name                              = local.sphs_bucket
+  name                              = local.phs_bucket
+  location                          = local.location
+  uniform_bucket_level_access       = true
+  force_destroy                     = true
+    depends_on = [
+      module.setup_foundations
+  ]
+}
+
+resource "google_storage_bucket" "create_dpms_bucket" {
+  project                           = local.project_id 
+  name                              = local.dpms_bucket
   location                          = local.location
   uniform_bucket_level_access       = true
   force_destroy                     = true
@@ -77,7 +99,10 @@ resource  "time_sleep" "sleep_after_creating_buckets" {
     google_storage_bucket.create_code_bucket,
     google_storage_bucket.create_notebook_bucket,
     google_storage_bucket.create_phs_bucket,
+    google_storage_bucket.create_dpms_bucket,
     google_storage_bucket.create_spark_bucket,
-    google_storage_bucket.create_dataproc_bucket
+    google_storage_bucket.create_dataproc_bucket,
+    google_storage_bucket.create_dataproc_temp_bucket,
+
   ]
 }
