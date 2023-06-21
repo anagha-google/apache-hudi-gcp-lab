@@ -10,7 +10,7 @@ variable "project_number" {
  type        = string
  description = "project number"
 }
-variable "deployer_account_name" {
+variable "gcp_account_name" {
  description = "User ID of person running Terraform in format anagha@google.com"
 }
 variable "org_id" {
