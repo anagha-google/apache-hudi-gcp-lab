@@ -12,6 +12,8 @@ resource "google_dataproc_metastore_service" "datalake_metastore_creation" {
 
   hive_metastore_config {
     version = "3.1.2"
+    hive-metastore-configs="hive.metastore.warehouse.dir=gs://${local.dpms_bucket}/hive-warehouse"
+    
   }
 
   depends_on = [
