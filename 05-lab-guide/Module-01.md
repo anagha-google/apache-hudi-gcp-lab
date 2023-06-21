@@ -83,17 +83,18 @@ cat ~/apache-hudi-gcp-lab/00-setup/terraform.tfvars
 
 Here is the author's output-
 ```
-project_id = "ts22-lab"
-project_number = "1053xx529"
-project_name = "ts22-lab"
-gcp_account_name = "xxxxx@akhanolkar.altostrat.com"
-org_id = "23xxx571"
-cloud_composer_image_version = "composer-2.0.29-airflow-2.2.5"
+project_id = "apache-hudi-lab"
+project_number = "3437xx791"
+project_name = "apache-hudi-lab"
+gcp_account_name = "xxx@google.com"
+org_id = "2365xxxx571"
+dataproc_gce_image_version = "2.1.14-debian11"
+cloud_composer_image_version = "composer‑2.3.1‑airflow‑2.5.1"
 gcp_region = "us-central1"
 gcp_zone = "us-central1-a"
 gcp_multi_region = "US"
-provision_vertex_ai = "true"
-update_org_policies = "true"
+provision_vertex_ai_bool = "false"
+update_org_policies_bool = "true"
 
 ```
 
