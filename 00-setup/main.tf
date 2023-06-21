@@ -55,16 +55,16 @@ catchall_subnet_nm          = "${local.resource_prefix}-catchall-snet"
 catchall_subnet_cidr           = "10.2.0.0/16"
 
 # BigQuery Deployments
-BQ_RAW_DATASET              ="${local.resource_prefix}_raw_ds"
-BQ_CURATED_DATASET          ="${local.resource_prefix}_curated_ds"
-BQ_PRODUCT_DATASET          ="${local.resource_prefix}_product_ds"
-BQ_CONNECTION               =
+bq_raw_dataset              ="${local.resource_prefix}_raw_ds"
+bq_curated_dataset          ="${local.resource_prefix}_curated_ds"
+bq_product_dataset          ="${local.resource_prefix}_product_ds"
+bq_connection               ="${local.resource_prefix}_bq_connection"
 
 # Dataplex Deployments
-LAKE_NM="${local.resource_prefix}-data-lake"
-RAW_ZONE_NM="${local.resource_prefix}-raw-zone"
-CURATED_ZONE_NM="${local.resource_prefix}-curated-zone"
-PRODUCT_ZONE_NM="${local.resource_prefix}-product-zone"
+lake_nm="${local.resource_prefix}-data-lake"
+raw_zone_nm="${local.resource_prefix}-raw-zone"
+curated_zone_nm="${local.resource_prefix}-curated-zone"
+product_zone_nm="${local.resource_prefix}-product-zone"
 
 # Data Lake Service Deployments
 phs_nm                      = "${local.resource_prefix}-phs-${local.project_nbr}"
@@ -74,7 +74,7 @@ dpgce_autoscale_policy_nm   = "${local.resource_prefix}-dpgce-cpu-autoscale-poli
 dataproc_gce_img_version    = "${var.dataproc_gce_image_version}"
 
 # Cloud Composer/Apache Airflow Deployments
-CLOUD_COMPOSER2_IMG_VERSION = "${var.cloud_composer_image_version}"
+cloud_composer_img_version = "${var.cloud_composer_image_version}"
 
 }
 
