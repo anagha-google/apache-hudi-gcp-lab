@@ -7,12 +7,13 @@ PROJECT_NAME=`gcloud projects describe ${PROJECT_ID} | grep name | cut -d':' -f2
 GCP_ACCOUNT_NAME=`gcloud auth list --filter=status:ACTIVE --format="value(account)"`
 ORG_ID=`gcloud organizations list --format="value(name)"`
 BQ_CONNECTOR_JAR_GCS_URI="gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.22.2.jar"
-CLOUD_COMPOSER_IMG_VERSION="composer-2.0.29-airflow-2.2.5"
+CLOUD_COMPOSER_IMG_VERSION="composer‑2.3.1‑airflow‑2.5.1"
 YOUR_GCP_REGION="us-central1"
 YOUR_GCP_ZONE="${YOUR_GCP_REGION}-a"
 YOUR_GCP_MULTI_REGION="US"
 PROVISION_VERTEX_AI="true"
 UPDATE_ORG_POLICIES="true"
+DATAPROC_GCE_IMAGE_VERSION="2.1.14-debian11"
 
 echo "project_id = "\"$PROJECT_ID"\"" > terraform.tfvars
 echo "project_number = "\"$PROJECT_NBR"\"" >> terraform.tfvars
@@ -20,7 +21,7 @@ echo "project_name = "\"$PROJECT_NAME"\"" >> terraform.tfvars
 echo "gcp_account_name = "\"${GCP_ACCOUNT_NAME}"\"" >> terraform.tfvars
 echo "org_id = "\"${ORG_ID}"\"" >> terraform.tfvars
 
-echo "bq_connector_jar_gcs_uri = "\"${BQ_CONNECTOR_JAR_GCS_URI}"\"" >> terraform.tfvars
+echo "dataproc_gce_image_version = "\"${DATAPROC_GCE_IMAGE_VERSION}"\"" >> terraform.tfvars
 echo "cloud_composer_image_version = "\"${CLOUD_COMPOSER_IMG_VERSION}"\"" >> terraform.tfvars
 echo "gcp_region = "\"${YOUR_GCP_REGION}"\"" >> terraform.tfvars
 echo "gcp_zone = "\"${YOUR_GCP_ZONE}"\"" >> terraform.tfvars
