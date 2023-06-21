@@ -12,7 +12,9 @@ resource "google_dataproc_metastore_service" "datalake_metastore_creation" {
 
   hive_metastore_config {
     version = "3.1.2"
-    config_overrides = ["hive.metastore.warehouse.dir=${local.dpms_bucket_fqn}/hive-warehouse"]
+    config_overrides = {
+                "hive.metastore.warehouse.dir" = "${local.dpms_bucket_fqn}/hive-warehouse"
+        }
     
   }
 
