@@ -13,7 +13,7 @@ The boolean for updating the org policies is in the terraform.tfvars. Google Cus
 ## 1. Layout of the lab repo
 The following is the layout-<br>
 ```
-~/ts22-just-enough-terraform-for-da
+~/apache-hudi-gcp-lab
          00-setup
          01-datasets
          02-scripts
@@ -26,7 +26,7 @@ The following is the layout-<br>
 ## 2. Scripts we will use/review in the Terraform root directory  
 
 ```
-~/ts22-just-enough-terraform-for-da/00-setup
+~/apache-hudi-gcp-lab/00-setup
 
            ....module_apis_and_policies
                ....main.tf     <---- We will run this
@@ -49,7 +49,7 @@ Study the main.tf in the root directory.<br>
 Open the main.tf as show below -
 
 ```
-cat ~/ts22-just-enough-terraform-for-da/00-setup/main.tf
+cat ~/apache-hudi-gcp-lab/00-setup/main.tf
 ```
 
 You should see a bunch of variables declared and then the below. Review the difference between local.<variable> and var.<variable>.
@@ -65,14 +65,14 @@ When the main.tf executes, it processes the variables declared and then runs the
 
 Review the module .tf file-
 ```
-cat ~/ts22-just-enough-terraform-for-da/00-setup/module_apis_and_policies/main.tf
+cat ~/apache-hudi-gcp-lab/00-setup/module_apis_and_policies/main.tf
 ```
 It enables a bunch of APIs and depending on the boolean for updateing org policies, updates the same (or not)
 
 
 ## 4. Run the terraform
 ```
-cd ~/ts22-just-enough-terraform-for-da/00-setup/
+cd ~/apache-hudi-gcp-lab/00-setup/
 terraform apply --auto-approve
 ```
 In case your are wondering where the variables are supplied, Terraform reads them from terraform.tfvars.
@@ -100,7 +100,7 @@ When you ran the "terraform apply" command in #6, Terraform completed the action
  
 1. Review the state file location by running the command below-
 ```
-cd ~/ts22-just-enough-terraform-for-da/00-setup/
+cd ~/apache-hudi-gcp-lab/00-setup/
 ls -al
 ```
 Note what is new.<br>
@@ -108,7 +108,7 @@ Note what is new.<br>
 2. Run the "terraform apply" command you ran previously again and observe the output
  
 ```
-cd ~/ts22-just-enough-terraform-for-da/00-setup/
+cd ~/apache-hudi-gcp-lab/00-setup/
 terraform apply --auto-approve
 ```
  
