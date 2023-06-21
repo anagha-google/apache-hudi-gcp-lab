@@ -1,1 +1,1 @@
-# apache-hudi-gcp-lab
+# Apache Hudi on GCP - a self-paced hands-on lab
