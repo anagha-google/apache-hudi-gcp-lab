@@ -18,12 +18,16 @@ output "VPC_NM" {
   value = local.vpc_nm
 }
 
-output "SPARK_SERVERLESS_SUBNET" {
+output "SPARK_SUBNET" {
   value = local.spark_subnet_nm
 }
 
-output "PERSISTENT_HISTORY_SERVER_NM" {
-  value = local.s8s_spark_sphs_nm
+output "CATCHALL_SUBNET" {
+  value = local.catchall_subnet_nm
+}
+
+output "PERSISTENT_HISTORY_SERVER_NM" 
+  value = local.phs_nm
 }
 
 output "DPMS_NM" {
@@ -35,17 +39,14 @@ output "UMSA_FQN" {
 }
 
 output "DATA_BUCKET" {
-  value = local.s8s_data_bucket
+  value = local.data_bucket
 }
 
 output "CODE_BUCKET" {
-  value = local.s8s_code_bucket
+  value = local.code_bucket
 }
 
 output "NOTEBOOK_BUCKET" {
-  value = local.s8s_notebook_bucket
+  value = local.notebook_bucket
 }
 
-output "USER_MANAGED_umnb_server_nm" {
-  value = local.umnb_server_nm
-}
