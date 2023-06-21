@@ -62,9 +62,10 @@ catchall_subnet_nm          = "${local.resource_prefix}-catchall-snet"
 catchall_subnet_cidr           = "10.2.0.0/16"
 
 # BigQuery Deployments
-BQ_RAW_DATASET              ="artemis_raw_ds"
-BQ_CURATED_DATASET          ="artemis_curated_ds"
-BQ_PRODUCT_DATASET          ="artemis_product_ds"
+BQ_RAW_DATASET              ="${local.resource_prefix}_raw_ds"
+BQ_CURATED_DATASET          ="${local.resource_prefix}_curated_ds"
+BQ_PRODUCT_DATASET          ="${local.resource_prefix}_product_ds"
+BQ_CONNECTION               =
 
 # Dataplex Deployments
 LAKE_NM="artemis-data-lake"
