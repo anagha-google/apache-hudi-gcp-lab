@@ -16,6 +16,9 @@ variable "gcp_account_name" {
 variable "org_id" {
  description = "Organization ID in which project exists"
 }
+variable "dataproc_gce_image_version" {
+ description = "Version of Dataproc GCE image to use"
+}
 variable "cloud_composer_image_version" {
  description = "Version of Cloud Composer 2 image to use"
 }
