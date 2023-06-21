@@ -18,7 +18,6 @@ resource "google_bigquery_connection" "bq_external_connection_creation" {
     project = var.project_id
     location = local.location
     cloud_resource {}
-    depends_on = [google_bigquery_dataset.bq_dataset_creation]
 } 
 
 resource "google_project_iam_member" "bq_connection_gmsa_iam_role_grant" {
