@@ -55,6 +55,15 @@ resource "google_dataproc_cluster" "create_dpgce_cluster" {
     software_config {
       image_version = local.dataproc_gce_img_version
       optional_components = [ "JUPYTER","HUDI"]
+      override_properties = {
+        "dataproc:dataproc.allow.zero.workers" = "false"
+        "spark:spark.history.fs.logDirectory"="${local.phs_bucket_fqn}/*/spark-job-history"
+        "spark:spark.eventLog.dir"="${local.phs_bucket_fqn}/events/spark-job-history"
+        "mapred:mapreduce.jobhistory.read-only.dir-pattern"="${local.phs_bucket_fqn}/*/mapreduce-job-history/done"
+        "mapred:mapreduce.jobhistory.done-dir"="${local.phs_bucket_fqn}/events/mapreduce-job-history/done"
+        "mapred:mapreduce.jobhistory.intermediate-done-dir"="${local.phs_bucket_fqn}/events/mapreduce-job-history/intermediate-done"
+        "yarn:yarn.nodemanager.remote-app-log-dir"="${local.phs_bucket_fqn}/yarn-logs"
+      }
     }
 
     initialization_action {
