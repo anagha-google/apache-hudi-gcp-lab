@@ -8,18 +8,31 @@ module "activate_google_apis" {
   disable_services_on_destroy = false
 
   activate_apis = [
-    "orgpolicy.googleapis.com",
-    "compute.googleapis.com",
-    "dataproc.googleapis.com",
-    "bigquery.googleapis.com",
-    "bigqueryconnection.googleapis.com",
-    "storage.googleapis.com",
-    "notebooks.googleapis.com",
-    "aiplatform.googleapis.com",
-    "servicenetworking.googleapis.com",
-    "composer.googleapis.com",
-    "pubsub.googleapis.com",
-    "metastore.googleapis.com"
+    "gcloud services enable dataproc.googleapis.com",
+    "gcloud services enable metastore.googleapis.com",
+    "gcloud services enable compute.googleapis.com",
+    "gcloud services enable container.googleapis.com",
+    "gcloud services enable containerregistry.googleapis.com",
+    "gcloud services enable bigquery.googleapis.com", 
+    "gcloud services enable storage.googleapis.com",
+    "gcloud services enable bigqueryconnection.googleapis.com",
+    "gcloud services enable bigquerydatapolicy.googleapis.com",
+    "gcloud services enable storage-component.googleapis.com",
+    "gcloud services enable bigquerystorage.googleapis.com",
+    "gcloud services enable datacatalog.googleapis.com",
+    "gcloud services enable dataplex.googleapis.com",
+    "gcloud services enable cloudresourcemanager.googleapis.com",
+    "gcloud services enable cloudidentity.googleapis.com",
+    "gcloud services enable composer.googleapis.com",
+    "gcloud services enable metastore.googleapis.com",
+    "gcloud services enable orgpolicy.googleapis.com",
+    "gcloud services enable dlp.googleapis.com",
+    "gcloud services enable logging.googleapis.com",
+    "gcloud services enable monitoring.googleapis.com",
+    "gcloud services enable cloudresourcemanager.googleapis.com",
+    "gcloud services enable datapipelines.googleapis.com",
+    "gcloud services enable cloudscheduler.googleapis.com",
+    "gcloud services enable datalineage.googleapis.com"
   ]  
 }
 
