@@ -19,7 +19,7 @@ Local variables declaration
  *****************************************/
 
 locals {
-resource_prefix             = "ts22-jetfdc"
+resource_prefix             = "artemis"
 
 project_id                  = "${var.project_id}"
 project_nbr                 = "${var.project_number}"
@@ -28,42 +28,50 @@ location                    = "${var.gcp_region}"
 zone                        = "${var.gcp_zone}"
 location_multi              = "${var.gcp_multi_region}"
 
+# IAM principals/accounts
 umsa                        = "${local.resource_prefix}-lab-sa"
 umsa_fqn                    = "${local.umsa}@${local.project_id}.iam.gserviceaccount.com"
 CC_GMSA_FQN                 = "service-${local.project_nbr}@cloudcomposer-accounts.iam.gserviceaccount.com"
 GCE_GMSA_FQN                = "${local.project_nbr}-compute@developer.gserviceaccount.com"
 CLOUD_COMPOSER2_IMG_VERSION = "${var.cloud_composer_image_version}"
 
+# Data Lake Service Deployments
+phs_nm                     = "${local.resource_prefix}-phs-${local.project_nbr}"
+dpms_nm                     = "${local.resource_prefix}-dpms-${local.project_nbr}"
+dpgce_nm                    = "${local.resource_prefix}-dpgce-cpu-${local.project_nbr}"
+dpgce_autoscale_policy_nm   = "${local.resource_prefix}-dpgce-cpu-autoscale-policy-${local.project_nbr}"
+
+# GCS buckets
 dataproc_bucket             = "${local.resource_prefix}_dataproc_bucket-${local.project_nbr}"
 dataproc_temp_bucket        = "${local.resource_prefix}_dataproc_temp_bucket-${local.project_nbr}"
 spark_bucket                = "${local.resource_prefix}-spark-bucket-${local.project_nbr}"
 spark_bucket_fqn            = "gs://${local.resource_prefix}-spark-${local.project_nbr}"
-sphs_nm                     = "${local.resource_prefix}-sphs-${local.project_nbr}"
-sphs_bucket                 = "${local.resource_prefix}-sphs-${local.project_nbr}"
-sphs_bucket_fqn             = "gs://${local.resource_prefix}-sphs-${local.project_nbr}"
+phs_bucket                  = "${local.resource_prefix}-phs-${local.project_nbr}"
+phs_bucket_fqn              = "gs://${local.resource_prefix}-phs-${local.project_nbr}"
+dpms_bucket                 = "${local.resource_prefix}-dpms-${local.project_nbr}"
+dpms_bucket_fqn             = "gs://${local.resource_prefix}-dpms-${local.project_nbr}"
 data_bucket                 = "${local.resource_prefix}_data_bucket-${local.project_nbr}"
 code_bucket                 = "${local.resource_prefix}_code_bucket-${local.project_nbr}"
 notebook_bucket             = "${local.resource_prefix}_notebook_bucket-${local.project_nbr}"
 
-
+# Networking Deployments
 vpc_nm                      = "${local.resource_prefix}-vpc-${local.project_nbr}"
-subnet_nm                   = "${local.resource_prefix}-snet"
-subnet_cidr                 = "10.0.0.0/16"
-psa_ip_length               = 16
-nat_router_name             = "${local.resource_prefix}-nat"
+spark_subnet_nm             = "${local.resource_prefix}-spark-snet"
+spark_subnet_cidr           = "10.0.0.0/16"
+catchall_subnet_nm          = "${local.resource_prefix}-catchall-snet"
+catchall_subnet_cidr           = "10.2.0.0/16"
 
-bq_datamart_ds              = "ts22_tf_lab_ds"
-bq_connector_jar_gcs_uri    = "${var.bq_connector_jar_gcs_uri}"
-bq_connection               = "external_gcs"
+# BigQuery Deployments
+BQ_RAW_DATASET              ="artemis_raw_ds"
+BQ_CURATED_DATASET          ="artemis_curated_ds"
+BQ_PRODUCT_DATASET          ="artemis_product_ds"
 
-umnb_server_machine_type    = "e2-medium"
-umnb_server_nm              = "${local.resource_prefix}-notebook-server"
-mnb_server_machine_type     = "n1-standard-4"
-mnb_server_nm               = "${local.resource_prefix}-managed-notebook-server"
+# Dataplex Deployments
+LAKE_NM="artemis-data-lake"
+RAW_ZONE_NM="artemis-raw-zone"
+CURATED_ZONE_NM="artemis-curated-zone"
+PRODUCT_ZONE_NM="artemis-product-zone"
 
-dpms_nm                     = "${local.resource_prefix}-dpms-${local.project_nbr}"
-dpgce_nm                    = "${local.resource_prefix}-dpgce-${local.project_nbr}"
-dpgce_autoscale_policy_nm   = "dpgce-autoscale-policy-${local.project_nbr}"
 }
 
 module "setup_foundations" {
