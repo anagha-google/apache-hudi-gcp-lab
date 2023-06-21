@@ -29,8 +29,8 @@ resource "google_dataproc_cluster" "create_dpgce_cluster" {
   project  = var.project_id
   region   = local.location
   cluster_config {
-    staging_bucket = local.spark_bucket
-    temp_bucket = local.dataproc_bucket
+    staging_bucket = local.dataproc_bucket
+    temp_bucket = local.dataproc_temp_bucket
     master_config {
       num_instances = 1
       machine_type  = "n1-standard-8"
@@ -53,8 +53,8 @@ resource "google_dataproc_cluster" "create_dpgce_cluster" {
 
     # Override or set some custom properties
     software_config {
-      image_version = "2.0-debian10"
-      optional_components = [ "JUPYTER"]
+      image_version = local.dataproc_gce_img_version
+      optional_components = [ "JUPYTER","HUDI"]
     }
 
     initialization_action {
@@ -73,7 +73,7 @@ resource "google_dataproc_cluster" "create_dpgce_cluster" {
 
     gce_cluster_config {
       zone        = "${local.zone}"
-      subnetwork  = local.subnet_nm
+      subnetwork  = local.spark_subnet_nm
       service_account = local.umsa_fqn
       service_account_scopes = [
         "cloud-platform"
@@ -84,37 +84,24 @@ resource "google_dataproc_cluster" "create_dpgce_cluster" {
         enable_vtpm                 = true
         enable_integrity_monitoring = true
         }
-     metadata = {
-        "spark-bigquery-connector-version" : "0.26.0",
-        "PIP_PACKAGES" : "pandas prophet plotly"
-        }   
+ 
     }
   }
   depends_on = [
     time_sleep.sleep_after_network_and_storage_steps,
     google_dataproc_metastore_service.datalake_metastore_creation,
-    google_dataproc_cluster.create_sphs,
+    google_dataproc_cluster.create_phs,
     google_dataproc_autoscaling_policy.create_autoscale_policy
   ]  
 }
 
-resource "google_storage_bucket_object" "copy_notebook_to_dpgce_bucket" {
-  for_each = {
-    "../03-notebooks/pyspark/icecream-sales-forecasting.ipynb" : "notebooks/jupyter/icecream-sales-forecasting.ipynb"
-  }
-  name        = each.value
-  source      = each.key
-  bucket      = local.spark_bucket
-  depends_on = [
-      google_dataproc_cluster.create_dpgce_cluster, 
-      time_sleep.sleep_after_bq_objects_creation
-  ]
+
 }
 
 resource "time_sleep" "sleep_after_creating_dpgce" {
   create_duration = "120s"
   depends_on = [
-   google_storage_bucket_object.copy_notebook_to_dpgce_bucket
+   google_dataproc_cluster.create_dpgce_cluster
 
   ]
 }
