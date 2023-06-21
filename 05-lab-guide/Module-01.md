@@ -18,8 +18,8 @@ Create a new project manually for this lab.
 Run this on Cloud Shell scoped to the new project you created for the lab.
 ```
 cd ~
-git clone https://github.com/anagha-google/ts22-just-enough-terraform-for-da.git
-cd ts22-just-enough-terraform-for-da
+git clone https://github.com/anagha-google/apache-hudi-gcp-lab.git
+cd apache-hudi-gcp-lab
 ```
 
 <hr>
@@ -42,7 +42,7 @@ Explore the repo really quick.
 ## 3. Layout of the Terraform root directory
 ```
 THIS IS FYI - DO NOT EXECUTE
-~/ts22-just-enough-terraform-for-da/00-setup
+~/apache-hudi-gcp-lab/00-setup
            
            ....module_apis_and_policies
            ....shelf
@@ -63,7 +63,7 @@ This is so that you get better performance.<br>
 If you are okay with provisioning in us-central1, skip this step.
 
 ```
-cd ~/ts22-just-enough-terraform-for-da/00-setup
+cd ~/apache-hudi-gcp-lab/00-setup
 vi configure-preferences.sh
 ```
 
@@ -71,14 +71,14 @@ vi configure-preferences.sh
 
 4.1. Run the command below in Cloud shell-
 ```
-cd ~/ts22-just-enough-terraform-for-da/00-setup
+cd ~/apache-hudi-gcp-lab/00-setup
 ./configure-preferences.sh
 ```
 
 4.2. This creates a variables file called terraform.tfvars that will be used for the rest of the lab. Lets review the file.<br>
 Run the command below in Cloud shell-
 ```
-cat ~/ts22-just-enough-terraform-for-da/00-setup/terraform.tfvars
+cat ~/apache-hudi-gcp-lab/00-setup/terraform.tfvars
 ```
 
 Here is the author's output-
@@ -88,7 +88,6 @@ project_number = "1053xx529"
 project_name = "ts22-lab"
 gcp_account_name = "xxxxx@akhanolkar.altostrat.com"
 org_id = "23xxx571"
-bq_connector_jar_gcs_uri = "gs://spark-lib/bigquery/spark-bigquery-with-dependencies_2.12-0.22.2.jar"
 cloud_composer_image_version = "composer-2.0.29-airflow-2.2.5"
 gcp_region = "us-central1"
 gcp_zone = "us-central1-a"
@@ -104,7 +103,7 @@ update_org_policies = "true"
 
 5.1. Run the init command in Cloud Shell-
 ```
-cd ~/ts22-just-enough-terraform-for-da/00-setup/
+cd ~/apache-hudi-gcp-lab/00-setup/
 terraform init
 ```
 You will see some output in the console. <br>
@@ -112,7 +111,7 @@ You will see some output in the console. <br>
 5.2. Check the directory to see what got created there.
 
 ```
-cd ~/ts22-just-enough-terraform-for-da/00-setup/
+cd ~/apache-hudi-gcp-lab/00-setup/
 ls -al
 ```
 
@@ -135,7 +134,7 @@ drwxr-xr-x  4 admin_ admin_ 4096 Oct 24 16:49 **.terraform**
 Terraform Hashicorp Configuration Language (HCL) is declarative (and not imperative). When you run the plan, it studies the configuration and comes up with an execution plan. Review the plan in Cloud Shell.
 
 ```
-cd ~/ts22-just-enough-terraform-for-da/00-setup/
+cd ~/apache-hudi-gcp-lab/00-setup/
 terraform plan
 ```
 
