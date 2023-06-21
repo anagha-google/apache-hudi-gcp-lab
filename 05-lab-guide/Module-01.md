@@ -28,7 +28,7 @@ cd apache-hudi-gcp-lab
 
 ```
 THIS IS FYI - DO NOT EXECUTE
-~/ts22-just-enough-terraform-for-da
+~/apache-hudi-gcp-lab
          00-setup
          01-datasets
          02-scripts
