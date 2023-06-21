@@ -12,13 +12,13 @@ In the previous module, we enabled Google APIs and (optionally) updated Organiza
 ## 1. Copy iam.tf file to the Terraform root directory
 
 ```
-cd ~/ts22-just-enough-terraform-for-da/00-setup/
+cd ~/apache-hudi-gcp-lab/00-setup/
 cp shelf/iam.tf .
 ```
 
 ## 2. Layout of the Terraform root directory
 ```
-~/ts22-just-enough-terraform-for-da/00-setup
+~/apache-hudi-gcp-lab/00-setup
 
            ....module_apis_and_policies
            ....shelf
@@ -36,7 +36,7 @@ cp shelf/iam.tf .
 
 ## 3. Open the file and read its contents
 ```
-cat ~/ts22-just-enough-terraform-for-da/00-setup/iam.tf
+cat ~/apache-hudi-gcp-lab/00-setup/iam.tf
 ```
 
 ## 4. What it does ...
@@ -53,7 +53,7 @@ Terraform will run every .tf file in the root directory when an "apply" is issue
 Run "terraform apply" command you ran previously again and observe the output
  
 ```
-cd ~/ts22-just-enough-terraform-for-da/00-setup/
+cd ~/apache-hudi-gcp-lab/00-setup/
 terraform init
 terraform apply --auto-approve
 ```
