@@ -5,7 +5,7 @@ resource "google_composer_environment" "create_cloud_composer_env" {
   project = local.project_id
   config {
     software_config {
-      image_version = local.CLOUD_COMPOSER2_IMG_VERSION 
+      image_version = local.cloud_composer_img_version 
       env_variables = {
         AIRFLOW_VAR_GCP_ACCOUNT_NAME = "${local.admin_upn_fqn}"
       }
@@ -13,7 +13,7 @@ resource "google_composer_environment" "create_cloud_composer_env" {
 
     node_config {
       network    = local.vpc_nm
-      subnetwork = local.subnet_nm
+      subnetwork = local.catchall_subnet_nm
       service_account = local.umsa_fqn
     }
   }
@@ -46,15 +46,3 @@ resource "time_sleep" "sleep_after_creating_composer" {
 }
 
 
-/*******************************************
-Upload Airflow DAG to Composer DAG bucket
-******************************************/
-
-resource "google_storage_bucket_object" "upload_cc2_dag_to_airflow_dag_bucket" {
-  name   = "dags/pipeline.py"
-  source = "../02-scripts/airflow/pipeline.py"  
-  bucket = substr(substr(google_composer_environment.create_cloud_composer_env.config.0.dag_gcs_prefix, 5, length(google_composer_environment.create_cloud_composer_env.config.0.dag_gcs_prefix)), 0, (length(google_composer_environment.create_cloud_composer_env.config.0.dag_gcs_prefix)-10))
-  depends_on = [
-    time_sleep.sleep_after_creating_composer
-  ]
-}
