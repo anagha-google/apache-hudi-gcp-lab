@@ -19,7 +19,7 @@ Local variables declaration
  *****************************************/
 
 locals {
-resource_prefix             = "artemis"
+resource_prefix             = "gaia"
 
 project_id                  = "${var.project_id}"
 project_nbr                 = "${var.project_number}"
@@ -68,10 +68,10 @@ BQ_PRODUCT_DATASET          ="${local.resource_prefix}_product_ds"
 BQ_CONNECTION               =
 
 # Dataplex Deployments
-LAKE_NM="artemis-data-lake"
-RAW_ZONE_NM="artemis-raw-zone"
-CURATED_ZONE_NM="artemis-curated-zone"
-PRODUCT_ZONE_NM="artemis-product-zone"
+LAKE_NM="${local.resource_prefix}-data-lake"
+RAW_ZONE_NM="${local.resource_prefix}-raw-zone"
+CURATED_ZONE_NM="${local.resource_prefix}-curated-zone"
+PRODUCT_ZONE_NM="${local.resource_prefix}-product-zone"
 
 }
 
