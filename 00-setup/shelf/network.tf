@@ -37,7 +37,7 @@ resource "google_compute_firewall" "create_firewall_rule" {
   name      = "allow-intra-snet-ingress-to-any"
   network   = local.vpc_nm
   direction = "INGRESS"
-  source_ranges = [local.subnet_cidr]
+  source_ranges = [local.spark_subnet_cidr,local.catchall_subnet_cidr]
   allow {
     protocol = "all"
   }
