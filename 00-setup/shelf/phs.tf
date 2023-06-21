@@ -1,7 +1,7 @@
-resource "google_dataproc_cluster" "create_sphs" {
+resource "google_dataproc_cluster" "create_phs" {
   project  = local.project_id 
   provider = google-beta
-  name     = local.sphs_nm
+  name     = local.phs_nm
   region   = local.location
 
   cluster_config {
@@ -18,12 +18,12 @@ resource "google_dataproc_cluster" "create_sphs" {
       override_properties = {
         "dataproc:dataproc.allow.zero.workers"=true
         "dataproc:job.history.to-gcs.enabled"=true
-        "spark:spark.history.fs.logDirectory"="${local.sphs_bucket_fqn}/*/spark-job-history"
-        "mapred:mapreduce.jobhistory.read-only.dir-pattern"="${local.sphs_bucket_fqn}/*/mapreduce-job-history/done"
+        "spark:spark.history.fs.logDirectory"="${local.phs_bucket_fqn}/*/spark-job-history"
+        "mapred:mapreduce.jobhistory.read-only.dir-pattern"="${local.phs_bucket_fqn}/*/mapreduce-job-history/done"
       }      
     }
     gce_cluster_config {
-      subnetwork =  "projects/${local.project_id}/regions/${local.location}/subnetworks/${local.subnet_nm}" 
+      subnetwork =  "projects/${local.project_id}/regions/${local.location}/subnetworks/${local.spark_subnet_nm}" 
       service_account = local.umsa_fqn
       service_account_scopes = [
         "cloud-platform"
