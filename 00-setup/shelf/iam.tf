@@ -7,7 +7,7 @@ module "umsa_creation" {
   project_id = local.project_id
   names      = ["${local.umsa}"]
   display_name = "User Managed Service Account"
-  description  = "User Managed Service Account for Serverless Spark"
+  description  = "User Managed Service Account for automation"
   depends_on = [
       module.setup_foundations
   ]
@@ -33,7 +33,9 @@ module "umsa_role_grants" {
     "roles/dataproc.worker",
     "roles/bigquery.dataEditor",
     "roles/bigquery.admin",
+    "roles/biglake.admin",
     "roles/dataproc.editor",
+    "roles/dataplex.admin",
     "roles/artifactregistry.writer",
     "roles/logging.logWriter",
     "roles/cloudbuild.builds.editor",
