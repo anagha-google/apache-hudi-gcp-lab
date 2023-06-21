@@ -33,13 +33,6 @@ umsa                        = "${local.resource_prefix}-lab-sa"
 umsa_fqn                    = "${local.umsa}@${local.project_id}.iam.gserviceaccount.com"
 CC_GMSA_FQN                 = "service-${local.project_nbr}@cloudcomposer-accounts.iam.gserviceaccount.com"
 GCE_GMSA_FQN                = "${local.project_nbr}-compute@developer.gserviceaccount.com"
-CLOUD_COMPOSER2_IMG_VERSION = "${var.cloud_composer_image_version}"
-
-# Data Lake Service Deployments
-phs_nm                     = "${local.resource_prefix}-phs-${local.project_nbr}"
-dpms_nm                     = "${local.resource_prefix}-dpms-${local.project_nbr}"
-dpgce_nm                    = "${local.resource_prefix}-dpgce-cpu-${local.project_nbr}"
-dpgce_autoscale_policy_nm   = "${local.resource_prefix}-dpgce-cpu-autoscale-policy-${local.project_nbr}"
 
 # GCS buckets
 dataproc_bucket             = "${local.resource_prefix}_dataproc_bucket-${local.project_nbr}"
@@ -72,6 +65,16 @@ LAKE_NM="${local.resource_prefix}-data-lake"
 RAW_ZONE_NM="${local.resource_prefix}-raw-zone"
 CURATED_ZONE_NM="${local.resource_prefix}-curated-zone"
 PRODUCT_ZONE_NM="${local.resource_prefix}-product-zone"
+
+# Data Lake Service Deployments
+phs_nm                      = "${local.resource_prefix}-phs-${local.project_nbr}"
+dpms_nm                     = "${local.resource_prefix}-dpms-${local.project_nbr}"
+dpgce_nm                    = "${local.resource_prefix}-dpgce-cpu-${local.project_nbr}"
+dpgce_autoscale_policy_nm   = "${local.resource_prefix}-dpgce-cpu-autoscale-policy-${local.project_nbr}"
+dataproc_gce_img_version    = "${var.dataproc_gce_image_version}"
+
+# Cloud Composer/Apache Airflow Deployments
+CLOUD_COMPOSER2_IMG_VERSION = "${var.cloud_composer_image_version}"
 
 }
 
