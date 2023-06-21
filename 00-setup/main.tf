@@ -34,6 +34,8 @@ CC_GMSA_FQN                 = "service-${local.project_nbr}@cloudcomposer-accoun
 GCE_GMSA_FQN                = "${local.project_nbr}-compute@developer.gserviceaccount.com"
 CLOUD_COMPOSER2_IMG_VERSION = "${var.cloud_composer_image_version}"
 
+dataproc_bucket             = "${local.resource_prefix}_dataproc_bucket-${local.project_nbr}"
+dataproc_temp_bucket        = "${local.resource_prefix}_dataproc_temp_bucket-${local.project_nbr}"
 spark_bucket                = "${local.resource_prefix}-spark-bucket-${local.project_nbr}"
 spark_bucket_fqn            = "gs://${local.resource_prefix}-spark-${local.project_nbr}"
 sphs_nm                     = "${local.resource_prefix}-sphs-${local.project_nbr}"
@@ -42,7 +44,7 @@ sphs_bucket_fqn             = "gs://${local.resource_prefix}-sphs-${local.projec
 data_bucket                 = "${local.resource_prefix}_data_bucket-${local.project_nbr}"
 code_bucket                 = "${local.resource_prefix}_code_bucket-${local.project_nbr}"
 notebook_bucket             = "${local.resource_prefix}_notebook_bucket-${local.project_nbr}"
-dataproc_bucket             = "${local.resource_prefix}_dataproc_bucket-${local.project_nbr}"
+
 
 vpc_nm                      = "${local.resource_prefix}-vpc-${local.project_nbr}"
 subnet_nm                   = "${local.resource_prefix}-snet"
