@@ -23,7 +23,7 @@ resource_prefix             = "gaia"
 
 project_id                  = "${var.project_id}"
 project_nbr                 = "${var.project_number}"
-admin_upn_fqn               = "${var.your_gcp_account_name}"
+admin_upn_fqn               = "${var.gcp_account_name}"
 location                    = "${var.gcp_region}"
 zone                        = "${var.gcp_zone}"
 location_multi              = "${var.gcp_multi_region}"
