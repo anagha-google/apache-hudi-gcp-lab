@@ -10,7 +10,7 @@ variable "project_number" {
  type        = string
  description = "project number"
 }
-variable "gcp_account_name" {
+variable "your_gcp_account_name" {
  description = "Your user ID"
 }
 variable "org_id" {
@@ -28,9 +28,7 @@ variable "gcp_zone" {
 variable "gcp_multi_region" {
  description = "GCP multi-region"
 }
-variable "bq_connector_jar_gcs_uri" {
- description = "BQ connector jar to use"
-}
+
 variable "provision_vertex_ai_bool" {
  description = "Boolean for provisioning Vertex AI Workbench for notebooks"
  type = bool
