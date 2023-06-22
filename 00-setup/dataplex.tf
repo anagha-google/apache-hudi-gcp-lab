@@ -50,5 +50,5 @@ resource "google_dataplex_zone" "create_zones" {
 
 resource "time_sleep" "sleep_after_dataplex_deployments" {
   create_duration = "120s"
-  depends_on = [google_dataplex_lake.create_zones]
+  depends_on = [google_dataplex_zone.create_zones]
 }
