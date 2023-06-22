@@ -12,11 +12,12 @@ resource "google_dataplex_lake" "create_lake" {
   }
   
   project = local.project_id
+  depends_on = [time_sleep.sleep_after_creating_dpgce]
 }
 
 resource "time_sleep" "sleep_after_lake_creation" {
   create_duration = "120s"
-  depends_on = [google_dataplex_lake.create_lakes]
+  depends_on = [google_dataplex_lake.create_lake]
 }
 
 
