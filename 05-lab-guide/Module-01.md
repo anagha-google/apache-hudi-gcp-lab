@@ -1,13 +1,15 @@
 # Module 1: Setup foundations
 
-In this module, you will get started with Terraform.
+In this module, you will get started with Terraform. We will enable requisite Google APIs and optionally update Organization policies. 
+
 1. You will create a project manually
 2. Clone the lab Git repo
 3. Configure your preferences for the lab
 4. Run Terraform init
 5. Run Terraform plan and review the same
-6. In this module, the entities provisioned are - enabling Google APIs and updating Organization policies. 
+6. Run Terraform apply and watch for completion
 
+   
 **Lab Module Duration:** <br>
 5 minutes 
 
@@ -30,11 +32,9 @@ cd apache-hudi-gcp-lab
 THIS IS FYI - DO NOT EXECUTE
 ~/apache-hudi-gcp-lab
          00-setup
-         01-datasets
-         02-scripts
-         03-notebooks
-         04-templates
-         05-lab-guide
+         01-scripts
+         02-notebooks
+         03-lab-guide
          README.md
 ```
 Explore the repo really quick.
@@ -44,23 +44,36 @@ Explore the repo really quick.
 THIS IS FYI - DO NOT EXECUTE
 ~/apache-hudi-gcp-lab/00-setup
            
-           ....module_apis_and_policies
-           ....shelf
-           
-           ....main.tf
-           ....variables.tf
-           ....versions.tf
-           
-           ....configure-preferences.sh <--- We will run this 
+├── bash.tf
+├── bigquery.tf
+├── composer.tf
+├── configure-preferences.sh <--- We will first run this
+├── dataplex.tf
+├── dpgce.tf
+├── dpms.tf
+├── iam.tf
+├── main.tf
+├── module_apis_and_policies <--- And then run terraform apply in this directory to enable Google APIs and update Org policies
+│   ├── main.tf
+│   └── variables.tf
+├── network.tf
+├── output.tf
+├── phs.tf
+├── storage.tf
+├── variables.tf
+└── versions.tf
            
 ```
 
 ## 3. Configure your preferences in the preferences script
 
 Edit the file configure.sh under 00-setup for your preferences.<br>
-E.g. Update the GCP region and zone to match your preference.<br>
-This is so that you get better performance.<br>
-If you are okay with provisioning in us-central1, skip this step.
+E.g. 
+1. Update the GCP region and zone to match your preference.<br>
+2. Update the Dataproc version as needed.<br>
+3. Update the Cloud Composer version as needed.<br>
+
+If you are okay with provisioning as designed by the author, skip the step of editing and move to step 4.
 
 ```
 cd ~/apache-hudi-gcp-lab/00-setup
@@ -68,6 +81,8 @@ vi configure-preferences.sh
 ```
 
 ## 4. Run the preferences shell script
+
+
 
 4.1. Run the command below in Cloud shell-
 ```
@@ -97,6 +112,9 @@ provision_vertex_ai_bool = "false"
 update_org_policies_bool = "true"
 
 ```
+
+**Note:** <br>
+The boolean for updating the org policies is in the terraform.tfvars. Google Customer engineers **need to** update org policies (default=true) in their designated environments, but this is not applicable for everyone. Set the boolean to false in the tfvars file if you dont need to org policies in your environment.<br>
 
 <hr>
 
@@ -139,7 +157,35 @@ cd ~/apache-hudi-gcp-lab/00-setup/
 terraform plan
 ```
 
-Study the output and see the number of resources provisioned.
+Study the output and see the number of resources that will be provisioned.
+
+## 7. Execute Terraform apply
+
+```
+This is informational - DO NOT RUN THIS
+
+├── bash.tf
+├── bigquery.tf
+├── composer.tf
+├── configure-preferences.sh
+├── dataplex.tf
+├── dpgce.tf
+├── dpms.tf
+├── iam.tf
+├── main.tf
+├── module_apis_and_policies
+│   ├── main.tf                             <--- We will run this
+│   └── variables.tf
+├── network.tf
+├── output.tf
+├── phs.tf
+├── storage.tf
+├── variables.tf
+└── versions.tf
+
+```
+
+
 
 <hr> 
 
