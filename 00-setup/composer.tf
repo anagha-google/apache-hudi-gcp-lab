@@ -28,9 +28,7 @@ resource "google_composer_environment" "create_cloud_composer_env" {
   } 
 }
 
-output "CLOUD_COMPOSER_DAG_BUCKET" {
-  value = google_composer_environment.create_cloud_composer_env.config.0.dag_gcs_prefix
-}
+
 
 /*******************************************
 Introducing sleep to minimize errors from
