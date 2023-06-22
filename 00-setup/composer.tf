@@ -1,7 +1,6 @@
 resource "google_composer_environment" "create_cloud_composer_env" {
   name   = "${local.project_id}-cc2"
   region = local.location
-  provider = google-beta
   project = local.project_id
   config {
     software_config {
