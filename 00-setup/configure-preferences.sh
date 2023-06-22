@@ -12,7 +12,7 @@ YOUR_GCP_MULTI_REGION="US"
 PROVISION_VERTEX_AI="false"
 UPDATE_ORG_POLICIES="true"
 DATAPROC_GCE_IMAGE_VERSION="2.1.14-debian11"
-CLOUD_COMPOSER_IMG_VERSION="composer‑2.3.1‑airflow‑2.5.1"
+CLOUD_COMPOSER_IMG_VERSION="composer‑2.3.0‑airflow‑2.5.1"
 
 echo "project_id = "\"$PROJECT_ID"\"" > terraform.tfvars
 echo "project_number = "\"$PROJECT_NBR"\"" >> terraform.tfvars
