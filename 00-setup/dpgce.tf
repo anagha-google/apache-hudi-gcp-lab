@@ -66,16 +66,6 @@ resource "google_dataproc_cluster" "create_dpgce_cluster" {
       }
     }
 
-    initialization_action {
-      script      = "gs://goog-dataproc-initialization-actions-${local.location}/connectors/connectors.sh"
-      timeout_sec = 300
-    }
-
-    initialization_action {
-      script      = "gs://goog-dataproc-initialization-actions-${local.location}/python/pip-install.sh"
-      timeout_sec = 300
-    }
-
     metastore_config {
         dataproc_metastore_service = "projects/${local.project_id}/locations/${local.location}/services/${local.dpms_nm}"
     }
