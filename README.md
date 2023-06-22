@@ -1,1 +1,1 @@
-# Demystifying Apache Hudi integration on GCP
+# Demystifying Apache Hudi integration on Google Cloud
