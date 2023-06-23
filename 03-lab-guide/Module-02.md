@@ -81,6 +81,7 @@ UMSA_FQN="gaia-lab-sa@$PROJECT_ID.iam.gserviceaccount.com"
 TARGET_BUCKET_GCS_URI="gs://gaia_data_bucket-$PROJECT_NBR/nyc_taxi_trips/parquet"
 DPGCE_CLUSTER_NM="gaia-dpgce-cpu-$PROJECT_NBR"
 CODE_BUCKET="gs://gaia_code_bucket-$PROJECT_NBR/nyc-taxi-data-generator"
+DATA_BUCKET="gs://gaia_data_bucket-$PROJECT_NBR/"
 DATAPROC_LOCATION="us-central1"
 BQ_LOCATION_MULTI="us"
 SPARK_BQ_CONNETCOR_SCRATCH_DATASET="gaia_scratch_ds"
@@ -94,6 +95,6 @@ gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet
 --id nyc_taxi_data_generator_parquet_$RANDOM \
 --region $DATAPROC_LOCATION \
 --project $PROJECT_ID \
--- --projectID=$PROJECT_ID --bqScratchDataset=$SPARK_BQ_CONNETCOR_SCRATCH_DATASET --peristencePath="$CODE_BUCKET/parquet" 
+-- --projectID=$PROJECT_ID --bqScratchDataset=$SPARK_BQ_CONNETCOR_SCRATCH_DATASET --peristencePath="$DATA_BUCKET" 
 
 ```
