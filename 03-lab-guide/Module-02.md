@@ -61,5 +61,8 @@ root
 
 ## 2. Data Generator Code
 
-We will use PySpark on Dataproc on GCE, using the Dataproc jobs API. The PySpark script is pre-created and uploaded to GCS as part of the Terraform provisioning. This step has deliberately not been automated so that you can subset/tune/tailor as needed.
+We will use PySpark on Dataproc on GCE, using the Dataproc jobs API. The PySpark script is pre-created and uploaded to GCS as part of the Terraform provisioning. This step has deliberately not been automated so that you can subset/tune/tailor as needed.<br>
 
+
+[Review the code for Parquet](../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py)<br>
+[Review the code for Hudi](../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py)<br>
