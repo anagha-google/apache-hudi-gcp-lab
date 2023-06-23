@@ -86,13 +86,12 @@ BQ_LOCATION_MULTI="us"
 SPARK_BQ_CONNETCOR_SCRATCH_DATASET="gaia_scratch_ds"
 
 # Delete any data from a prior run
-gsutil rm -r ${TARGET_BUCKET_GCS_URI}/*
+gsutil rm -r ${TARGET_BUCKET_GCS_URI}
 
 # Persist NYC Taxi trips to Cloud Storage in Parquet
-gcloud dataproc jobs submit pyspark \
---cluster $DPGCE_CLUSTER_NAME \
+gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet.py \
+--cluster $DPGCE_CLUSTER_NM \
 --id nyc_taxi_data_generator_parquet_$RANDOM \
-gs://$CODE_BUCKET/nyc_txi_data_generator_parquet.py \
 --region $DATAPROC_LOCATION \
 --project $PROJECT_ID \
 -- --projectID=$PROJECT_ID --bqScratchDataset=$SPARK_BQ_CONNETCOR_SCRATCH_DATASET --peristencePath="$CODE_BUCKET/parquet" 
