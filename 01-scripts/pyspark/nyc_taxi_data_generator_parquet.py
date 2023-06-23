@@ -114,7 +114,7 @@ def fnMain(logger, args):
             print(f"Trip count for the year=str({taxiTripsCountForTheYear})")
         
             print(f"Starting write for year {taxi_trip_year}...")
-            taxiTripsHomogenizedUnionedDF.write.partitionBy("trip_year","trip_month","trip_day").parquet(f"{PERSIST_TO_BUCKET}/nyc-taxi-trips/parquet-base/", mode='append')
+            taxiTripsHomogenizedUnionedDF.write.partitionBy("trip_year","trip_month","trip_day").parquet(f"{peristencePath}", mode='append')
             print(f"Completed write for year {taxi_trip_year}...")
             print("==================================")
                
