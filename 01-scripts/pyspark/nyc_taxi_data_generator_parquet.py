@@ -105,7 +105,7 @@ def fnMain(logger, args):
               .format('bigquery') \
               .load(f"bigquery-public-data.new_york_taxi_trips.tlc_green_trips_{taxi_trip_year}")
             greenTaxiTripsDF.createOrReplaceTempView("green_taxi_trips")
-            greenTaxiTripsHomogenizedDF=spark.sql(GREEN_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE.replace("YYYY",str(2014)))
+            greenTaxiTripsHomogenizedDF=spark.sql(GREEN_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE.replace("YYYY",str(taxi_trip_year)))
             greenTripCount=greenTaxiTripsHomogenizedDF.count()
             print(f"Green trip count=str({greenTripCount})")
         
