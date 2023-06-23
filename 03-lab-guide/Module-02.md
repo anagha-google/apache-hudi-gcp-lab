@@ -66,3 +66,35 @@ We will use PySpark on Dataproc on GCE, using the Dataproc jobs API. The PySpark
 
 [Review the code for Parquet](../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py)<br>
 [Review the code for Hudi](../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py)<br>
+
+## 3. Generate data
+
+### 3.1. Generate data in Parquet 
+
+The commands below run the [Spark application]((../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py)) on dataproc on GCE.<br>
+Paste the below in cloud shell-
+```
+# Variables
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+UMSA_FQN="gaia-lab-sa@$PROJECT_ID.iam.gserviceaccount.com"
+TARGET_BUCKET_GCS_URI="gs://gaia_data_bucket-$PROJECT_NBR/nyc_taxi_trips/parquet"
+DPGCE_CLUSTER_NM="gaia-dpgce-cpu-$PROJECT_NBR"
+CODE_BUCKET="gs://gaia_code_bucket-$PROJECT_NBR/nyc-taxi-data-generator"
+DATAPROC_LOCATION="us-central1"
+BQ_LOCATION_MULTI="us"
+SPARK_BQ_CONNETCOR_SCRATCH_DATASET="gaia_scratch_ds"
+
+# Delete any data from a prior run
+gsutil rm -r ${TARGET_BUCKET_GCS_URI}/*
+
+# Persist NYC Taxi trips to Cloud Storage in Parquet
+gcloud dataproc jobs submit pyspark \
+--cluster $DPGCE_CLUSTER_NAME \
+--id nyc_taxi_data_generator_parquet_$RANDOM \
+gs://$CODE_BUCKET/nyc_txi_data_generator_parquet.py \
+--region $DATAPROC_LOCATION \
+--project $PROJECT_ID \
+-- --projectID=$PROJECT_ID --bqScratchDataset=$SPARK_BQ_CONNETCOR_SCRATCH_DATASET --peristencePath="$CODE_BUCKET/parquet" 
+
+```
