@@ -21,3 +21,8 @@ We will read the New York Taxi yellow and green taxi data in BigQuery public dat
 | Hive partition scheme |trip_year=YYYY/trip_month=XX/trip_day=XX/trip_hour=XX/trip_minute=XX|
 | Cloud Storage Location - Parquet | gs://gaia-data-bucket-YOUR_PROJECT_NUMBER/nyc_taxi_trips/parquet|
 | Cloud Storage Location - Hudi | gs://gaia-data-bucket-YOUR_PROJECT_NUMBER/nyc_taxi_trips/hudi|
+
+## 2. Data Generator Code
+
+We will use PySpark on Dataproc on GCE, using the Dataproc jobs API. The PySpark script is pre-created and uploaded to GCS as part of the Terraform provisioning. This step has deliberately not been automated so that you can subset/tune/tailor as needed.
+
