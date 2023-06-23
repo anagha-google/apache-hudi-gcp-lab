@@ -78,16 +78,13 @@ Paste the below in cloud shell-
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
 PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
 UMSA_FQN="gaia-lab-sa@$PROJECT_ID.iam.gserviceaccount.com"
-TARGET_BUCKET_GCS_URI="gs://gaia_data_bucket-$PROJECT_NBR/nyc_taxi_trips/parquet"
 DPGCE_CLUSTER_NM="gaia-dpgce-cpu-$PROJECT_NBR"
 CODE_BUCKET="gs://gaia_code_bucket-$PROJECT_NBR/nyc-taxi-data-generator"
-DATA_BUCKET="gs://gaia_sample_data_bucket-$PROJECT_NBR/"
+DATA_BUCKET_FQP="gs://gaia_sample_data_bucket-$PROJECT_NBR/nyc-taxi-trips/parquet-base"
 DATAPROC_LOCATION="us-central1"
-BQ_LOCATION_MULTI="us"
-SPARK_BQ_CONNETCOR_SCRATCH_DATASET="gaia_scratch_ds"
 
 # Delete any data from a prior run
-gsutil rm -r ${TARGET_BUCKET_GCS_URI}
+gsutil rm -r ${DATA_BUCKET_FQP}/
 
 # Persist NYC Taxi trips to Cloud Storage in Parquet
 gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet.py \
@@ -95,6 +92,6 @@ gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet
 --id nyc_taxi_data_generator_parquet_$RANDOM \
 --region $DATAPROC_LOCATION \
 --project $PROJECT_ID \
--- --projectID=$PROJECT_ID --bqScratchDataset=$SPARK_BQ_CONNETCOR_SCRATCH_DATASET --peristencePath="$DATA_BUCKET" 
+-- --projectID=$PROJECT_ID --bqScratchDataset=$SPARK_BQ_CONNETCOR_SCRATCH_DATASET --peristencePath="$DATA_BUCKET_FQP" 
 
 ```
