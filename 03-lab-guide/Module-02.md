@@ -10,7 +10,7 @@ Successful completion of prior module
 
 ## 1. About the data
 
-We will read the New York Taxi yellow and green taxi data in BigQuery public dataset into a canonical data model and perist to our data lake in Cloud Storage in Parquet and Hudi formats. 
+We will read the New York yellow and green taxi trip data in BigQuery public dataset into a canonical data model and perist to our data lake in Cloud Storage in Parquet and Hudi formats. 
 
 |  |  |
 | -- |:--- |
