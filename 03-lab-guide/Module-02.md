@@ -59,17 +59,48 @@ root
 
 ```
 
-## 2. Data Generator Code
+## 3. The transformations for homogenizing the schema across the taxi types
+
+The NYC yellow and green taxi trips have different schemas. The transformations done are captured in SQL format [here](../01-scirpts/bqsql/export_taxi_trips.sql).
+The transformations however are applied in Spark, the technology used to generate the BigLake lab base datasets in Parquet and Hudi formats. 
+
+## 4. Data Generator Code
 
 We will use PySpark on Dataproc on GCE, using the Dataproc jobs API. The PySpark script is pre-created and uploaded to GCS as part of the Terraform provisioning. This step has deliberately not been automated so that you can subset/tune/tailor as needed.<br>
-
 
 [Review the code for Parquet](../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py)<br>
 [Review the code for Hudi](../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py)<br>
 
-## 3. Generate data
+## 5. Generate data
 
-### 3.1. Generate data in Parquet 
+### 5.1. Generate data in Parquet off of the BigQuery public NYC Taxi dataset
+
+The commands below run the [Spark application]((../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py)) on dataproc on GCE.<br>
+Paste the below in cloud shell-
+```
+# Variables
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+UMSA_FQN="gaia-lab-sa@$PROJECT_ID.iam.gserviceaccount.com"
+DPGCE_CLUSTER_NM="gaia-dpgce-cpu-$PROJECT_NBR"
+CODE_BUCKET="gs://gaia_code_bucket-$PROJECT_NBR/nyc-taxi-data-generator"
+DATA_BUCKET_FQP="gs://gaia_sample_data_bucket-$PROJECT_NBR/nyc-taxi-trips/parquet-base"
+DATAPROC_LOCATION="us-central1"
+
+# Delete any data from a prior run
+gsutil rm -r ${DATA_BUCKET_FQP}/
+
+# Persist NYC Taxi trips to Cloud Storage in Parquet
+gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet.py \
+--cluster $DPGCE_CLUSTER_NM \
+--id nyc_taxi_data_generator_parquet_$RANDOM \
+--region $DATAPROC_LOCATION \
+--project $PROJECT_ID \
+-- --projectID=$PROJECT_ID --bqScratchDataset=$SPARK_BQ_CONNETCOR_SCRATCH_DATASET --peristencePath="$DATA_BUCKET_FQP" 
+
+```
+
+### 5.2. Generate data in Hudi off of the Parquet dataset in Cloud Storage
 
 The commands below run the [Spark application]((../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py)) on dataproc on GCE.<br>
 Paste the below in cloud shell-
