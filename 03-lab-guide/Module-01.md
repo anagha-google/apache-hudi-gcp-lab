@@ -31,7 +31,7 @@ cd apache-hudi-gcp-lab
 ```
 THIS IS FYI - DO NOT EXECUTE
 ~/apache-hudi-gcp-lab
-         00-setup
+         00-provisioning-automation
          01-scripts
          02-notebooks
          03-lab-guide
@@ -42,7 +42,7 @@ Explore the repo really quick.
 ## 3. Layout of the Terraform root directory
 ```
 THIS IS FYI - DO NOT EXECUTE
-~/apache-hudi-gcp-lab/00-setup
+~/apache-hudi-gcp-lab/00-provisioning-automation
            
 ├── bash.tf
 ├── bigquery.tf
@@ -76,7 +76,7 @@ E.g.
 If you are okay with provisioning as designed by the author, skip the step of editing and move to step 4.
 
 ```
-cd ~/apache-hudi-gcp-lab/00-setup
+cd ~/apache-hudi-gcp-lab/00-provisioning-automation
 vi configure-preferences.sh
 ```
 
@@ -86,14 +86,14 @@ vi configure-preferences.sh
 
 4.1. Run the command below in Cloud shell-
 ```
-cd ~/apache-hudi-gcp-lab/00-setup
+cd ~/apache-hudi-gcp-lab/00-provisioning-automation
 ./configure-preferences.sh
 ```
 
 4.2. This creates a variables file called terraform.tfvars that will be used for the rest of the lab. Lets review the file.<br>
 Run the command below in Cloud shell-
 ```
-cat ~/apache-hudi-gcp-lab/00-setup/terraform.tfvars
+cat ~/apache-hudi-gcp-lab/00-provisioning-automation/terraform.tfvars
 ```
 
 Here is the author's output-
@@ -122,7 +122,7 @@ The boolean for updating the org policies is in the terraform.tfvars. Google Cus
 
 5.1. Run the init command in Cloud Shell-
 ```
-cd ~/apache-hudi-gcp-lab/00-setup/
+cd ~/apache-hudi-gcp-lab/00-provisioning-automation/
 terraform init
 ```
 You will see some output in the console. <br>
@@ -130,12 +130,13 @@ You will see some output in the console. <br>
 5.2. Check the directory to see what got created there.
 
 ```
-cd ~/apache-hudi-gcp-lab/00-setup/
+cd ~/apache-hudi-gcp-lab/00-provisioning-automation/
 ls -al
 ```
 
 Author's output is-
 ```
+INFORMATIONAL
 -rwxr-xr-x  1 admin_ admin_ 1645 Oct 24 16:37 configure-preferences.sh
 -rw-r--r--  1 admin_ admin_ 2869 Oct 24 16:19 main.tf
 drwxr-xr-x  2 admin_ admin_ 4096 Oct 24 16:08 module_apis_and_policies
@@ -153,7 +154,7 @@ drwxr-xr-x  4 admin_ admin_ 4096 Oct 24 16:49 **.terraform**
 Terraform Hashicorp Configuration Language (HCL) is declarative (and not imperative). When you run the plan, it studies the configuration and comes up with an execution plan. Review the plan in Cloud Shell.
 
 ```
-cd ~/apache-hudi-gcp-lab/00-setup/
+cd ~/apache-hudi-gcp-lab/00-provisioning-automation/
 terraform plan
 ```
 
