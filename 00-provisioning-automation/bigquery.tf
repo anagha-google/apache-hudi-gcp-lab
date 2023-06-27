@@ -1,5 +1,11 @@
-resource "google_bigquery_dataset" "bq_spark_product_dataset_creation" {
+resource "google_bigquery_dataset" "bq_product_dataset_creation" {
   dataset_id                  = local.bq_product_dataset
+  location                    = local.location
+  depends_on = [time_sleep.sleep_after_identities_permissions]
+}
+
+resource "google_bigquery_dataset" "bq_dq_dataset_creation" {
+  dataset_id                  = local.bq_dq_dataset
   location                    = local.location
   depends_on = [time_sleep.sleep_after_identities_permissions]
 }
@@ -25,7 +31,8 @@ resource "google_project_iam_member" "bq_connection_gmsa_iam_role_grant" {
 resource "time_sleep" "sleep_after_bq_objects_creation" {
   create_duration = "60s"
   depends_on = [
-    google_bigquery_dataset.bq_spark_product_dataset_creation,
+    google_bigquery_dataset.bq_product_dataset_creation,
+    google_bigquery_dataset.bq_dq_dataset_creation,
     google_bigquery_connection.bq_external_connection_creation,
     google_project_iam_member.bq_connection_gmsa_iam_role_grant
 
