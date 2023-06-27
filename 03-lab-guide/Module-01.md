@@ -169,7 +169,7 @@ Paste the command below in Cloud Shell and review the plan.
 
 ```
 cd ~/apache-hudi-gcp-lab/00-provisioning-automation/
-terraform apply
+terraform apply --auto-approve >> provisioning.log
 ```
 
 This will take approximately 45 minutes to run and complete. At the end of this , all services needed for this will be provisioned in your project, code copied over, all permissioning will be complete.
