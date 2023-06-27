@@ -1,10 +1,10 @@
 variable "scripts_to_upload" {
   type = map(string)
   default = {
-    "../01-scripts/airflow/data_engineering_pipeline.py" = "airflow/data_engineering_pipeline.py",
+    "../01-scripts/airflow/nyc_taxi_trips/data_engineering_pipeline.py" = "airflow/nyc_taxi_trips/data_engineering_pipeline.py",
     "../01-scripts/bash/run_service_updates.sh" = "bash/run_service_updates.sh",
-    "../01-scripts/bqsql/export_taxi_trips.sql" = "bqsql/export_taxi_trips.sql",
-    "../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py" = "pyspark/nyc_taxi_data_generator_parquet.py"
+    "../01-scripts/bqsql/nyc_taxi_trips/export_taxi_trips.sql" = "bqsql/nyc_taxi_trips/export_taxi_trips.sql",
+    "../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_parquet.py" = "pyspark/nyc_taxi_trips/nyc_taxi_data_generator_parquet.py"
   }
 }
 
