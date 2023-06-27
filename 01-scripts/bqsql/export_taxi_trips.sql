@@ -1,4 +1,4 @@
-# This is an UNUSED informational script 
+# This is an UNUSED informational script that is representative of the data sourced from BigQuery for the lab
 SELECT
     'yellow' as taxi_type,
     extract(year from pickup_datetime) as trip_year,
