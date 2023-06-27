@@ -47,7 +47,7 @@ THIS IS FYI - DO NOT EXECUTE
 ├── bash.tf
 ├── bigquery.tf
 ├── composer.tf
-├── configure-preferences.sh <--- We will first run this
+├── configure-preferences.sh <--- We will first run this - it creates a terraform.tfvars file
 ├── dataplex.tf
 ├── dpgce.tf
 ├── dpms.tf
