@@ -24,7 +24,8 @@ We will read the New York Taxi yellow and green taxi data in BigQuery public dat
 
 ## 2. Canonical Data Model for NYC Yellow and Green taxi trip data
 
-The following is the schema-
+The NYC yellow and green taxi trips have different schemas. We have created a canonical data model and mapped the individual schemas of yellow taxi trips nad green taxi trips to the same.
+The following is the canonical schema-
 ```
 root
  |-- taxi_type: string (nullable = true)
@@ -59,9 +60,7 @@ root
 
 ```
 
-## 3. The transformations for homogenizing the schema across the taxi types
-
-The NYC yellow and green taxi trips have different schemas. The transformations done are captured in SQL format [here](../01-scirpts/bqsql/export_taxi_trips.sql).
+The transformations done are captured in SQL format [here](../01-scirpts/bqsql/export_taxi_trips.sql).
 The transformations however are applied in Spark, the technology used to generate the BigLake lab base datasets in Parquet and Hudi formats. 
 
 ## 4. Data Generator Code
