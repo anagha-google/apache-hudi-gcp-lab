@@ -8,21 +8,21 @@ In this module, we will generate data for the lab that we will persist in our da
 **Prerequisite:** <br>
 Successful completion of prior module
 
+<hr>
+
 ## 1. About the data
 
+### 1.1. Source
 We will read the New York yellow and green taxi trip data in BigQuery public dataset into a canonical data model and perist to our data lake in Cloud Storage in Parquet and Hudi formats. 
 
 |  |  |
 | -- |:--- |
-| Base Yellow Taxi Tables |  bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_YYYY where YYYY is the year |
-| Base Green Taxi Tables |  bigquery-public-data.new_york_taxi_trips.tlc_green_trips_YYYY where YYYY is the year  |
+| Source for Yellow Taxi Tables |  bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_YYYY where YYYY is the year |
+| Source for  Green Taxi Tables |  bigquery-public-data.new_york_taxi_trips.tlc_green_trips_YYYY where YYYY is the year  |
 | Years of data | 2019, 2020, 2021, 2022 |
-| Total Row Count | TBD |
-| Hive partition scheme of target datasets |trip_year=YYYY/trip_month=XX/trip_day=XX/trip_hour=XX/trip_minute=XX|
-| Cloud Storage Location - Parquet | gs://gaia-data-bucket-YOUR_PROJECT_NUMBER/nyc_taxi_trips/parquet|
-| Cloud Storage Location - Hudi | gs://gaia-data-bucket-YOUR_PROJECT_NUMBER/nyc_taxi_trips/hudi|
 
-## 2. Canonical Data Model for NYC Yellow and Green taxi trip data
+
+### 1.2. Data Model 
 
 The NYC yellow and green taxi trips have different schemas. We have created a canonical data model and mapped the individual schemas of yellow taxi trips and green taxi trips to the same.
 The following is the canonical schema-
@@ -60,15 +60,43 @@ root
 
 ```
 
+### 1.3. Transformations 
+
 The transformations done are captured in SQL format [here](../01-scirpts/bqsql/export_taxi_trips.sql).
 The transformations however are applied in Spark, the technology used to generate the BigLake lab base datasets in Parquet and Hudi formats. 
 
-## 4. Data Generator Code
+### 1.4. Hive Parition Scheme
 
-We will use PySpark on Dataproc on GCE, using the Dataproc jobs API. The PySpark script is pre-created and uploaded to GCS as part of the Terraform provisioning. This step has deliberately not been automated so that you can subset/tune/tailor as needed.<br>
+|  |  |
+| -- |:--- |
+| Hive partition scheme of target datasets |trip_year=YYYY/trip_month=XX/trip_day=XX/trip_hour=XX/trip_minute=XX|
 
-[Review the code for Parquet](../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py)<br>
-[Review the code for Hudi](../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py)<br>
+
+### 1.5. Parquet and Hudi datasets in Cloud Storage
+
+|  |  |
+| -- |:--- |
+| Cloud Storage Location - Parquet | gs://gaia-data-bucket-YOUR_PROJECT_NUMBER/nyc_taxi_trips/parquet|
+| Cloud Storage Location - Hudi | gs://gaia-data-bucket-YOUR_PROJECT_NUMBER/nyc_taxi_trips/hudi|
+
+### 1.6. Data stats
+
+|  |  |
+| -- |:--- |
+| Total Trips | TBD |
+| Total Yellow Trips | TBD |
+| Total Green Trips | TBD |
+
+<hr>
+
+## 2. Data Generator Code
+
+|  |  |
+| -- |:--- |
+| PySpark to read from BigQuery and persist to Cloud Storge as Parquet  | [Script](../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py) |
+| PySpark to read Parquet from Cloud Storage and persist to Cloud Storge as Hudi  | [Notebook](../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py) |
+
+<hr>
 
 ## 5. Generate data
 
