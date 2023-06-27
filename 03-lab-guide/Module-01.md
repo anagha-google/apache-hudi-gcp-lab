@@ -161,30 +161,18 @@ terraform plan
 
 Study the output and see the number of resources that will be provisioned.
 
+<hr>
+
 ## 8. Execute Terraform apply
 
-```
-This is informational - DO NOT RUN THIS
-
-├── bash.tf
-├── bigquery.tf
-├── composer.tf
-├── configure-preferences.sh
-├── dataplex.tf
-├── dpgce.tf
-├── dpms.tf
-├── iam.tf
-├── main.tf
-├── module_apis_and_policies
-│   ├── main.tf                             <--- This will run first, then the rest of the .tf scripts
-│   └── variables.tf
-├── network.tf
-├── phs.tf
-├── storage.tf
-├── variables.tf
-└── versions.tf
+Paste the command below in Cloud Shell and review the plan.
 
 ```
+cd ~/apache-hudi-gcp-lab/00-provisioning-automation/
+terraform apply
+```
+
+This will take approximately 45 minutes to run and complete. At the end of this , all services needed for this will be provisioned in your project, code copied over, all permissioning will be complete.
 
 <hr> 
 
