@@ -26,7 +26,7 @@ cd apache-hudi-gcp-lab
 
 <hr>
 
-## 2. Familiarize yourself with the layout
+## 2. Familiarize yourself with the top level layout
 
 ```
 THIS IS FYI - DO NOT EXECUTE
@@ -39,7 +39,7 @@ THIS IS FYI - DO NOT EXECUTE
 ```
 Explore the repo really quick.
 
-## 3. Layout of the Terraform root directory
+## 3. Familiarize yourself with the layout of the Terraform root directory
 ```
 THIS IS FYI - DO NOT EXECUTE
 ~/apache-hudi-gcp-lab/00-provisioning-automation
@@ -65,7 +65,7 @@ THIS IS FYI - DO NOT EXECUTE
            
 ```
 
-## 3. Configure your preferences in the preferences script
+## 4. Configure your preferences in the preferences script
 
 Edit the file configure.sh under 00-setup for your preferences.<br>
 E.g. 
@@ -80,17 +80,15 @@ cd ~/apache-hudi-gcp-lab/00-provisioning-automation
 vi configure-preferences.sh
 ```
 
-## 4. Run the preferences shell script
+## 5. Run the preferences shell script
 
-
-
-4.1. Run the command below in Cloud shell-
+5.1. Run the command below in Cloud shell-
 ```
 cd ~/apache-hudi-gcp-lab/00-provisioning-automation
 ./configure-preferences.sh
 ```
 
-4.2. This creates a variables file called terraform.tfvars that will be used for the rest of the lab. Lets review the file.<br>
+5.2. This creates a variables file called terraform.tfvars that will be used for the rest of the lab. Lets review the file.<br>
 Run the command below in Cloud shell-
 ```
 cat ~/apache-hudi-gcp-lab/00-provisioning-automation/terraform.tfvars
@@ -118,16 +116,16 @@ The boolean for updating the org policies is in the terraform.tfvars. Google Cus
 
 <hr>
 
-## 5. Initialize Terraform
+## 6. Initialize Terraform
 
-5.1. Run the init command in Cloud Shell-
+6.1. Run the init command in Cloud Shell-
 ```
 cd ~/apache-hudi-gcp-lab/00-provisioning-automation/
 terraform init
 ```
 You will see some output in the console. <br>
 
-5.2. Check the directory to see what got created there.
+6.2. Check the directory to see what got created there.
 
 ```
 cd ~/apache-hudi-gcp-lab/00-provisioning-automation/
@@ -149,7 +147,7 @@ drwxr-xr-x  4 admin_ admin_ 4096 Oct 24 16:49 **.terraform**
 
 <hr>
 
-## 6. Review the Terraform execution plan
+## 7. Review the Terraform execution plan
 
 Terraform Hashicorp Configuration Language (HCL) is declarative (and not imperative). When you run the plan, it studies the configuration and comes up with an execution plan. Review the plan in Cloud Shell.
 
@@ -160,7 +158,7 @@ terraform plan
 
 Study the output and see the number of resources that will be provisioned.
 
-## 7. Execute Terraform apply
+## 8. Execute Terraform apply
 
 ```
 This is informational - DO NOT RUN THIS
