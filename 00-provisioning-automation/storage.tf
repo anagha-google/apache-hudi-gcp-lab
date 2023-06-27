@@ -92,7 +92,7 @@ Introduce sleep to minimize errors from
 dependencies having not completed
 ********************************************/
 
-resource  "time_sleep" "sleep_after_creating_buckets" {
+resource  "time_sleep" "sleep_after_bucket_creation" {
   create_duration = "60s"
   depends_on = [
     google_storage_bucket.create_data_bucket,
