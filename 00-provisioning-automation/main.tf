@@ -55,8 +55,6 @@ catchall_subnet_nm          = "${local.resource_prefix}-catchall-snet"
 catchall_subnet_cidr           = "10.2.0.0/16"
 
 # BigQuery Deployments
-bq_raw_dataset              ="${local.resource_prefix}_raw_ds"
-bq_curated_dataset          ="${local.resource_prefix}_curated_ds"
 bq_product_dataset          ="${local.resource_prefix}_product_ds"
 bq_connection               ="${local.resource_prefix}_bq_connection"
 
