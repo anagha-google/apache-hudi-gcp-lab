@@ -1,3 +1,4 @@
+# This is an UNUSED informational script 
 SELECT
     'yellow' as taxi_type,
     extract(year from pickup_datetime) as trip_year,
