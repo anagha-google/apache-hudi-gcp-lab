@@ -1,4 +1,5 @@
-# This is an UNUSED informational script that is representative of the data sourced from BigQuery for the lab
+# This is an UNUSED informational script that is representative of the data sourced from BigQuery for the lab & transformations applied
+# to homogenize the schema across yellow and green taxi trips
 SELECT
     'yellow' as taxi_type,
     extract(year from pickup_datetime) as trip_year,
