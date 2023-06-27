@@ -1,6 +1,6 @@
 # Module 2: Generate data for the lab
 
-In this module, we will generate data for the lab that we will persist in our data lake in Cloud Storage. We will generate two flavors of persistence formats - Parquet and Hudi to showcase performance variations WRT BigLake queries.
+In this module, we will generate data for the lab that we will persist in our data lake in Cloud Storage. We will generate two flavors of persistence formats - Parquet and Hudi to showcase performance variations WRT BigLake queries. To make this lab also gently introduce capabilities in Dataproc for those new to it, the lab includes running a Spark Dataproc job from command line to read from BigQuery (with the Apache Spark BigQuery connector) and write to Cloud storage as Parquet, and to generate the Hudi dataset, we will use a Jupyter notebook on Dataproc 
    
 **Lab Module Duration:** <br>
 30 minutes 
@@ -24,7 +24,7 @@ We will read the New York Taxi yellow and green taxi data in BigQuery public dat
 
 ## 2. Canonical Data Model for NYC Yellow and Green taxi trip data
 
-The NYC yellow and green taxi trips have different schemas. We have created a canonical data model and mapped the individual schemas of yellow taxi trips nad green taxi trips to the same.
+The NYC yellow and green taxi trips have different schemas. We have created a canonical data model and mapped the individual schemas of yellow taxi trips and green taxi trips to the same.
 The following is the canonical schema-
 ```
 root
