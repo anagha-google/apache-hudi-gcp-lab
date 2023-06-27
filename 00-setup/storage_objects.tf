@@ -22,6 +22,7 @@ variable "notebooks_to_upload" {
   type = map(string)
   default = {
     "../02-notebooks/nyc_taxi_trips_data_generator/nyc_taxi_hudi_data_generator.ipynb" = "nyc_taxi_trips_data_generator/nyc_taxi_hudi_data_generator.ipynb"
+    "../02-notebooks/exploration/data_explorer.ipynb" = "exploration/data_explorer.ipynb"
   }
 }
 resource "google_storage_bucket_object" "upload_notebooks_to_gcs" {
