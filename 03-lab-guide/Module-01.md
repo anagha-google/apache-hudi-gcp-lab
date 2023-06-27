@@ -1,4 +1,4 @@
-# Module 1: Setup foundations
+# Module 1: Provisioning automation
 
 In this module, you will get started with Terraform. We will enable requisite Google APIs and optionally update Organization policies. 
 
