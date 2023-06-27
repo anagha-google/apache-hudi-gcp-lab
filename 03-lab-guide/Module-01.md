@@ -116,19 +116,21 @@ The boolean for updating the org policies is in the terraform.tfvars. Google Cus
 
 <hr>
 
-## 6. Initialize Terraform
+## 6. Initialize & apply Terraform for the foundational setup
 
-6.1. Run the init command in Cloud Shell-
+This includes updates to any organizational policies needed by the Google Cloud data services in scope and Google APIs to be enabled.
+
+### 6.1. Run the init command in Cloud Shell-
 ```
-cd ~/apache-hudi-gcp-lab/00-provisioning-automation/
+cd ~/apache-hudi-gcp-lab/00-provisioning-automation
 terraform init
 ```
 You will see some output in the console. <br>
 
-6.2. Check the directory to see what got created there.
+### 6.2. Check the directory to see what got created there.
 
 ```
-cd ~/apache-hudi-gcp-lab/00-provisioning-automation/
+cd ~/apache-hudi-gcp-lab/00-provisioning-automation
 ls -al
 ```
 
@@ -145,11 +147,12 @@ drwxr-xr-x  4 admin_ admin_ 4096 Oct 24 16:49 **.terraform**
 -rw-r--r--  1 admin_ admin_  263 Oct 24 15:06 versions.tf
 ```
 
+
 <hr>
 
 ## 7. Review the Terraform execution plan
 
-Terraform Hashicorp Configuration Language (HCL) is declarative (and not imperative). When you run the plan, it studies the configuration and comes up with an execution plan. Review the plan in Cloud Shell.
+Paste the command below in Cloud Shell and review the plan.
 
 ```
 cd ~/apache-hudi-gcp-lab/00-provisioning-automation/
@@ -173,18 +176,15 @@ This is informational - DO NOT RUN THIS
 ├── iam.tf
 ├── main.tf
 ├── module_apis_and_policies
-│   ├── main.tf                             <--- We will run this
+│   ├── main.tf                             <--- This will run first, then the rest of the .tf scripts
 │   └── variables.tf
 ├── network.tf
-├── output.tf
 ├── phs.tf
 ├── storage.tf
 ├── variables.tf
 └── versions.tf
 
 ```
-
-
 
 <hr> 
 
