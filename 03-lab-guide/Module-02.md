@@ -1,6 +1,6 @@
 # Module 2: Generate data for the lab
 
-In this module, we will generate data for the lab that we will persist in our data lake in Cloud Storage. We will generate two flavors of persistence formats - Parquet and Hudi to showcase performance variations.
+In this module, we will generate data for the lab that we will persist in our data lake in Cloud Storage. We will generate two flavors of persistence formats - Parquet and Hudi to showcase performance variations WRT BigLake queries.
    
 **Lab Module Duration:** <br>
 30 minutes 
