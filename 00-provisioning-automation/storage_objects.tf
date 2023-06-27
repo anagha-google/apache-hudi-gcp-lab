@@ -35,4 +35,11 @@ resource "google_storage_bucket_object" "upload_notebooks_to_gcs" {
   ]
 }
 
+resource "time_sleep" "sleep_after_network_and_storage_steps" {
+  create_duration = "120s"
+  depends_on = [
+   google_dataproc_cluster.upload_notebooks_to_gcs,
+   google_dataproc_cluster.upload_scripts_to_gcs
 
+  ]
+}
