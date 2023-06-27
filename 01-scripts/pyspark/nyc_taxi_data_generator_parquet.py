@@ -1,9 +1,13 @@
 # ............................................................
-# Generate NYC Taxi trips
+# Generate NYC Taxi trips in Parquet
 # ............................................................
 # This script -
-# 1. Reads a BQ public dataset table with NYC Taxi trips
-# 2. Persists to GCS as parquet
+# 1. Reads BQ public dataset tables with NYC yellow taxi trips and 
+# 2. Reads BQ public dataset tables with NYC green taxi trips and 
+# 3. Homogenizes the schema across the datasets and
+# 4. Unions the two datasets and
+# 5. Persists to GCS as parquet in the 
+# 6. Hive partition scheme of trip_year=YYYY/trip_month=MM,/trip_day=DD
 # ............................................................
 
 import sys,logging,argparse
@@ -40,26 +44,6 @@ def fnParseArguments():
         required=True)
     return argsParser.parse_args()
 # }} End fnParseArguments()
-
-def fnDeleteSuccessFlagFile(bucket_uri):
-# {{ Start 
-    """Deletes a blob from the bucket."""
-    # bucket_name = "your-bucket-name"
-    # blob_name = "your-object-name"
-
-    storage_client = storage.Client()
-    bucket_name = bucket_uri.split("/")[2]
-    object_name = "/".join(bucket_uri.split("/")[3:]) 
-
-    print(f"Bucket name: {bucket_name}")
-    print(f"Object name: {object_name}")
-
-    bucket = storage_client.bucket(bucket_name)
-    blob = bucket.blob(f"{object_name}_SUCCESS")
-    blob.delete()
-
-    print(f"_SUCCESS file deleted.")
-# }} End
 
 def fnMain(logger, args):
 # {{ Start main
