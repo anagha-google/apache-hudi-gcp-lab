@@ -11,7 +11,7 @@ In this module, you will get started with Terraform. We will enable requisite Go
 
    
 **Lab Module Duration:** <br>
-5 minutes 
+~45-55 minutes 
 
 **Prerequisite:** <br>
 Create a new project manually for this lab. 
