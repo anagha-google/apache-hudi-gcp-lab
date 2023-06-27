@@ -16,9 +16,9 @@ We will read the New York Taxi yellow and green taxi data in BigQuery public dat
 | -- |:--- |
 | Base Yellow Taxi Tables |  bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_YYYY where YYYY is the year |
 | Base Green Taxi Tables |  bigquery-public-data.new_york_taxi_trips.tlc_green_trips_YYYY where YYYY is the year  |
-| Total Row Count | 1,213,620,063 |
-| Query used to generate | [export_taxi_trips.sql](../01-scripts/bqsql/export_taxi_trips.sql) |
-| Hive partition scheme |trip_year=YYYY/trip_month=XX/trip_day=XX/trip_hour=XX/trip_minute=XX|
+| Years of data | 2019, 2020, 2021, 2022 |
+| Total Row Count | TBD |
+| Hive partition scheme of target datasets |trip_year=YYYY/trip_month=XX/trip_day=XX/trip_hour=XX/trip_minute=XX|
 | Cloud Storage Location - Parquet | gs://gaia-data-bucket-YOUR_PROJECT_NUMBER/nyc_taxi_trips/parquet|
 | Cloud Storage Location - Hudi | gs://gaia-data-bucket-YOUR_PROJECT_NUMBER/nyc_taxi_trips/hudi|
 
