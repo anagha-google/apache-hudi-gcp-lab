@@ -62,7 +62,7 @@ resource "google_storage_bucket_object" "upload_dags_to_airflow_dag_bucket" {
   source   = "${path.module}/${each.key}"
   bucket   = substr(substr(google_composer_environment.create_cloud_composer_env.config.0.dag_gcs_prefix, 5, length(google_composer_environment.create_cloud_composer_env.config.0.dag_gcs_prefix)), 0, (length(google_composer_environment.create_cloud_composer_env.config.0.dag_gcs_prefix)-10))
   depends_on = [
-    time_sleep.create_cloud_composer_env
+    time_sleep.sleep_after_creating_composer
   ]
 }
 
