@@ -127,7 +127,7 @@ terraform init
 ```
 You will see some output in the console. <br>
 
-### 6.2. Check the directory to see what got created there.
+### 6.2. Check the automation directory 
 
 ```
 cd ~/apache-hudi-gcp-lab/00-provisioning-automation
