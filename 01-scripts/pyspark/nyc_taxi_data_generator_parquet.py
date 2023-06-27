@@ -33,11 +33,6 @@ def fnParseArguments():
         type=str,
         required=True)
     argsParser.add_argument(
-        '--bqScratchDataset',
-        help='Materialization dataset used by Spark BQ connector for query pushdown',
-        type=str,
-        required=True)
-    argsParser.add_argument(
         '--peristencePath',
         help='GCS location to persist output',
         type=str,
@@ -50,7 +45,6 @@ def fnMain(logger, args):
 
     # 1. Capture Spark application input
     projectID = args.projectID
-    bqScratchDataset = args.bqScratchDataset
     peristencePath = args.peristencePath
 
     # 2. Query to read BQ 
