@@ -111,7 +111,7 @@ PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d'
 UMSA_FQN="gaia-lab-sa@$PROJECT_ID.iam.gserviceaccount.com"
 DPGCE_CLUSTER_NM="gaia-dpgce-cpu-$PROJECT_NBR"
 CODE_BUCKET="gs://gaia_code_bucket-$PROJECT_NBR/pyspark/nyc_taxi_trips"
-DATA_BUCKET_FQP="gs://gaia_sample_data_bucket-$PROJECT_NBR/nyc-taxi-trips/parquet-base"
+DATA_BUCKET_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips/parquet-base"
 DATAPROC_LOCATION="us-central1"
 
 # Delete any data from a prior run
