@@ -102,7 +102,7 @@ The transformations however are applied in Spark, the technology used to generat
 
 ## 3. Generate data in Parquet off of the BigQuery public NYC Taxi dataset
 
-The commands below run the [Spark application](../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_parquet.py) on dataproc on GCE.<br>
+The commands below run the [Spark application](../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_parquet.py) on dataproc on GCE. This takes ~35 minutes to complete.<br>
 Paste the below in cloud shell-
 ```
 # Variables
