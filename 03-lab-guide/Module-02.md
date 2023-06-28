@@ -95,16 +95,14 @@ The transformations however are applied in Spark, the technology used to generat
 
 |  |  |
 | -- |:--- |
-| PySpark to read from BigQuery and persist to Cloud Storge as Parquet  | [Script](../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py) |
-| PySpark to read Parquet from Cloud Storage and persist to Cloud Storge as Hudi  | [Notebook](../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py) |
+| PySpark to read from BigQuery and persist to Cloud Storge as Parquet  | [Script](../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_parquet.py) |
+| PySpark to read Parquet from Cloud Storage and persist to Cloud Storge as Hudi  | [Notebook](../02-notebooks/nyc_taxi_trips/nyc_taxi_hudi_data_generator.ipynb) |
 
 <hr>
 
-## 5. Generate data
+## 3. Generate data in Parquet off of the BigQuery public NYC Taxi dataset
 
-### 5.1. Generate data in Parquet off of the BigQuery public NYC Taxi dataset
-
-The commands below run the [Spark application]((../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py)) on dataproc on GCE.<br>
+The commands below run the [Spark application](../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_parquet.py) on dataproc on GCE.<br>
 Paste the below in cloud shell-
 ```
 # Variables
@@ -131,27 +129,7 @@ gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet
 
 ### 5.2. Generate data in Hudi off of the Parquet dataset in Cloud Storage
 
-The commands below run the [Spark application]((../01-scripts/pyspark/nyc_taxi_data_generator_parquet.py)) on dataproc on GCE.<br>
-Paste the below in cloud shell-
-```
-# Variables
-PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
-PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
-UMSA_FQN="gaia-lab-sa@$PROJECT_ID.iam.gserviceaccount.com"
-DPGCE_CLUSTER_NM="gaia-dpgce-cpu-$PROJECT_NBR"
-CODE_BUCKET="gs://gaia_code_bucket-$PROJECT_NBR/nyc-taxi-data-generator"
-DATA_BUCKET_FQP="gs://gaia_sample_data_bucket-$PROJECT_NBR/nyc-taxi-trips/parquet-base"
-DATAPROC_LOCATION="us-central1"
+Review the code and then run the Spark [notebook](../02-notebooks/nyc_taxi_trips/nyc_taxi_hudi_data_generator.ipynb) on Dataproc on GCE from Jupyter to generate data in Hudi off of the Parquet dataset in Cloud Storage.<br>
 
-# Delete any data from a prior run
-gsutil rm -r ${DATA_BUCKET_FQP}/
 
-# Persist NYC Taxi trips to Cloud Storage in Parquet
-gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet.py \
---cluster $DPGCE_CLUSTER_NM \
---id nyc_taxi_data_generator_parquet_$RANDOM \
---region $DATAPROC_LOCATION \
---project $PROJECT_ID \
--- --projectID=$PROJECT_ID --bqScratchDataset=$SPARK_BQ_CONNETCOR_SCRATCH_DATASET --peristencePath="$DATA_BUCKET_FQP" 
 
-```
