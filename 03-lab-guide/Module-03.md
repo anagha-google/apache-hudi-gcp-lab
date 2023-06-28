@@ -1,4 +1,4 @@
-# Sync the Hudi metadata into Dataproc Metastore
+# Module 3: Sync the Hudi metadata into Dataproc Metastore & work with. theHudi table from Spark SQL anywhere
 
 ```
 ### 7.1. Find the Public IP address of your Cloud Shell terminal
