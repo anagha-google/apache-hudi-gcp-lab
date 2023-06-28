@@ -125,7 +125,7 @@ gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet
 --id nyc_taxi_data_generator_parquet_$RANDOM \
 --region $DATAPROC_LOCATION \
 --project $PROJECT_ID \
--- --projectID=$PROJECT_ID --bqScratchDataset=$SPARK_BQ_CONNETCOR_SCRATCH_DATASET --peristencePath="$DATA_BUCKET_FQP" 
+-- --projectID=$PROJECT_ID --peristencePath="$DATA_BUCKET_FQP" 
 
 ```
 
