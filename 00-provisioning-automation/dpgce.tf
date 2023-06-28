@@ -104,4 +104,20 @@ resource "time_sleep" "sleep_after_creating_dpgce" {
   ]
 }
 
+variable "notebooks_to_upload" {
+  type = map(string)
+  default = {
+    "../02-notebooks/nyc_taxi_trips/nyc_taxi_hudi_data_generator.ipynb" = "notebooks/jupyter/nyc_taxi_trips/nyc_taxi_hudi_data_generator.ipynb"
+  }
+}
+resource "google_storage_bucket_object" "upload_notebooks_to_dpgce_bucket" {
+  for_each = var.notebooks_to_upload
+  name     = each.value
+  source   = "${path.module}/${each.key}"
+  bucket   = "${local.dataproc_bucket}"
+  depends_on = [
+    time_sleep.sleep_after_creating_dpgce
+  ]
+}
+
 
