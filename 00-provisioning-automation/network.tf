@@ -32,7 +32,7 @@ module "create_vpc" {
 Create Firewall rules 
  *****************************************/
 
-resource "google_compute_firewall" "create_firewall_rule" {
+resource "google_compute_firewall" "create_firewall_rule_dpgce" {
   project   = local.project_id 
   name      = "allow-intra-snet-ingress-to-any"
   network   = local.vpc_nm
@@ -47,7 +47,20 @@ resource "google_compute_firewall" "create_firewall_rule" {
   ]
 }
 
-
+resource "google_compute_firewall" "create_firewall_rule_iap" {
+  project   = local.project_id 
+  name      = "allow-ingress-to-iap"
+  network   = local.vpc_nm
+  direction = "INGRESS"
+  source_ranges = [35.235.240.0/20]
+  allow {
+    protocol = "all"
+  }
+  description        = "Creates firewall rule to allow ingress from IAP on all ports, all protocols"
+  depends_on = [
+    module.create_vpc
+  ]
+}
 
 /*******************************************
 Introduce sleep to minimize errors from
@@ -57,7 +70,8 @@ resource "time_sleep" "sleep_after_creating_network_services" {
   create_duration = "120s"
   depends_on = [
     module.create_vpc,
-    google_compute_firewall.create_firewall_rule
+    google_compute_firewall.create_firewall_rule_dpgce,
+    google_compute_firewall.create_firewall_rule_iap
 
   ]
 }
