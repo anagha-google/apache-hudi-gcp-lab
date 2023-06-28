@@ -85,9 +85,9 @@ The transformations however are applied in Spark, the technology used to generat
 
 |  |  |
 | -- |:--- |
-| Total Trips | TBD |
-| Total Yellow Trips | TBD |
-| Total Green Trips | TBD |
+| Total Trips | 20,939,415 |
+| Total Yellow Trips | 16,972,211 |
+| Total Green Trips | 3,967,204 |
 
 <hr>
 
