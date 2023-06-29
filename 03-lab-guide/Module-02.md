@@ -106,6 +106,8 @@ The transformations however are applied in Spark, the technology used to generat
 
 ### 2.1. Navigate to Cloud Dataproc UI on the Cloud Console, review the processing cluster
 
+![README](../04-images/m02-01.png)   
+<br><br>
 
 ### 2.2. Review the source data in BigQuery in another tab of the Cloud Console
 Explore the data to be used in the lab. Run the queries below that showcase the transformations we will do to homogenize the schema across the two taxi types.<br>
