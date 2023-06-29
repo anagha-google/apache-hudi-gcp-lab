@@ -1,13 +1,13 @@
-# Module 2: Generate data for the lab
+# Module 2: Generate Parquet data for the lab
 
-In this module, we will generate data for the lab that we will persist in our data lake in Cloud Storage. We will generate two flavors of persistence formats - Parquet and Hudi to showcase performance variations WRT BigLake queries. 
+In this module and next, we will generate data for the lab that we will persist in our data lake in Cloud Storage. We will generate two flavors of persistence formats - Parquet and Hudi to showcase performance variations WRT BigLake queries. 
 
 To gently introduce capabilities in Dataproc for those new to it, we will run two flavors of Spark processing on Dataproc-
 1. Dataproc Jobs API: We will run a Spark Dataproc job from command line on a Dataproc cluster on Google Compute Engine to read from BigQuery (with the Apache Spark BigQuery connector) and write to Cloud Storage as Parquet,
 2. Dataproc Jupyter Notebooks: And to generate the Hudi dataset, we will use Spark in a Jupyter notebook on Dataproc to read the Parquet dataset in Cloud Storage (with the Apache Spark Cloud Storage connector) and persist to Cloud Storage in Hudi format. 
    
 **Lab Module Duration:** <br>
-60 minutes 
+30 minutes 
 
 **Prerequisite:** <br>
 Successful completion of prior module
@@ -76,12 +76,11 @@ The transformations however are applied in Spark, the technology used to generat
 | Hive partition scheme of target datasets |trip_year=YYYY/trip_month=XX/trip_day=XX/trip_hour=XX/trip_minute=XX|
 
 
-### 1.5. Parquet and Hudi datasets in Cloud Storage
+### 1.5. Cloud Storage location
 
 |  |  |
 | -- |:--- |
-| Cloud Storage Location - Parquet | gs://gaia-data-bucket-YOUR_PROJECT_NUMBER/nyc_taxi_trips/parquet|
-| Cloud Storage Location - Hudi | gs://gaia-data-bucket-YOUR_PROJECT_NUMBER/nyc_taxi_trips/hudi|
+| Cloud Storage Location - Parquet | gs://gaia-data-bucket-YOUR_PROJECT_NUMBER/nyc_taxi_trips-parquet|
 
 ### 1.6. Data stats
 
@@ -93,12 +92,6 @@ The transformations however are applied in Spark, the technology used to generat
 
 <hr>
 
-## 2. Data Generator Code
-
-|  |  |
-| -- |:--- |
-| PySpark to read from BigQuery and persist to Cloud Storge as Parquet  | [Script](../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_parquet.py) |
-| PySpark to read Parquet from Cloud Storage and persist to Cloud Storge as Hudi  | [Notebook](../02-notebooks/nyc_taxi_trips/nyc_taxi_hudi_data_generator.ipynb) |
 
 <hr>
 
@@ -303,17 +296,36 @@ gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet
 
 ### 5.4. Review the executing job in the Dataproc jobs UI on the Cloud Console
 
+![README](../04-images/m02-05.png)   
+<br><br>
+
+![README](../04-images/m02-06.png)   
+<br><br>
 
 ### 5.5. Review the results in Cloud Storage
 
+![README](../04-images/m02-07.png)   
+<br><br>
 
+![README](../04-images/m02-08.png)   
+<br><br>
+
+![README](../04-images/m02-09.png)   
+<br><br>
+
+![README](../04-images/m02-10.png)   
+<br><br>
+
+![README](../04-images/m02-11.png)   
+<br><br>
+
+![README](../04-images/m02-12.png)   
+<br><br>
 
 
 <hr>
 
-### 5.2. Generate data in Hudi off of the Parquet dataset in Cloud Storage
-
-Review the code and then run the Spark [notebook](../02-notebooks/nyc_taxi_trips/nyc_taxi_hudi_data_generator.ipynb) on Dataproc on GCE from Jupyter to generate data in Hudi off of the Parquet dataset in Cloud Storage.<br>
+This concludes the module. Please proceed to the [next module](Module-03.md).
 
 
 
