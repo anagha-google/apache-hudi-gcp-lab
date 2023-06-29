@@ -102,7 +102,132 @@ The transformations however are applied in Spark, the technology used to generat
 
 <hr>
 
-## 3. Generate data in Parquet off of the BigQuery public NYC Taxi dataset
+## 2. Generate data in Parquet off of the BigQuery public NYC Taxi dataset
+
+### 2.1. Navigate to Cloud Dataproc UI on the Cloud Console, review the processing cluster
+
+
+### 2.2. Review the source data in BigQuery in another tab of the Cloud Console
+Explore the data to be used in the lab. Run the queries below that showcase the transformations we will do to homogenize the schema across the two taxi types.<br>
+
+Query for Yellow Taxi Trips data-
+```
+SELECT
+    'yellow' AS taxi_type,
+    EXTRACT(year
+    FROM
+      pickup_datetime) AS trip_year,
+    EXTRACT(month
+    FROM
+      pickup_datetime) AS trip_month,
+    EXTRACT(day
+    FROM
+      pickup_datetime) AS trip_day,
+    EXTRACT(hour
+    FROM
+      pickup_datetime) AS trip_hour,
+    EXTRACT(minute
+    FROM
+      pickup_datetime) AS trip_minute,
+    vendor_id AS vendor_id,
+    pickup_datetime AS pickup_datetime,
+    dropoff_datetime AS dropoff_datetime,
+    store_and_fwd_flag AS store_and_forward,
+    Rate_Code AS rate_code,
+    pickup_location_id AS pickup_location_id,
+    dropoff_location_id AS dropoff_location_id,
+    Passenger_Count AS passenger_count,
+    trip_distance,
+    fare_amount,
+    imp_surcharge AS surcharge,
+    mta_tax AS mta_tax,
+    tip_amount,
+    tolls_amount,
+    CAST(NULL AS numeric) AS improvement_surcharge,
+    total_amount,
+    payment_type AS payment_type_code,
+    CAST(NULL AS numeric) AS congestion_surcharge,
+    CAST(NULL AS string) AS trip_type,
+    CAST(NULL AS numeric) AS ehail_fee,
+    DATE(pickup_datetime) AS partition_date,
+    CAST(NULL AS numeric) AS distance_between_service,
+    CAST(NULL AS integer) AS time_between_service
+  FROM
+    `bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_2022`
+  WHERE
+    EXTRACT(year
+    FROM
+      pickup_datetime)=2022
+  LIMIT
+    2
+```
+
+Query for Green Taxi Trips data-
+```
+SELECT
+  'green' AS taxi_type,
+  EXTRACT(year
+  FROM
+    pickup_datetime) AS trip_year,
+  EXTRACT(month
+  FROM
+    pickup_datetime) AS trip_month,
+  EXTRACT(day
+  FROM
+    pickup_datetime) AS trip_day,
+  EXTRACT(hour
+  FROM
+    pickup_datetime) AS trip_hour,
+  EXTRACT(minute
+  FROM
+    pickup_datetime) AS trip_minute,
+  vendor_id AS vendor_id,
+  pickup_datetime AS pickup_datetime,
+  dropoff_datetime AS dropoff_datetime,
+  store_and_fwd_flag AS store_and_forward,
+  Rate_Code AS rate_code,
+  pickup_location_id AS pickup_location_id,
+  dropoff_location_id AS dropoff_location_id,
+  Passenger_Count AS passenger_count,
+  trip_distance,
+  fare_amount,
+  imp_surcharge AS surcharge,
+  mta_tax,
+  tip_amount,
+  tolls_amount,
+  CAST(NULL AS numeric) AS improvement_surcharge,
+  total_amount,
+  payment_type AS payment_type_code,
+  CAST(NULL AS numeric) AS congestion_surcharge,
+  trip_type AS trip_type,
+  CAST(Ehail_Fee AS numeric) AS ehail_fee,
+  DATE(pickup_datetime) AS partition_date,
+  distance_between_service,
+  time_between_service
+FROM
+  `bigquery-public-data.new_york_taxi_trips.tlc_green_trips_2022`
+WHERE
+  EXTRACT(year
+  FROM
+    pickup_datetime)=2022
+LIMIT
+  2
+```
+
+### 2.3. Storage bucket we will persist data to
+
+
+### 2.4. Review the source code available locally
+
+|  |  |
+| -- |:--- |
+| PySpark to read from BigQuery and persist to Cloud Storge as Parquet  | [Script](../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_parquet.py) |
+
+### 2.5. Open an another Cloud Console tab and launch Cloud Shell
+
+
+
+### 2.6. Execute a Spark application in Cloud Shell - to read BigQuery table and persist as Parquet to Cloud Storage
 
 The commands below run the [Spark application](../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_parquet.py) on dataproc on GCE. This takes ~35 minutes to complete.<br>
 Paste the below in cloud shell-
@@ -128,6 +253,16 @@ gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet
 -- --projectID=$PROJECT_ID --peristencePath="$DATA_BUCKET_FQP" 
 
 ```
+
+### 2.7. Review the executing job in the Dataproc jobs UI on the Cloud Console
+
+
+### 2.8. Review the results in Cloud Storage
+
+
+
+
+<hr>
 
 ### 5.2. Generate data in Hudi off of the Parquet dataset in Cloud Storage
 
