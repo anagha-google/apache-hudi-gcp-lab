@@ -1,1 +1,1 @@
-# Module 4: Sync the Hudi metadata into BigQuery & work with the Hudi table with BigQuery SQL
+# Module 5: BigLake and metadata acceleration on Hudi tables
