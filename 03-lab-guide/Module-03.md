@@ -59,7 +59,7 @@ Number of files
 gsutil ls -r $DATA_BUCKET_PARQUET_FQP | wc -l
 ```
 
-Author's output: 127018
+Author's output: 127,018
 
 ### 1.3. The size of the data
 ```
@@ -87,10 +87,7 @@ Navigate to Jupyter on Dataproc and run ththe notebook nyc_taxi_hudi_data_genera
 <br><br>
 
 
-
 ## 4. Review the persisted data layout & details in Cloud Storage
-
-
 
 ### 4.1. The layout
 
@@ -103,34 +100,58 @@ DATA_BUCKET_HUDI_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi"
 
 
 # List some files to get a view of the hive paritioning scheme
-gsutil ls -r $DATA_BUCKET_HUDI_FQP | head -20
+gsutil ls -r $DATA_BUCKET_HUDI_FQP/ | head -10
 ```
 
 Author's output:
 ```
 INFORMATIONAL
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/trip_year=2019/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/trip_year=2020/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/trip_year=2021/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/trip_year=2022/
 ```
 
-### 4.2. The number of files
+### 4.2. The number of Hudi files
 
 Number of files
 ```
 gsutil ls -r $DATA_BUCKET_HUDI_FQP | wc -l
 ```
 
-Author's output: 127018
+Author's output: 
+7,341
+(versus 127,018 for Parquet format)
 
 ### 4.3. The size of the data
 ```
 gsutil du -sh $DATA_BUCKET_HUDI_FQP
 ```
 
-Author's output: 8.07 GiB
+Author's output: 
+1.26 GiB 
+(versus 8 GiB of Parquet
+
+### 4.4. The record count
+
+Hudi format:
++---------+----------+----------+
+||Hudi|Parquet |    
++---------+----------+----------+
+|trip_year|trip_count|trip_count|
++---------+----------+----------+
+|     2019|   8023712| |
+|     2020|   4179576| |
+|     2022|   4022129| |
+|     2021|   4713998| | 
++---------+----------+----------+
 
 ### 4.4. The metadata
 
 ```
-gsutil du -sh $DATA_BUCKET_HUDI_FQP
+gsutil ls -r $DATA_BUCKET_HUDI_FQP/.hoodie
 ```
 
 The author's output-
