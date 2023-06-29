@@ -11,14 +11,28 @@ Learn more about the tooling in the [Apache Hudi documentation](https://hudi.apa
 
 ### 1.2. Under the hood
 
+The sync tool syncs a Hudi table at a time, and requires running a Spark application. 
+Upon launching the app-
+1. It creates a manifest file reflecting the latest snapshot of the table, and persists the same in the .hoodie directory of the Hudi dataset.
+2. It creates two tables in BigQuery and one (virtual) BigQuery view
 
-### 1.3. What is takes to use thus tooling as it stands
+### 1.3. Querying the Hudi dataset in BigQuery
+To query the Hudi dataset, one must query the view.<br>
 
+### 1.4. Architectural considerations
+1. The manifest is point in time snapshot, therefore the view reflects point in time state of the Hudi dataset. Run the sync tool as frequently as you need to query fresh data
+2. The view is virtual and executes a join of two tables each time you run the query
+3. Deletion of underlying Hudi files will result in query failures
 
+### 1.5. What is takes to use the tooling as it stands
 
+1. Build Hudi from source (requires Java 8)
+2. Copy the same to cluster
+3. Run the Spark application that uses the BigQuerySyncTool
 
-### 1.4. What's coming in Dataproc
+### 1.6. What's coming in Dataproc
 
+The BigQuerySyncTool will be included as part of the base Dataproc image.
 <br>
 
 
