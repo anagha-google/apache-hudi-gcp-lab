@@ -246,7 +246,7 @@ LIMIT
 
 <hr>
 
-## 5. Generate Parquet data for thelab
+## 5. Generate Parquet data for the lab
 
 ### 5.1. Review the source code available locally
 
