@@ -267,7 +267,7 @@ LIMIT
 | -- |:--- |
 | PySpark to read from BigQuery and persist to Cloud Storge as Parquet  | [Script](../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_parquet.py) |
 
-
+<br><br>
 
 ### 5.2. Open an another Cloud Console tab and launch Cloud Shell
 
