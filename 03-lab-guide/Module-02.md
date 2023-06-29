@@ -2,7 +2,9 @@
 
 In this module, we will generate data for the lab that we will persist in our data lake in Cloud Storage. We will generate two flavors of persistence formats - Parquet and Hudi to showcase performance variations WRT BigLake queries. 
 
-To make this lab also gently introduce capabilities in Dataproc for those new to it, the lab includes running a Spark Dataproc job from command line to read from BigQuery (with the Apache Spark BigQuery connector) and write to Cloud Storage as Parquet, and to generate the Hudi dataset, we will use Spark in a Jupyter notebook on Dataproc to read the Parquet dataset in Cloud Storage (with the Apache Spark Cloud Storage connector) and persist to Cloud Storage in Hudi format. 
+To gently introduce capabilities in Dataproc for those new to it, we will run two flavors of Spark processing on Dataproc-
+1. Dataproc Jobs API: We will run a Spark Dataproc job from command line on a Dataproc cluster on Google Compute Engine to read from BigQuery (with the Apache Spark BigQuery connector) and write to Cloud Storage as Parquet,
+2. Dataproc Jupyter Notebooks: And to generate the Hudi dataset, we will use Spark in a Jupyter notebook on Dataproc to read the Parquet dataset in Cloud Storage (with the Apache Spark Cloud Storage connector) and persist to Cloud Storage in Hudi format. 
    
 **Lab Module Duration:** <br>
 60 minutes 
