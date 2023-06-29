@@ -109,6 +109,33 @@ The transformations however are applied in Spark, the technology used to generat
 ![README](../04-images/m02-01.png)   
 <br><br>
 
+Click on the cluster with the keyword 'dpgce' in the name-
+![README](../04-images/m02-01-a.png)   
+<br><br>
+
+Review the montioring tab-
+![README](../04-images/m02-01-b.png)   
+<br><br>
+
+Review the VM instances tab-
+![README](../04-images/m02-01-c.png)   
+<br><br>
+
+Review the cluster configuration tab-
+![README](../04-images/m02-01-d.png)   
+<br><br>
+
+Review the cluster web interfaces tab, click on the Jupyter link-
+![README](../04-images/m02-01-e.png)   
+<br><br>
+![README](../04-images/m02-01-f.png)   
+<br><br>
+![README](../04-images/m02-01-g.png)   
+<br><br>
+![README](../04-images/m02-01-h.png)   
+<br><br>
+
+
 ### 2.2. Review the source data in BigQuery in another tab of the Cloud Console
 Explore the data to be used in the lab. Run the queries below that showcase the transformations we will do to homogenize the schema across the two taxi types.<br>
 
