@@ -102,7 +102,7 @@ The transformations however are applied in Spark, the technology used to generat
 
 <hr>
 
-## 2. Generate data in Parquet off of the BigQuery public NYC Taxi dataset
+## 2. Familiarize yourself with the Dataproc cluster created as part of proviosioning automation
 
 ### 2.1. Navigate to Cloud Dataproc UI on the Cloud Console, review the processing cluster
 
@@ -135,8 +135,12 @@ Review the cluster web interfaces tab, click on the Jupyter link-
 ![README](../04-images/m02-01-h.png)   
 <br><br>
 
+<hr>
 
-### 2.2. Review the source data in BigQuery in another tab of the Cloud Console
+## 3. Familiarize yourself with the source data in the BigQuery public datasets for NYC Taxi trips
+
+### 3.1.Explore yellow taxi trips
+Review the source data in BigQuery in another tab of the Cloud Console<br>
 Explore the data to be used in the lab. Run the queries below that showcase the transformations we will do to homogenize the schema across the two taxi types.<br>
 
 Query for Yellow Taxi Trips data-
@@ -190,7 +194,7 @@ SELECT
   LIMIT
     2
 ```
-
+### 3.2. Explore green taxi trips
 Query for Green Taxi Trips data-
 ```
 SELECT
@@ -243,20 +247,34 @@ LIMIT
   2
 ```
 
-### 2.3. Storage bucket we will persist data to
+![README](../04-images/m02-03.png)   
+<br><br>
 
+<hr>
 
-### 2.4. Review the source code available locally
+## 4. Review the Cloud Storage bucket we will persist data to
+
+![README](../04-images/m02-02.png)   
+<br><br>
+
+<hr>
+
+## 5. Generate Parquet data for thelab
+
+### 5.1. Review the source code available locally
 
 |  |  |
 | -- |:--- |
 | PySpark to read from BigQuery and persist to Cloud Storge as Parquet  | [Script](../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_parquet.py) |
 
-### 2.5. Open an another Cloud Console tab and launch Cloud Shell
+<br><br>
 
+### 5.2. Open an another Cloud Console tab and launch Cloud Shell
 
+![README](../04-images/m02-04.png)   
+<br><br>
 
-### 2.6. Execute a Spark application in Cloud Shell - to read BigQuery table and persist as Parquet to Cloud Storage
+### 5.3. Execute the Spark application in Cloud Shell - to read BigQuery table and persist as Parquet to Cloud Storage
 
 The commands below run the [Spark application](../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_parquet.py) on dataproc on GCE. This takes ~35 minutes to complete.<br>
 Paste the below in cloud shell-
@@ -267,7 +285,7 @@ PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d'
 UMSA_FQN="gaia-lab-sa@$PROJECT_ID.iam.gserviceaccount.com"
 DPGCE_CLUSTER_NM="gaia-dpgce-cpu-$PROJECT_NBR"
 CODE_BUCKET="gs://gaia_code_bucket-$PROJECT_NBR/pyspark/nyc_taxi_trips"
-DATA_BUCKET_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips/parquet-base"
+DATA_BUCKET_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-parquet"
 DATAPROC_LOCATION="us-central1"
 
 # Delete any data from a prior run
@@ -283,10 +301,10 @@ gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet
 
 ```
 
-### 2.7. Review the executing job in the Dataproc jobs UI on the Cloud Console
+### 5.4. Review the executing job in the Dataproc jobs UI on the Cloud Console
 
 
-### 2.8. Review the results in Cloud Storage
+### 5.5. Review the results in Cloud Storage
 
 
 
