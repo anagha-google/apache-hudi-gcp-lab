@@ -29,6 +29,8 @@ DATA_BUCKET_PARQUET_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-parqu
 gsutil ls -r $DATA_BUCKET_PARQUET_FQP | head -20
 ```
 Author's output:
+```
+INFORMATIONAL
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/:
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/_SUCCESS
@@ -49,6 +51,7 @@ gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_year=2019/trip_mo
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_year=2019/trip_month=1/trip_day=1/part-00005-7c5db3b2-8584-458f-a1df-471740bd4750.c000.snappy.parquet
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_year=2019/trip_month=1/trip_day=1/part-00006-7c5db3b2-8584-458f-a1df-471740bd4750.c000.snappy.parquet
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_year=2019/trip_month=1/trip_day=1/part-00007-7c5db3b2-8584-458f-a1df-471740bd4750.c000.snappy.parquet
+```
 
 ### 1.2. The number of files
 Number of files
