@@ -153,7 +153,7 @@ Hudi format:
 We will learn about the disparity in module 8<br>
 ```
 
-### 4.4. The metadata
+### 4.5. The metadata
 
 ```
 gsutil ls -r $DATA_BUCKET_HUDI_FQP/.hoodie
@@ -235,4 +235,6 @@ gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/files/.h
 ```
 
 <hr>
+
+This concludes module 3, please proceed to the [next module](Module-04.md).
 
