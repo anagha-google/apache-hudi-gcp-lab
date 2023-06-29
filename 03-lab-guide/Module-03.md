@@ -135,7 +135,7 @@ Author's output:
 (versus 8 GiB of Parquet
 
 ### 4.4. The record count
-
+```
 Hudi format:
 +---------+----------+----------+
 ||Hudi|Parquet |    
@@ -147,6 +147,8 @@ Hudi format:
 |     2022|   4022129| |
 |     2021|   4713998| | 
 +---------+----------+----------+
+
+```
 
 ### 4.4. The metadata
 
