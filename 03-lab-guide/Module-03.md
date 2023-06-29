@@ -1,4 +1,4 @@
-# Module 4: Create BigQuery external tables on Hudi datasets in your data lake
+# Module 3: Create BigQuery external tables on Hudi datasets in your data lake
 
 This lab module introduces Apache Hudi tooling for integrating Hudi tables in a data lake on Cloud Storage into BigQuery as external tables.
 
