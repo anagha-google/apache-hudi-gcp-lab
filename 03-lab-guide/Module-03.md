@@ -72,7 +72,7 @@ Author's output: 8.07 GiB
 
 ## 3. Generate a Hudi (CoW) dataset in Cloud Storage
 
-Navigate to Jupyter on Dataproc and run ththe notebook nyc_taxi_hudi_data_generator.ipynb as shown below-
+Navigate to Jupyter on Dataproc and run the notebook nyc_taxi_hudi_data_generator.ipynb as shown below-
 
 ![README](../04-images/m03-01.png)   
 <br><br>
