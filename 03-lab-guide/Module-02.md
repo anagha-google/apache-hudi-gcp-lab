@@ -69,20 +69,14 @@ root
 The transformations done are captured in SQL format [here](../01-scirpts/bqsql/export_taxi_trips.sql).
 The transformations however are applied in Spark, the technology used to generate the BigLake lab base datasets in Parquet and Hudi formats. 
 
-### 1.4. Hive Parition Scheme
 
-|  |  |
-| -- |:--- |
-| Hive partition scheme of target datasets |trip_year=YYYY/trip_month=XX/trip_day=XX/trip_hour=XX/trip_minute=XX|
-
-
-### 1.5. Cloud Storage location
+### 1.4. Cloud Storage location
 
 |  |  |
 | -- |:--- |
 | Cloud Storage Location - Parquet | gs://gaia-data-bucket-YOUR_PROJECT_NUMBER/nyc_taxi_trips-parquet|
 
-### 1.6. Data stats
+### 1.5. Data stats
 
 |  |  |
 | -- |:--- |
@@ -292,6 +286,11 @@ gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet
 --project $PROJECT_ID \
 -- --projectID=$PROJECT_ID --peristencePath="$DATA_BUCKET_FQP" 
 
+```
+
+The application will persist yellow and green taxi trips data in a canonical schema to Cloud Storage as parquet with the Hive partitioning scheme as follows-
+```
+trip_year=YYYY/trip_month=MM/trip_day=DD
 ```
 
 ### 5.4. Review the executing job in the Dataproc jobs UI on the Cloud Console
