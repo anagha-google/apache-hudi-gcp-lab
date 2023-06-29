@@ -74,3 +74,69 @@ Author's output: 8.07 GiB
 
 Navigate to Jupyter on Dataproc and run ththe notebook nyc_taxi_hudi_data_generator.ipynb as shown below-
 
+![README](../04-images/m03-01.png)   
+<br><br>
+
+![README](../04-images/m03-02.png)   
+<br><br>
+
+![README](../04-images/m03-03.png)   
+<br><br>
+
+![README](../04-images/m03-04.png)   
+<br><br>
+
+
+
+## 4. Review the persisted data layout & details in Cloud Storage
+
+
+
+### 4.1. The layout
+
+Run this in Cloud Shell-
+```
+# Variables
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+DATA_BUCKET_HUDI_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi"
+
+
+# List some files to get a view of the hive paritioning scheme
+gsutil ls -r $DATA_BUCKET_HUDI_FQP | head -20
+```
+
+Author's output:
+```
+INFORMATIONAL
+```
+
+### 4.2. The number of files
+
+Number of files
+```
+gsutil ls -r $DATA_BUCKET_HUDI_FQP | wc -l
+```
+
+Author's output: 127018
+
+### 4.3. The size of the data
+```
+gsutil du -sh $DATA_BUCKET_HUDI_FQP
+```
+
+Author's output: 8.07 GiB
+
+### 4.4. The metadata
+
+```
+gsutil du -sh $DATA_BUCKET_HUDI_FQP
+```
+
+The author's output-
+```
+
+```
+
+<hr>
+
