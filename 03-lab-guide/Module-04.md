@@ -290,6 +290,16 @@ This requires running the BigQuerySyncTool to update the manifest. Once this man
 
 1. If underlying data in the Hudi table is deleted, the BigQuery queries against the snapshot fail.
 
+2. 
+
+<hr>
+
+## 13. Best practices
+
+1. Avoid connecting to the master node and running the utility, prefer using the Dataproc jobs API instead. This will be much easier when the default image includes hudi in totality.
+2. Prefer Biglake tables for query acceleration, and fine grained access control - row and column level and including masking
+
+
 <hr>
 
 This concludes the module.
