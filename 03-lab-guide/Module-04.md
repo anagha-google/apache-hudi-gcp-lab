@@ -138,7 +138,9 @@ hudi/packaging/hudi-gcp-bundle/target/hudi-gcp-bundle-0.14.0-SNAPSHOT.jar \
 --source-uri gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi/trip_year=*  \
 --source-uri-prefix gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi/ \
 --base-path gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi/ \
---partitioned-by trip_year,trip_month,trip_year
+--partitioned-by trip_year,trip_month,trip_year \
+--use-bq-manifest-file
+
 ```
 
 Author's output-
