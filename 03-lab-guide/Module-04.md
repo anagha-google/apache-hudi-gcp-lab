@@ -102,7 +102,7 @@ echo spark.executor.extraClassPath=$HUDI_PATH >> gaia_hudi_conf
 
 This created a properties file to which we appended Hudi libraries to the Spark driver and executor extraClassPath.
 
-## 7. Run the BQ SyncTool utility on the master node of the cluster
+## 7. Run the BigQuerySyncTool  on the master node of the cluster
 
 
 ```
@@ -123,6 +123,40 @@ hudi/packaging/hudi-gcp-bundle/target/hudi-gcp-bundle-0.14.0-SNAPSHOT.jar \
 --source-uri-prefix gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi/ \
 --base-path gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi/ \
 --partitioned-by trip_year,trip_month,trip_year
+```
+
+Author's output-
+```
+INFORMATIONAL
+.....
+23/06/30 03:48:43 INFO HoodieBigQuerySyncClient: Manifest External table created.
+23/06/30 03:48:43 INFO BigQuerySyncTool: Manifest table creation complete for nyc_taxi_trips_hudi_manifest
+23/06/30 03:48:44 INFO HoodieBigQuerySyncClient: External table created using hivepartitioningoptions
+23/06/30 03:48:44 INFO BigQuerySyncTool: Versions table creation complete for nyc_taxi_trips_hudi_versions
+23/06/30 03:48:44 INFO HoodieBigQuerySyncClient: View created successfully
+23/06/30 03:48:44 INFO BigQuerySyncTool: Snapshot view creation complete for nyc_taxi_trips_hudi
+23/06/30 03:48:44 INFO BigQuerySyncTool: Sync table complete for nyc_taxi_trips_hudi
+```
+
+## 8. The Hudi manifest file
+
+A manifest file called latest-snapshot.csv gets created in the .hoodie directory of the Hudi dataset in Cloud Storage in a folder called manifest. It merely has a listing of all the files in the latest Hudi snapshot.<br>
+
+Run this on Cloud Shell-
+
+```
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+HUDI_DATA_LOCATION=gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi
+
+gsutil cat $HUDI_DATA_LOCATION/.hoodie/manifest/latest-snapshot.csv | head -2 
+```
+
+Author's output-
+```
+INFORMATIONAL
+566cad29-f485-4cdb-8474-015f55728f98-0_1158-95-23078_20230629171034889.parquet
+69fcb2aa-17df-45e3-a352-5831d2c55e78-0_1159-95-23079_20230629171034889.parquet
 ```
 
 <br>
