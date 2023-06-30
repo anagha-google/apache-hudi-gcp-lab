@@ -27,7 +27,7 @@ To query the Hudi dataset, one must query the view.<br>
 ### 1.5. What is takes to use the tooling as it stands
 
 1. Build Hudi from source (requires Java 8)
-2. Copy the same to cluster
+2. Copy/scp the same to cluster
 3. Run the Spark application that uses the BigQuerySyncTool
 
 ### 1.6. What's coming in Dataproc
@@ -35,7 +35,94 @@ To query the Hudi dataset, one must query the view.<br>
 The BigQuerySyncTool will be included as part of the base Dataproc image.
 <br>
 
+<hr>
 
-## 2. The lab
+
+## 2. Building Hudi from source
+
+### 2.1. Prerequisite
+
+Java 8 and Maven
+
+### 2.2. Steps to build from source 
+
+```
+# ........................................................
+# Clone Apache Hudi locally
+git clone https://github.com/apache/hudi
+
+# ........................................................
+# Build from source
+cd hudi
+mvn clean package -DskipTests -Dspark3.3 -Dscala-2.12
+
+# ........................................................
+# Compress Hudi
+cd ..
+tar -cvzf hudi.tgz hudi
+```
+
+<hr>
+
+## 3. scp the tarball to the cluster
+
+Run the command to scp to the cluster
+
+```
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+
+gcloud compute scp hudi.tgz --zone "us-central1-a" gaia-dpgce-cpu-$PROJECT_NBR-m:~/ --tunnel-through-iap --project "apache-hudi-lab"
+
+```
+
+<hr>
+
+## 4. SSH to the cluster master node
+### C
+
+
+## 5. Uncompress the Hudi tarball on the master node of the cluster
+
+While logged into the master node on Dataproc, uncompress the Hudi tarball.
+
+```
+tar -xvzf hudi.tgz
+```
+
+## 6. Create a properties file on the master node of the cluster
+
+Run this on the master node-
+```
+cp /etc/spark/conf/spark-defaults.conf gaia_hudi_conf
+HUDI_PATH=~/hudi/*
+echo spark.driver.extraClassPath=$HUDI_PATH >> gaia_hudi_conf
+echo spark.executor.extraClassPath=$HUDI_PATH >> gaia_hudi_conf
+```
+
+This created a properties file to which we appended Hudi libraries to the Spark driver and executor extraClassPath.
+
+## 7. Run the BQ SyncTool utility on the master node of the cluster
+
+
+```
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+LOCATION=us-central1
+
+spark-submit --master yarn \
+--properties-file gaia_hudi_conf \
+--packages com.google.cloud:google-cloud-bigquery:2.10.4  \
+--class org.apache.hudi.gcp.bigquery.BigQuerySyncTool  \
+hudi/packaging/hudi-gcp-bundle/target/hudi-gcp-bundle-0.14.0-SNAPSHOT.jar \
+--project-id $PROJECT_ID \
+--dataset-name gaia_product_ds \
+--dataset-location $LOCATION \
+--table nyc_taxi_trips_hudi \
+--source-uri gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi/trip_year=*  \
+--source-uri-prefix gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi/ \
+--base-path gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi/ \
+--partitioned-by trip_year,trip_month,trip_year
+```
 
 <br>
