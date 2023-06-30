@@ -170,6 +170,7 @@ INFORMATIONAL
 
 ## 9. Entities created by BigQuerySyncTool in BigQuery
 
+### 9.1. List the entities created by the sync tool
 The following lists the entities created in BigQuery-
 ```
 bq ls \
@@ -190,4 +191,79 @@ INFORMATIONAL
 | nyc_taxi_trips_hudi_versions | EXTERNAL |        |                   |                  |
 +------------------------------+----------+--------+-------------------+------------------+
 ```
-<br>
+<hr>
+
+### 9.2. The hudi manifest table in BigQuery
+
+Run this query in the BigQuery UI and study the DDL- 
+```
+SELECT ddl FROM gaia_product_ds.INFORMATION_SCHEMA.TABLES WHERE table_name="nyc_taxi_trips_hudi_manifest"
+```
+
+Author's output-
+```
+THIS IS JUST FYI...
+
+CREATE EXTERNAL TABLE `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_manifest`
+(filename STRING)
+OPTIONS(
+	format "CSV\",
+	uris [\"gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/manifest/*\"]
+```
+
+### 9.3. The hudi version table in BigQuery
+
+Run this query in the BigQuery UI and study the DDL- 
+```
+SELECT ddl FROM gaia_product_ds.INFORMATION_SCHEMA.TABLES WHERE table_name="nyc_taxi_trips_hudi_versions"
+```
+
+Author's output-
+```
+THIS IS JUST FYI...
+
+CREATE EXTERNAL TABLE `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_versions`
+WITH PARTITION COLUMNS
+OPTIONS(
+ignore_unknown_values true,
+format "PARQUET",
+hive_partition_uri_prefix "gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/\",
+uris [\"gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/trip_year\"]
+```
+
+### 9.4. The hudi view in BigQuery
+
+Run this query in the BigQuery UI and study the DDL- 
+```
+SELECT view_definition FROM gaia_product_ds.INFORMATION_SCHEMA.VIEWS WHERE table_schema='gaia_product_ds' and table_name="nyc_taxi_trips_hudi"
+```
+Author's output-
+```
+THIS IS JUST FYI...
+
+SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_versions` 
+WHERE _hoodie_file_name IN 
+(SELECT filename FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_manifest`)
+```
+
+Effectively every time we want to query the table, a join is executed against the two tables to determine data scope.
+
+## 10. Query the view
+
+Run this query in the BigQuery UI
+
+```
+SELECT
+  taxi_type,
+  SUM(total_amount) AS total_revenue
+FROM
+  gaia_product_ds.nyc_taxi_trips_hudi
+WHERE
+  trip_year=2021
+  AND trip_month=1
+  AND trip_day=31
+GROUP BY
+  taxi_type
+```
+
+This concludes the module.
