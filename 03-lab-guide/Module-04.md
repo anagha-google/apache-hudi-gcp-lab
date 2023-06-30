@@ -79,8 +79,18 @@ gcloud compute scp hudi.tgz --zone "us-central1-a" gaia-dpgce-cpu-$PROJECT_NBR-m
 <hr>
 
 ## 4. SSH to the cluster master node
-### C
 
+![README](../04-images/m04-01.png)   
+<br><br>
+
+![README](../04-images/m04-02.png)   
+<br><br>
+
+![README](../04-images/m04-03.png)   
+<br><br>
+
+![README](../04-images/m04-04.png)   
+<br><br>
 
 <hr>
 
