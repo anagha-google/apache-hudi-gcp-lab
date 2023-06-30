@@ -150,7 +150,7 @@ Hudi format:
 |     2022| 4,022,129| 31,972,637|
 |     2021| 4,713,998| 37,023,925| 
 +---------+----------+-----------+
-We will learn about the disparity in module 8<br>
+We will learn about the disparity in module 8
 ```
 
 ### 4.5. The metadata
