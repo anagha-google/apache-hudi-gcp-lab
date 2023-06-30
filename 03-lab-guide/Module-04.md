@@ -248,7 +248,9 @@ WHERE _hoodie_file_name IN
 
 Effectively every time we want to query the table, a join is executed against the two tables to determine data scope.
 
-## 10. Query the view
+<hr>
+
+## 10. Query the view & review the results
 
 Run this query in the BigQuery UI
 
@@ -265,5 +267,19 @@ WHERE
 GROUP BY
   taxi_type
 ```
+<hr>
+
+## 11. Querying fresh data
+
+This requires running the BigQuerySyncTool to update the manifest. Once this manifest is updated, the queries will run against the latest snapshot of the data.
+
+
+<hr>
+
+## 12. Known issues
+
+1. If underlying data in the Hudi table is deleted, the BigQuery queries against the snapshot fail.
+
+<hr>
 
 This concludes the module.
