@@ -179,8 +179,9 @@ $PROJECT_ID:gaia_product_ds
 ```
 
 Author's output-
-INFORMATUIOAL
+
 ```
+INFORMATIONAL
 +------------------------------+----------+--------+-------------------+------------------+
 |           tableId            |   Type   | Labels | Time Partitioning | Clustered Fields |
 +------------------------------+----------+--------+-------------------+------------------+
@@ -188,6 +189,5 @@ INFORMATUIOAL
 | nyc_taxi_trips_hudi_manifest | EXTERNAL |        |                   |                  |
 | nyc_taxi_trips_hudi_versions | EXTERNAL |        |                   |                  |
 +------------------------------+----------+--------+-------------------+------------------+
-
 ```
 <br>
