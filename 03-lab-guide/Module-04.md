@@ -82,6 +82,8 @@ gcloud compute scp hudi.tgz --zone "us-central1-a" gaia-dpgce-cpu-$PROJECT_NBR-m
 ### C
 
 
+<hr>
+
 ## 5. Uncompress the Hudi tarball on the master node of the cluster
 
 While logged into the master node on Dataproc, uncompress the Hudi tarball.
@@ -89,6 +91,8 @@ While logged into the master node on Dataproc, uncompress the Hudi tarball.
 ```
 tar -xvzf hudi.tgz
 ```
+
+<hr>
 
 ## 6. Create a properties file on the master node of the cluster
 
@@ -101,6 +105,8 @@ echo spark.executor.extraClassPath=$HUDI_PATH >> gaia_hudi_conf
 ```
 
 This created a properties file to which we appended Hudi libraries to the Spark driver and executor extraClassPath.
+
+<hr>
 
 ## 7. Run the BigQuerySyncTool  on the master node of the cluster
 
@@ -138,6 +144,8 @@ INFORMATIONAL
 23/06/30 03:48:44 INFO BigQuerySyncTool: Sync table complete for nyc_taxi_trips_hudi
 ```
 
+<hr>
+
 ## 8. The Hudi manifest file
 
 A manifest file called latest-snapshot.csv gets created in the .hoodie directory of the Hudi dataset in Cloud Storage in a folder called manifest. It merely has a listing of all the files in the latest Hudi snapshot.<br>
@@ -158,5 +166,28 @@ INFORMATIONAL
 566cad29-f485-4cdb-8474-015f55728f98-0_1158-95-23078_20230629171034889.parquet
 69fcb2aa-17df-45e3-a352-5831d2c55e78-0_1159-95-23079_20230629171034889.parquet
 ```
+<hr>
 
+## 9. Entities created by BigQuerySyncTool in BigQuery
+
+The following lists the entities created in BigQuery-
+```
+bq ls \
+--format=pretty \
+--max_results 10 \
+$PROJECT_ID:gaia_product_ds
+```
+
+Author's output-
+INFORMATUIOAL
+```
++------------------------------+----------+--------+-------------------+------------------+
+|           tableId            |   Type   | Labels | Time Partitioning | Clustered Fields |
++------------------------------+----------+--------+-------------------+------------------+
+| nyc_taxi_trips_hudi          | VIEW     |        |                   |                  |
+| nyc_taxi_trips_hudi_manifest | EXTERNAL |        |                   |                  |
+| nyc_taxi_trips_hudi_versions | EXTERNAL |        |                   |                  |
++------------------------------+----------+--------+-------------------+------------------+
+
+```
 <br>
