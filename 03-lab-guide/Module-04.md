@@ -288,9 +288,10 @@ This requires running the BigQuerySyncTool to update the manifest. Once this man
 
 ## 12. Known issues
 
-1. If underlying data in the Hudi table is deleted, the BigQuery queries against the snapshot fail.
+1. Consistency: If underlying data in the Hudi table is deleted, the BigQuery queries against the snapshot fail.
+2. Performance: The queries are not optimized and are slo a
+3. Cost: Slot consumption is higher due to larger data scans
 
-2. 
 
 <hr>
 
