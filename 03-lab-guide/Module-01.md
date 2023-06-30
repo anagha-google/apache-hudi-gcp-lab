@@ -1,23 +1,19 @@
 # Module 1: Provisioning automation
 
-In this module, you will get started with Terraform. We will enable requisite Google APIs and optionally update Organization policies. 
+In this module, you will provision the services needed for the lab.  
 
-1. You will create a project manually
-2. Clone the lab Git repo
-3. Configure your preferences for the lab
-4. Run Terraform init
-5. Run Terraform plan and review the same
-6. Run Terraform apply and watch for completion
-
+1. You will clone the lab git repo
+2. Then configure your preferences for the lab
+3. And run terraform for provisioning
    
 **Lab Module Duration:** <br>
 ~45-55 minutes 
 
 **Prerequisite:** <br>
-Create a new project manually for this lab. 
+Create a new project manually for this lab. You need to be the owner. 
 
 ## 1. Clone the repo
-Run this on Cloud Shell scoped to the new project you created for the lab.
+Run this on Cloud Shell scoped to the project you created for the lab.
 ```
 cd ~
 git clone https://github.com/anagha-google/apache-hudi-gcp-lab.git
@@ -35,6 +31,7 @@ THIS IS FYI - DO NOT EXECUTE
          01-scripts
          02-notebooks
          03-lab-guide
+         04-images
          README.md
 ```
 Explore the repo really quick.
@@ -52,8 +49,8 @@ THIS IS FYI - DO NOT EXECUTE
 ├── dpgce.tf
 ├── dpms.tf
 ├── iam.tf
-├── main.tf
-├── module_apis_and_policies <--- And then run terraform apply in this directory to enable Google APIs and update Org policies
+├── main.tf <--- And then run terraform apply 
+├── module_apis_and_policies <--- This module enables Google APIs and updates org policies and is the first thing that runs
 │   ├── main.tf
 │   └── variables.tf
 ├── network.tf
@@ -112,7 +109,7 @@ update_org_policies_bool = "true"
 ```
 
 **Note:** <br>
-The boolean for updating the org policies is in the terraform.tfvars. Google Customer engineers **need to** update org policies (default=true) in their designated environments, but this is not applicable for everyone. Set the boolean to false in the tfvars file if you dont need to org policies in your environment.<br>
+The boolean for updating the org policies is in the terraform.tfvars. Google Customer engineers **need to** update org policies (default=true) in their designated environments, but this is not applicable for everyone. Set the boolean to false in the tfvars file if you dont need to update the org policies in your environment.<br>
 
 <hr>
 
@@ -172,7 +169,7 @@ cd ~/apache-hudi-gcp-lab/00-provisioning-automation/
 terraform apply --auto-approve >> provisioning.log
 ```
 
-This will take approximately 45 minutes to run and complete. At the end of this , all services needed for this will be provisioned in your project, code copied over, all permissioning will be complete.
+Tail the log if you wish to in a separate tab of Cloud Shell to monitor to completion. This will take approximately 45 minutes to run and complete. At the end of this , all services needed for this will be provisioned in your project, code copied over, all permissioning will be complete.
 
 <hr> 
 
