@@ -38,11 +38,14 @@ echo $DDL
 
 
 
-### 1.3. Query the Hudi snapshot table from BigQuery UI
+### 1.3. Query the Hudi snapshot BigLake table from BigQuery UI
 
 
 
-### 1.4. Query the Hudi snapshot table via Apache Spark
+### 1.4. Query the Hudi snapshot BigLake table via Apache Spark
 
 
+### 1.5. Run the same query against the Hudi snapshot (plain old) BigQuery (not BigLake) external table
 
+
+### 1.6. Review performance benefits of BigLake
