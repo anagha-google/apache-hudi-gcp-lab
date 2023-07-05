@@ -99,6 +99,7 @@ gcloud compute scp hudi.tgz --zone "us-central1-a" gaia-dpgce-cpu-$PROJECT_NBR-m
 While logged into the master node on Dataproc, uncompress the Hudi tarball.
 
 ```
+cd ~
 tar -xvzf hudi.tgz
 ```
 
@@ -108,6 +109,7 @@ tar -xvzf hudi.tgz
 
 Run this on the master node-
 ```
+cd ~
 cp /etc/spark/conf/spark-defaults.conf gaia_hudi_conf
 HUDI_PATH=~/hudi/*
 echo spark.driver.extraClassPath=$HUDI_PATH >> gaia_hudi_conf
@@ -125,6 +127,8 @@ This created a properties file to which we appended Hudi libraries to the Spark 
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
 PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
 LOCATION=us-central1
+
+cd ~
 
 spark-submit --master yarn \
 --properties-file gaia_hudi_conf \
