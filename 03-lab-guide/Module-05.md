@@ -19,6 +19,9 @@ As part of your data engineering pipelines, run the BigQuerySyncTool to provide 
 
 ## 1. Create a BigLake table definition over the Hudi snapshot parquet & manifest in GCS
 
+### 1.1. Generate a SQL for the DDL command to be executed in BigQuery UI
+
+Run this in Cloud Shell-
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
 PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
@@ -29,7 +32,17 @@ MANIFEST_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi/.hoodie/man
 DDL="CREATE OR REPLACE EXTERNAL TABLE gaia_product_ds.nyc_taxi_trips_hudi WITH PARTITION COLUMNS (trip_year string,trip_month string, trip_day string) WITH CONNECTION gaia_product_ds.$BQ_CONNECTION_NM OPTIONS(uris=[\"$MANIFEST_FQP\"], format=\"PARQUET\",file_set_spec_type=\"NEW_LINE_DELIMITED_MANIFEST\",metadata_cache_mode=\"AUTOMATIC\",max_staleness=INTERVAL '1' DAY );"
 echo $DDL
 
-````
+```
+
+### 1.2. Run the DDL from the previous step in BigQuery UI
+
+
+
+### 1.3. Query the Hudi snapshot table from BigQuery UI
+
+
+
+### 1.4. Query the Hudi snapshot table via Apache Spark
 
 
 
