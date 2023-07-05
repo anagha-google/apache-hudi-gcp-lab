@@ -1,4 +1,4 @@
-# Module 5: BigLake external tables with metadata acceleration on Hudi datasets
+# Module 5: BigLake external tables on Hudi snapshots
 
 ## BigLake in a nutshell
 BigLake is feature that provides the following capabilities-
