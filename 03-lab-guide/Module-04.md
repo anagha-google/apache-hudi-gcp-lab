@@ -25,10 +25,12 @@ Upon launching the app-
 2. It creates an external table in BigQuery
 
 ### 1.3. Querying the Hudi dataset in BigQuery
-To query the Hudi dataset, one must query the external table.<br>
+To query the Hudi dataset, one must query the external table. Its important to understand the architectural considerations.<br>
 
 ### 1.4. Architectural considerations
-The manifest is a "point in time" snapshot, therefore the view reflects point in time state of the Hudi dataset. Run the sync tool as frequently as you need to query fresh data
+1. The manifest is a "point in time" snapshot, therefore the view reflects point in time state of the Hudi dataset.
+2. Run the sync tool as frequently as you need to query fresh data
+3. The data in BigQuery if updated, will not sync (back) with the Hudi dataset in Cloud Storage.
 
 ### 1.5. What is takes to use the tooling as it stands
 
