@@ -145,10 +145,10 @@ hudi/packaging/hudi-gcp-bundle/target/hudi-gcp-bundle-0.14.0-SNAPSHOT.jar \
 --project-id $PROJECT_ID \
 --dataset-name gaia_product_ds \
 --dataset-location $LOCATION \
---table nyc_taxi_trips_hudi \
---source-uri gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi/trip_year=*  \
---source-uri-prefix gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi/ \
---base-path gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi/ \
+--table nyc_taxi_hudi_bq \
+--source-uri gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/trip_year=*  \
+--source-uri-prefix gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/ \
+--base-path gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/ \
 --partitioned-by trip_year,trip_month,trip_year \
 --use-bq-manifest-file
 
@@ -158,13 +158,12 @@ Author's output-
 ```
 INFORMATIONAL
 .....
-23/06/30 03:48:43 INFO HoodieBigQuerySyncClient: Manifest External table created.
-23/06/30 03:48:43 INFO BigQuerySyncTool: Manifest table creation complete for nyc_taxi_trips_hudi_manifest
-23/06/30 03:48:44 INFO HoodieBigQuerySyncClient: External table created using hivepartitioningoptions
-23/06/30 03:48:44 INFO BigQuerySyncTool: Versions table creation complete for nyc_taxi_trips_hudi_versions
-23/06/30 03:48:44 INFO HoodieBigQuerySyncClient: View created successfully
-23/06/30 03:48:44 INFO BigQuerySyncTool: Snapshot view creation complete for nyc_taxi_trips_hudi
-23/06/30 03:48:44 INFO BigQuerySyncTool: Sync table complete for nyc_taxi_trips_hudi
+...
+23/07/10 20:50:36 INFO AbstractTableFileSystemView: Building file system view for partition (trip_year=2020/trip_month=12/trip_day=16)
+23/07/10 20:50:36 INFO ManifestFileWriter: Writing base file names to manifest file: 2004
+23/07/10 20:50:38 INFO HoodieBigQuerySyncClient: External table created using manifest file.
+23/07/10 20:50:38 INFO BigQuerySyncTool: Completed table nyc_taxi_hudi_bq creation using the manifest file
+23/07/10 20:50:38 INFO BigQuerySyncTool: Sync table complete for nyc_taxi_hudi_bq
 ```
 
 <hr>
@@ -178,16 +177,17 @@ Run this on Cloud Shell-
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
 PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
-HUDI_DATA_LOCATION=gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi
+HUDI_DATA_LOCATION=gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow
 
-gsutil cat $HUDI_DATA_LOCATION/.hoodie/manifest/latest-snapshot.csv | head -2 
+gsutil cat $HUDI_DATA_LOCATION/.hoodie/absolute-path-manifest/latest-snapshot.csv | head -2 
 ```
 
 Author's output-
 ```
 INFORMATIONAL
-566cad29-f485-4cdb-8474-015f55728f98-0_1158-95-23078_20230629171034889.parquet
-69fcb2aa-17df-45e3-a352-5831d2c55e78-0_1159-95-23079_20230629171034889.parquet
+....
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2019/trip_month=1/trip_day=1/a4db9264-cb81-4669-a27a-d671d14a0195-0_155-28-4482_20230710174218046.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2019/trip_month=1/trip_day=1/d2f6bd7f-976f-45c1-a86f-8a7c5747ea6f-0_156-28-4483_20230710174218046.parquet
 ```
 <hr>
 
@@ -206,72 +206,39 @@ Author's output-
 
 ```
 INFORMATIONAL
-+------------------------------+----------+--------+-------------------+------------------+
-|           tableId            |   Type   | Labels | Time Partitioning | Clustered Fields |
-+------------------------------+----------+--------+-------------------+------------------+
-| nyc_taxi_trips_hudi          | EXTERNAL |        |                   |                  |
-+------------------------------+----------+--------+-------------------+------------------+
+...
++------------------+----------+--------+-------------------+------------------+
+|     tableId      |   Type   | Labels | Time Partitioning | Clustered Fields |
++------------------+----------+--------+-------------------+------------------+
+| nyc_taxi_hudi_bq | EXTERNAL |        |                   |                  |
++------------------+----------+--------+-------------------+------------------+
 ```
 <hr>
 
-### 9.2. The hudi manifest table in BigQuery
+### 9.2. The DDL of the external table created by the Hudi BigQuerySyncTool
 
 Run this query in the BigQuery UI and study the DDL- 
 ```
-SELECT ddl FROM gaia_product_ds.INFORMATION_SCHEMA.TABLES WHERE table_name="nyc_taxi_trips_hudi_manifest"
+SELECT ddl FROM gaia_product_ds.INFORMATION_SCHEMA.TABLES WHERE table_name="nyc_taxi_hudi_bq"
 ```
 
 Author's output-
 ```
 THIS IS JUST FYI...
 
-CREATE EXTERNAL TABLE `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_manifest`
-(filename STRING)
-OPTIONS(
-	format "CSV\",
-	uris [\"gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/manifest/*\"]
-```
-
-### 9.3. The hudi version table in BigQuery
-
-Run this query in the BigQuery UI and study the DDL- 
-```
-SELECT ddl FROM gaia_product_ds.INFORMATION_SCHEMA.TABLES WHERE table_name="nyc_taxi_trips_hudi_versions"
-```
-
-Author's output-
-```
-THIS IS JUST FYI...
-
-CREATE EXTERNAL TABLE `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_versions`
+CREATE EXTERNAL TABLE `apache-hudi-lab.gaia_product_ds.nyc_taxi_hudi_bq`
 WITH PARTITION COLUMNS
 OPTIONS(
-ignore_unknown_values true,
-format "PARQUET",
-hive_partition_uri_prefix "gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/\",
-uris [\"gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/trip_year\"]
+  format="PARQUET",
+  hive_partition_uri_prefix="gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/",
+  uris=["gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/absolute-path-manifest/*"],
+  file_set_spec_type="NEW_LINE_DELIMITED_MANIFEST"
+);
 ```
-
-### 9.4. The hudi view in BigQuery
-
-Run this query in the BigQuery UI and study the DDL- 
-```
-SELECT view_definition FROM gaia_product_ds.INFORMATION_SCHEMA.VIEWS WHERE table_schema='gaia_product_ds' and table_name="nyc_taxi_trips_hudi"
-```
-Author's output-
-```
-THIS IS JUST FYI...
-
-SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_versions` 
-WHERE _hoodie_file_name IN 
-(SELECT filename FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_manifest`)
-```
-
-Effectively every time we want to query the table, a join is executed against the two tables to determine data scope.
 
 <hr>
 
-## 10. Query the view & review the results
+## 10. Query the table & review the results
 
 Run this query in the BigQuery UI
 
@@ -280,7 +247,7 @@ SELECT
   taxi_type,
   SUM(total_amount) AS total_revenue
 FROM
-  gaia_product_ds.nyc_taxi_trips_hudi
+  gaia_product_ds.nyc_taxi_hudi_bq
 WHERE
   trip_year=2021
   AND trip_month=1
@@ -298,7 +265,7 @@ This requires running the BigQuerySyncTool to update the manifest. Once this man
 
 ## 12. Best practices
 
-1. Dataproc: Avoid connecting to the master node and running the utility, prefer using the Dataproc jobs API instead. This will be much easier when the default image includes hudi in totality.
+1. Dataproc: Avoid connecting to the master node and running the utility, prefer using the Dataproc jobs API instead. This will be much easier when the default image includes Hudi in totality.
 2. External tables: Prefer Biglake tables for query acceleration, and fine grained access control - row and column level and including masking
 
 
