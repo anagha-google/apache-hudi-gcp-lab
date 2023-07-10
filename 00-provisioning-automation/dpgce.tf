@@ -3,7 +3,7 @@ resource "google_dataproc_autoscaling_policy" "create_autoscale_policy" {
   location  = local.location
 
   worker_config {
-    max_instances = 2
+    max_instances = 5
   }
 
   secondary_worker_config {
@@ -36,6 +36,15 @@ resource "google_dataproc_cluster" "create_dpgce_cluster" {
       machine_type  = "n1-standard-8"
       disk_config {
         boot_disk_size_gb = 1000
+      }
+    }
+
+    worker_config {
+      num_instances    = 4
+      machine_type     = "n1-standard-8"
+      disk_config {
+        boot_disk_size_gb = 1000
+        num_local_ssds    = 1
       }
     }
     
@@ -103,21 +112,3 @@ resource "time_sleep" "sleep_after_creating_dpgce" {
 
   ]
 }
-
-variable "notebooks_to_upload" {
-  type = map(string)
-  default = {
-    "../02-notebooks/nyc_taxi_trips/nyc_taxi_hudi_data_generator.ipynb" = "notebooks/jupyter/nyc_taxi_trips/nyc_taxi_hudi_data_generator.ipynb"
-  }
-}
-resource "google_storage_bucket_object" "upload_notebooks_to_dpgce_bucket" {
-  for_each = var.notebooks_to_upload
-  name     = each.value
-  source   = "${path.module}/${each.key}"
-  bucket   = "${local.dataproc_bucket}"
-  depends_on = [
-    time_sleep.sleep_after_creating_dpgce
-  ]
-}
-
-
