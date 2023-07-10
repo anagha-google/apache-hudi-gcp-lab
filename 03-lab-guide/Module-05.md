@@ -44,21 +44,23 @@ Capture the DDL emitted, we will paste this in the BigQuery UI.
 
 Create the BigLake table by running the DDL in the BigQuery UI.
 
-<br>
+<hr>
 
 ## 2. Query the Hudi snapshot BigLake table from BigQuery UI
 
-<br>
+<hr>
 
 ## 3. Query the Hudi snapshot BigLake table via Apache Spark
 
-<br>
+<hr>
 
 ## 4. Run the same query against the Hudi snapshot (plain old) BigQuery (not BigLake) external table
 
-<br>
+<hr>
 
 ## 5. Review performance benefits of BigLake
 
-<br>
+
+
+<hr>
 This concludes the module. Please proceed to the next module.
