@@ -296,14 +296,16 @@ Hudi dataset-
 ```
 
 Parquet dataset-
-+---------+------------------+
-|trip_year|parquet_trip_count|
-+---------+------------------+
-|     2019|          90897542|
-|     2020|          26369825|
-|     2021|          31972637|
-|     2022|          37023925|
-+---------+------------------+
+```
++---------+--------------------+
+|trip_year|parquet_trip_count  |
++---------+--------------------+
+|     2019|          90,897,542|
+|     2020|          26,369,825|
+|     2021|          31,972,637|
+|     2022|          37,023,925|
++---------+--------------------+
+```
 
 The counts are slightly different due to the author's choice of composite record key (column combination) and the precombine field. Because its not a material difference, we will proceed with the lab.
 
