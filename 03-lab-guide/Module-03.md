@@ -271,6 +271,19 @@ Navigate to Jupyter on Dataproc and run the notebook nyc_taxi_hudi_data_generato
 ![README](../04-images/m03-04.png)   
 <br><br>
 
+## 6. Taxi trip count
+
+Hudi dataset-
++---------+------------+
+|trip_year|trip_count  |
++---------+------------+
+|     2019|  90,690,529|
+|     2020|  26,192,443|
+|     2021|  31,845,761|
+|     2022|  36,821,513|
++---------+------------+
+
+Parquet dataset from previous module-
 
 <hr>
 
