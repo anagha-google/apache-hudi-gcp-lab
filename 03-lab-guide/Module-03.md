@@ -100,7 +100,163 @@ gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_hudi.py
 --  --peristencePathInput="$DATA_BUCKET_PARQUET_FQP" --peristencePathOutput="$DATA_BUCKET_HUDI_FQP" 
 ```
 
-## 4. Explore the dataset in a Jupyter notebook
+## 4. Review the persisted data layout & details in Cloud Storage
+
+### 4.1. The layout
+
+Run this in Cloud Shell-
+```
+# Variables
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+DATA_BUCKET_HUDI_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow"
+
+# List some files to get a view of the hive paritioning scheme
+gsutil ls $DATA_BUCKET_HUDI_FQP/ | head -10
+
+```
+
+Author's output:
+```
+INFORMATIONAL
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2019/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2020/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2021/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2022/
+```
+
+### 4.2. The number of Hudi files
+
+Number of files
+```
+gsutil ls -r $DATA_BUCKET_HUDI_FQP | wc -l
+```
+
+Author's output: 
+7933<br>
+(versus 127,018 for Parquet format)<br>
+We will learn about the disparity in module 9
+
+### 4.3. The size of the data
+No compression code was explicitly specified.
+The Hudi dataset is uncompressed.
+(versus Parquet - compressed with snappy by default)
+```
+gsutil du -sh $DATA_BUCKET_HUDI_FQP
+```
+
+Author's output: 
+8.2 GiB 
+(versus 8 GiB of (snappy compressed) Parquet)<br>
+We will learn about the disparity in module 9
+
+### 4.4. The metadata
+
+We will learn more about the metadata in the module 9
+```
+gsutil ls -r $DATA_BUCKET_HUDI_FQP/.hoodie
+```
+
+The author's output-
+```
+INFORMATIONAL
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/20230710174218046.commit
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/20230710174218046.commit.requested
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/20230710174218046.inflight
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/20230710180034357.commit
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/20230710180034357.commit.requested
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/20230710180034357.inflight
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/20230710180539428.commit
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/20230710180539428.commit.requested
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/20230710180539428.inflight
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/20230710181127186.commit
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/20230710181127186.commit.requested
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/20230710181127186.inflight
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/hoodie.properties
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/.aux/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/.aux/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/.aux/.bootstrap/:
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/.aux/.bootstrap/.fileids/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/.aux/.bootstrap/.fileids/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/.aux/.bootstrap/.partitions/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/.aux/.bootstrap/.partitions/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/.schema/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/.schema/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/.temp/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/.temp/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/archived/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/archived/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/00000000000000.deltacommit
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/00000000000000.deltacommit.inflight
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/00000000000000.deltacommit.requested
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/20230710174218046.deltacommit
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/20230710174218046.deltacommit.inflight
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/20230710174218046.deltacommit.requested
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/20230710180034357.deltacommit
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/20230710180034357.deltacommit.inflight
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/20230710180034357.deltacommit.requested
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/20230710180539428.deltacommit
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/20230710180539428.deltacommit.inflight
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/20230710180539428.deltacommit.requested
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/20230710181127186.deltacommit
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/20230710181127186.deltacommit.inflight
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/20230710181127186.deltacommit.requested
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/hoodie.properties
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/.aux/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/.aux/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/.aux/.bootstrap/:
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/.aux/.bootstrap/.fileids/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/.aux/.bootstrap/.fileids/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/.aux/.bootstrap/.partitions/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/.aux/.bootstrap/.partitions/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/.heartbeat/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/.heartbeat/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/.schema/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/.schema/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/.temp/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/.temp/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/archived/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/.hoodie/archived/
+
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/files/:
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/files/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/files/.files-0000_00000000000000.log.1_0-0-0
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/files/.files-0000_00000000000000.log.1_0-7-7
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/files/.files-0000_00000000000000.log.2_0-38-6203
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/files/.files-0000_00000000000000.log.3_0-70-9325
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/files/.files-0000_00000000000000.log.4_0-102-12496
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/files/.files-0000_00000000000000.log.5_0-137-15623
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/metadata/files/.hoodie_partition_metadata
+admin_@cloudshell:~ (apache-hudi-lab)$ 
+
+```
+
+## 5. Explore the dataset in a Jupyter notebook
 Navigate to Jupyter on Dataproc and run the notebook nyc_taxi_hudi_data_generator.ipynb as shown below-
 
 ![README](../04-images/m03-01.png)   
@@ -115,153 +271,6 @@ Navigate to Jupyter on Dataproc and run the notebook nyc_taxi_hudi_data_generato
 ![README](../04-images/m03-04.png)   
 <br><br>
 
-
-## 5. Review the persisted data layout & details in Cloud Storage
-
-### 5.1. The layout
-
-Run this in Cloud Shell-
-```
-# Variables
-PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
-PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
-DATA_BUCKET_HUDI_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi"
-
-
-# List some files to get a view of the hive paritioning scheme
-gsutil ls -r $DATA_BUCKET_HUDI_FQP/ | head -10
-```
-
-Author's output:
-```
-INFORMATIONAL
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/trip_year=2019/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/trip_year=2020/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/trip_year=2021/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/trip_year=2022/
-```
-
-### 5.2. The number of Hudi files
-
-Number of files
-```
-gsutil ls -r $DATA_BUCKET_HUDI_FQP | wc -l
-```
-
-Author's output: 
-7,341<br>
-(versus 127,018 for Parquet format)<br>
-We will learn about the disparity in module 8
-
-### 5.3. The size of the data
-```
-gsutil du -sh $DATA_BUCKET_HUDI_FQP
-```
-
-Author's output: 
-1.26 GiB 
-(versus 8 GiB of Parquet)<br>
-We will learn about the disparity in module 8
-
-### 5.4. The record count
-
-```
-Hudi format:
-+---------+----------+-----------+
-|         |    Hudi  |  Parquet  |    
-+---------+----------+-----------+
-|trip_year|trip_count| trip_count|
-+---------+----------+-----------+
-|     2019| 8,023,712| 90,897,542|
-|     2020| 4,179,576| 26,369,825|
-|     2022| 4,022,129| 31,972,637|
-|     2021| 4,713,998| 37,023,925| 
-+---------+----------+-----------+
-We will learn about the disparity in module 8
-```
-
-### 5.5. The metadata
-
-```
-gsutil ls -r $DATA_BUCKET_HUDI_FQP/.hoodie
-```
-
-The author's output-
-```
-INFORMATIONAL
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/20230629171034889.commit
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/20230629171034889.commit.requested
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/20230629171034889.inflight
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/hoodie.properties
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/.aux/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/.aux/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/.aux/.bootstrap/:
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/.aux/.bootstrap/.fileids/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/.aux/.bootstrap/.fileids/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/.aux/.bootstrap/.partitions/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/.aux/.bootstrap/.partitions/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/.schema/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/.schema/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/.temp/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/.temp/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/archived/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/archived/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/00000000000000.deltacommit
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/00000000000000.deltacommit.inflight
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/00000000000000.deltacommit.requested
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/20230629171034889.deltacommit
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/20230629171034889.deltacommit.inflight
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/20230629171034889.deltacommit.requested
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/hoodie.properties
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/.aux/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/.aux/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/.aux/.bootstrap/:
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/.aux/.bootstrap/.fileids/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/.aux/.bootstrap/.fileids/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/.aux/.bootstrap/.partitions/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/.aux/.bootstrap/.partitions/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/.heartbeat/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/.heartbeat/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/.schema/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/.schema/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/.temp/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/.temp/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/archived/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/.hoodie/archived/
-
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/files/:
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/files/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/files/.files-0000_00000000000000.log.1_0-0-0
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/files/.files-0000_00000000000000.log.1_0-74-14014
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/files/.files-0000_00000000000000.log.2_0-105-24790
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/.hoodie/metadata/files/.hoodie_partition_metadata
-
-```
 
 <hr>
 
