@@ -2,6 +2,14 @@
 
 This lab module introduces Apache Hudi tooling for integrating Hudi tables in a data lake on Cloud Storage into BigQuery as external tables.
 
+### Prerequisite for the module
+Completion of prior lab modules, including creation of Hudi dataset.
+
+### Lab module duration
+15 minutes
+
+<hr>
+
 ## 1. Native Apache Hudi integration tooling for BigQuery
 
 ### 1.1. About
@@ -284,22 +292,12 @@ GROUP BY
 
 This requires running the BigQuerySyncTool to update the manifest. Once this manifest is updated, the queries will run against the latest snapshot of the data.
 
-
 <hr>
 
-## 12. Known issues
+## 12. Best practices
 
-1. Consistency: If underlying data in the Hudi table is deleted, the BigQuery queries against the snapshot fail.
-2. Performance: The queries are not optimized and are slo a
-3. Cost: Slot consumption is higher due to larger data scans
-
-
-<hr>
-
-## 13. Best practices
-
-1. Avoid connecting to the master node and running the utility, prefer using the Dataproc jobs API instead. This will be much easier when the default image includes hudi in totality.
-2. Prefer Biglake tables for query acceleration, and fine grained access control - row and column level and including masking
+1. Dataproc: Avoid connecting to the master node and running the utility, prefer using the Dataproc jobs API instead. This will be much easier when the default image includes hudi in totality.
+2. External tables: Prefer Biglake tables for query acceleration, and fine grained access control - row and column level and including masking
 
 
 <hr>
