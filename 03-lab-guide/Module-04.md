@@ -193,7 +193,12 @@ gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2019/trip_m
 
 ## 9. Entities created by BigQuerySyncTool in BigQuery
 
-### 9.1. List the entities created by the sync tool
+### 9.1. Review the table listing under the dataset gaia_product_ds in the BigQuery UI
+
+![README](../04-images/m04-05.png)   
+<br><br>
+
+### 9.2. List the entities created by the sync tool
 The following lists the entities created in BigQuery-
 ```
 bq ls \
@@ -215,7 +220,7 @@ INFORMATIONAL
 ```
 <hr>
 
-### 9.2. The DDL of the external table created by the Hudi BigQuerySyncTool
+### 9.3. The DDL of the external table created by the Hudi BigQuerySyncTool
 
 Run this query in the BigQuery UI and study the DDL- 
 ```
@@ -236,6 +241,9 @@ OPTIONS(
 );
 ```
 
+![README](../04-images/m04-06.png)   
+<br><br>
+
 <hr>
 
 ## 10. Query the table & review the results
@@ -255,6 +263,11 @@ WHERE
 GROUP BY
   taxi_type
 ```
+
+![README](../04-images/m04-07.png)   
+<br><br>
+
+
 <hr>
 
 ## 11. Querying fresh data
