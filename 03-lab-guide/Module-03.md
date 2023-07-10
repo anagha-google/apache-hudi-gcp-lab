@@ -69,11 +69,11 @@ Author's output: 8.07 GiB
 
 <hr>
 
-## 3. Generate a Hudi (CoW) dataset in Cloud Storage
+## 2. Generate a Hudi (CoW) dataset in Cloud Storage
 
-### 3.1. Review the source code
+### 2.1. Review the source code
 
-### 3.2. Run the following script in Cloud Shell
+### 2.2. Run the following script in Cloud Shell
 
 This Dataproc can be tuned further for performance.
 ```
@@ -100,9 +100,12 @@ gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_hudi.py
 --  --peristencePathInput="$DATA_BUCKET_PARQUET_FQP" --peristencePathOutput="$DATA_BUCKET_HUDI_FQP" 
 ```
 
-## 4. Review the persisted data layout & details in Cloud Storage
 
-### 4.1. The layout
+<hr>
+
+## 3. Review the persisted data layout & details in Cloud Storage
+
+### 3.1. The layout
 
 Run this in Cloud Shell-
 ```
@@ -127,7 +130,7 @@ gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2021/
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2022/
 ```
 
-### 4.2. The number of Hudi files
+### 3.2. The number of Hudi files
 
 Number of files
 ```
@@ -139,7 +142,7 @@ Author's output:
 (versus 127,018 for Parquet format)<br>
 We will learn about the disparity in module 9
 
-### 4.3. The size of the data
+### 3.3. The size of the data
 No compression code was explicitly specified.
 The Hudi dataset is uncompressed.
 (versus Parquet - compressed with snappy by default)
@@ -152,7 +155,7 @@ Author's output:
 (versus 8 GiB of (snappy compressed) Parquet)<br>
 We will learn about the disparity in module 9
 
-### 4.4. The metadata
+### 3.4. The metadata
 
 We will learn more about the metadata in the module 9
 ```
@@ -256,7 +259,10 @@ admin_@cloudshell:~ (apache-hudi-lab)$
 
 ```
 
-## 5. Explore the dataset in a Jupyter notebook
+
+<hr>
+
+## 4. Explore the dataset in a Jupyter notebook
 Navigate to Jupyter on Dataproc and run the notebook nyc_taxi_hudi_data_generator.ipynb as shown below-
 
 ![README](../04-images/m03-01.png)   
@@ -265,15 +271,20 @@ Navigate to Jupyter on Dataproc and run the notebook nyc_taxi_hudi_data_generato
 ![README](../04-images/m03-02.png)   
 <br><br>
 
-![README](../04-images/m03-03.png)   
+![README](../04-images/m03-06.png)   
 <br><br>
 
-![README](../04-images/m03-04.png)   
+![README](../04-images/m03-07.png)   
 <br><br>
 
-## 6. Taxi trip count
+
+<hr>
+
+## 5. Taxi trip count
+This is from the notebook.<br><br>
 
 Hudi dataset-
+```
 +---------+------------+
 |trip_year|trip_count  |
 +---------+------------+
@@ -282,8 +293,19 @@ Hudi dataset-
 |     2021|  31,845,761|
 |     2022|  36,821,513|
 +---------+------------+
+```
 
-Parquet dataset from previous module-
+Parquet dataset-
++---------+------------------+
+|trip_year|parquet_trip_count|
++---------+------------------+
+|     2019|          90897542|
+|     2020|          26369825|
+|     2021|          31972637|
+|     2022|          37023925|
++---------+------------------+
+
+The counts are slightly different due to the author's choice of composite record key (column combination) and the precombine field. Because its not a material difference, we will proceed with the lab.
 
 <hr>
 
