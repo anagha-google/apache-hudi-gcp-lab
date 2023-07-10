@@ -172,7 +172,13 @@ INFORMATIONAL
 
 A manifest file called latest-snapshot.csv gets created in the .hoodie directory of the Hudi dataset in Cloud Storage in a folder called manifest. It merely has a listing of all the files in the latest Hudi snapshot.<br>
 
-Run this on Cloud Shell-
+![README](../04-images/m04-08.png)   
+<br><br>
+
+![README](../04-images/m04-09.png)   
+<br><br>
+
+Run this on Cloud Shell to view the listing-
 
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
@@ -190,11 +196,7 @@ gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2019/trip_m
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2019/trip_month=1/trip_day=1/d2f6bd7f-976f-45c1-a86f-8a7c5747ea6f-0_156-28-4483_20230710174218046.parquet
 ```
 
-![README](../04-images/m04-08.png)   
-<br><br>
 
-![README](../04-images/m04-09.png)   
-<br><br>
 
 <hr>
 
