@@ -20,8 +20,7 @@ Upon launching the app-
 To query the Hudi dataset, one must query the external table.<br>
 
 ### 1.4. Architectural considerations
-The manifest is point in time snapshot, therefore the view reflects point in time state of the Hudi dataset. Run the sync tool as frequently as you need to query fresh data
-
+The manifest is a "point in time" snapshot, therefore the view reflects point in time state of the Hudi dataset. Run the sync tool as frequently as you need to query fresh data
 
 ### 1.5. What is takes to use the tooling as it stands
 
