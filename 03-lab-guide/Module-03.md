@@ -24,7 +24,6 @@ PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
 PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
 DATA_BUCKET_PARQUET_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-parquet"
 
-
 # List some files to get a view of the hive paritioning scheme
 gsutil ls -r $DATA_BUCKET_PARQUET_FQP | head -20
 ```
@@ -72,6 +71,36 @@ Author's output: 8.07 GiB
 
 ## 3. Generate a Hudi (CoW) dataset in Cloud Storage
 
+### 3.1. Review the source code
+
+### 3.2. Run the following script in Cloud Shell
+
+This Dataproc can be tuned further for performance.
+```
+# Variables
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+UMSA_FQN="gaia-lab-sa@$PROJECT_ID.iam.gserviceaccount.com"
+DPGCE_CLUSTER_NM="gaia-dpgce-cpu-$PROJECT_NBR"
+CODE_BUCKET="gs://gaia_code_bucket-$PROJECT_NBR/pyspark/nyc_taxi_trips"
+DATA_BUCKET_PARQUET_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-parquet"
+DATA_BUCKET_HUDI_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow"
+DATAPROC_LOCATION="us-central1"
+
+# Delete any data from a prior run
+gsutil rm -r ${DATA_BUCKET_HUDI_FQP}/
+
+# Persist NYC Taxi trips to Cloud Storage in Parquet
+gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_hudi.py \
+--cluster $DPGCE_CLUSTER_NM \
+--id nyc_taxi_data_generator_hudi_$RANDOM \
+--region $DATAPROC_LOCATION \
+--project $PROJECT_ID \
+--properties "spark.executor.memory=4g" \
+--  --peristencePathInput="$DATA_BUCKET_PARQUET_FQP" --peristencePathOutput="$DATA_BUCKET_HUDI_FQP" 
+```
+
+## 4. Explore the dataset in a Jupyter notebook
 Navigate to Jupyter on Dataproc and run the notebook nyc_taxi_hudi_data_generator.ipynb as shown below-
 
 ![README](../04-images/m03-01.png)   
@@ -87,9 +116,9 @@ Navigate to Jupyter on Dataproc and run the notebook nyc_taxi_hudi_data_generato
 <br><br>
 
 
-## 4. Review the persisted data layout & details in Cloud Storage
+## 5. Review the persisted data layout & details in Cloud Storage
 
-### 4.1. The layout
+### 5.1. The layout
 
 Run this in Cloud Shell-
 ```
@@ -114,7 +143,7 @@ gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/trip_year=2021/
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi/trip_year=2022/
 ```
 
-### 4.2. The number of Hudi files
+### 5.2. The number of Hudi files
 
 Number of files
 ```
@@ -126,7 +155,7 @@ Author's output:
 (versus 127,018 for Parquet format)<br>
 We will learn about the disparity in module 8
 
-### 4.3. The size of the data
+### 5.3. The size of the data
 ```
 gsutil du -sh $DATA_BUCKET_HUDI_FQP
 ```
@@ -136,7 +165,7 @@ Author's output:
 (versus 8 GiB of Parquet)<br>
 We will learn about the disparity in module 8
 
-### 4.4. The record count
+### 5.4. The record count
 
 ```
 Hudi format:
@@ -153,7 +182,7 @@ Hudi format:
 We will learn about the disparity in module 8
 ```
 
-### 4.5. The metadata
+### 5.5. The metadata
 
 ```
 gsutil ls -r $DATA_BUCKET_HUDI_FQP/.hoodie
