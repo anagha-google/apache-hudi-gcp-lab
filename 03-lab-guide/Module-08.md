@@ -1,2 +1,2 @@
 
-# Module 08: External table security powered by BigLake 
+# Module 8: External table security powered by BigLake 
