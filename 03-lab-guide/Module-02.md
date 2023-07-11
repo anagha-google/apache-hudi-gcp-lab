@@ -2,15 +2,48 @@
 
 In this module and next, we will generate data for the lab that we will persist in our data lake in Cloud Storage. We will generate two flavors of persistence formats - Parquet and Hudi to showcase performance variations WRT BigLake queries. 
 
-To gently introduce capabilities in Dataproc for those new to it, we will run two flavors of Spark processing on Dataproc-
-1. Dataproc Jobs API: We will run a Spark Dataproc job from command line on a Dataproc cluster on Google Compute Engine to read from BigQuery (with the Apache Spark BigQuery connector) and write to Cloud Storage as Parquet,
-2. Dataproc Jupyter Notebooks: And to generate the Hudi dataset, we will use Spark in a Jupyter notebook on Dataproc to read the Parquet dataset in Cloud Storage (with the Apache Spark Cloud Storage connector) and persist to Cloud Storage in Hudi format. 
-   
-**Lab Module Duration:** <br>
-30 minutes 
-
-**Prerequisite:** <br>
+## Lab Module Prerequisite
 Successful completion of prior module
+
+## Lab Module Goals
+
+Fundamentaly, this module covers creating a Parquet dataset of NYC Taxi dataset. The following are implicit. 
+
+| # | Goal | 
+| :-- | :--- |  
+| 1 |  Provide gentle introduction to querying in BigQuery, through a practial example, if unfamiliar | 
+| 2 |  Provide gentle introduction to Dataproc on Google Compute Engine through practical example, if unfamiliar - specifically Dataproc Spark jobs API|
+| 3 |  Provide gentle introduction to Apache Spark connector for BigQuery (native tables) through practical example, if unfamiliar  | 
+| 4 |  Provide gentle introduction to Apache Spark connector for Cloud Storage through practical example, if unfamiliar  | 
+| 5 |  Provide gentle introduction to gsutil commands on Cloud Storage to work with data & stats | 
+   
+## Lab Module Duration
+
+40 minutes 
+
+<hr>
+
+## Lab Flow
+
+![README](../04-images/m02-00.png)   
+<br><br>
+
+<hr>
+
+
+## Lab Solution Architecture
+
+![README](../04-images/m02-01.png)   
+<br><br>
+
+
+<hr>
+
+## Relevant Collateral
+
+| # | Asset/Artifact/Documentation | 
+| :-- | :--- |  
+| 1 |  [Git repo](https://github.com/GoogleCloudDataproc/spark-bigquery-connector) for more information about the Apache Spark BigQuery connector | 
 
 <hr>
 
