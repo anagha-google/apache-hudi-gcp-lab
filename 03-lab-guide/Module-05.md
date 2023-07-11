@@ -183,6 +183,7 @@ While the difference in the performance in the results above is not material, th
 
 ## 6. Query the Hudi snapshot BigLake table via Apache Spark
 
+A notebook has been pre-created and is attached to the Dataproc cluster.
 <hr>
 
 
