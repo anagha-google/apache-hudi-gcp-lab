@@ -1,1 +1,2 @@
-# Module 8: Data Lineage with BigQuery/BigLake Hudi external tables
+
+# Module 8: External table security powered by BigLake 

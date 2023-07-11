@@ -119,7 +119,7 @@ Review the cluster web interfaces tab, click on the Jupyter link-
 <br><br>
 ![README](../04-images/m02-01-g.png)   
 <br><br>
-![README](../04-images/m02-01-h.png)   
+![README](../04-images/m03-07.png)   
 <br><br>
 
 <hr>

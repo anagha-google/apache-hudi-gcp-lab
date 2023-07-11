@@ -1,1 +1,1 @@
-# Module 7: Data Quality on Hudi tables in BigLake, powered by Dataplex
+# Module 7: Data Lineage with BigQuery/BigLake Hudi external tables

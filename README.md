@@ -1,1 +1,2 @@
-# Apache Hudi on Google Cloud Platform
+# Apache Hudi support on Google Cloud Platform
+
