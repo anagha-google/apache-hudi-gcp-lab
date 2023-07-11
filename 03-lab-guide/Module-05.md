@@ -23,10 +23,10 @@ Note: BigLake is currently, a read-only external table framework; To add/update/
 - BigLake **query acceleration** over Hudi (point-in-time) snapshots of Hudi tables in Cloud Storage.
 
 ## Architectural considerations
-- 1. You dont need to create a BigQuery and BigLake table each time you run the Hudi BigQuerySyncTool, just the very first time
-- 2. For BigLake tables that are based on Parquet files (as is the case with Hudi snapshots), table statistics are collected during the metadata cache refresh and will improve query plans.
-- 3. Include a process to sync to BigQuery/BigLake metastore, in your data engineering pipelines, for freshest data for querying via BQ SQL, with row and column level security enforced at read time
-- 4. Configure the refresh of BigLake metadata cache based on the need for freshness is a must. Understand the nuances of metadata cache refresh
+1. You dont need to create a BigQuery and BigLake table each time you run the Hudi BigQuerySyncTool, just the very first time
+2. For BigLake tables that are based on Parquet files (as is the case with Hudi snapshots), table statistics are collected during the metadata cache refresh and will improve query plans.
+3. Include a process to sync to BigQuery/BigLake metastore, in your data engineering pipelines, for freshest data for querying via BQ SQL, with row and column level security enforced at read time
+4. Configure the refresh of BigLake metadata cache based on the need for freshness is a must. Understand the nuances of metadata cache refresh
   
 <br>
 
