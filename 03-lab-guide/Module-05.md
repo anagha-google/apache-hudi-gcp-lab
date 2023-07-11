@@ -9,6 +9,9 @@ BigLake is feature that provides the following capabilities-
 5. Run queries from BigQuery UI on BigQuery native tables and BigLake tables seamlessly
 6. Read/write to BigQuery and BigLake tables seamlessly from Apache Spark on Dataproc
 7. Read from BigQuery and BigLake tables seamlessly and visualize with your favorite dashboarding solution
+8. Automated scheduled metadata cache refresh per requirement for data freshness
+9. Ability to view the metadata cache refresh schedule, alter the same
+10. Ability to refresh the metadata cache on demand
 
 <br>
 
@@ -19,10 +22,11 @@ Note: BigLake is currently, a read-only external table framework; To add/update/
 - BigLake offers **row, column level security** over Hudi (point-in-time) snapshots of Hudi tables in Cloud Storage
 - BigLake **query acceleration** over Hudi (point-in-time) snapshots of Hudi tables in Cloud Storage.
 
-## Architectural considerations for data engineering pipelines
-- 1. You dont need to create a BigQuery and BigLake table each time, just the very first time.
-- 2. Include syncing to BigQuery/BigLake metastore in your data engineering pipelines, for freshest data for querying via BQ SQL, with row and column level security enforced at read time
-- 3. Refresh Biglake metadata cache if freshness is a must
+## Architectural considerations
+- 1. You dont need to create a BigQuery and BigLake table each time you run the Hudi BigQuerySyncTool, just the very first time
+- 2. For BigLake tables that are based on Parquet files (as is the case with Hudi snapshots), table statistics are collected during the metadata cache refresh and will improve query plans.
+- 3. Include a process to sync to BigQuery/BigLake metastore, in your data engineering pipelines, for freshest data for querying via BQ SQL, with row and column level security enforced at read time
+- 4. Configure the refresh of BigLake metadata cache based on the need for freshness is a must. Understand the nuances of metadata cache refresh
   
 <br>
 
@@ -51,7 +55,7 @@ Capture the DDL emitted, we will paste this in the BigQuery UI.
 <br><br>
 
 
-### 1.2. Run the DDL from the previous step in BigQuery UI
+### 1.2. Run the DDL from the previous step in BigQuery UI to create a Biglake table with bounded staleness
 
 Create the BigLake table by running the DDL in the BigQuery UI.
 
@@ -65,17 +69,100 @@ Create the BigLake table by running the DDL in the BigQuery UI.
 
 ## 2. Query the Hudi snapshot BigLake table from BigQuery UI
 
+### 2.1. Execute the query
+Run the following query in the BigQuery UI-
+```
+SELECT trip_year,trip_month,trip_day, AVG(tip_amount) as avg_tips
+FROM
+  gaia_product_ds.nyc_taxi_trips_hudi_biglake
+GROUP BY
+  trip_year,trip_month,trip_day
+ORDER BY
+  trip_year,trip_month,trip_day
+```
+
+![README](../04-images/m05-04.png)   
+<br><br>
+
+### 2.2. Review the execution details
+
+Click on the execution details tab.
+
+![README](../04-images/m05-05.png)   
+<br><br>
+
+### 2.3. Review the execution graph
+
+Click on the execution details tab.
+
+![README](../04-images/m05-06.png)   
+<br><br>
+
 <hr>
 
-## 3. Query the Hudi snapshot BigLake table via Apache Spark
+## 3. Run the same query against the Hudi snapshot (plain old) BigQuery (not BigLake) external table
+
+### 3.1. Execute the query
+Run the following query in the BigQuery UI-
+```
+SELECT trip_year,trip_month,trip_day, AVG(tip_amount) as avg_tips
+FROM
+  gaia_product_ds.nyc_taxi_trips_hudi_bigquery
+GROUP BY
+  trip_year,trip_month,trip_day
+ORDER BY
+  trip_year,trip_month,trip_day
+```
+
+![README](../04-images/m05-07.png)   
+<br><br>
+
+### 3.2. Review the execution details
+
+Click on the execution details tab.
+
+![README](../04-images/m05-08.png)   
+<br><br>
 
 <hr>
 
-## 4. Run the same query against the Hudi snapshot (plain old) BigQuery (not BigLake) external table
+## 4. The BigLake metadata cache
+
+### 4.1. Understand the metadata cache related architectural considerations
+
+Read the documentation [here](https://cloud.google.com/bigquery/docs/biglake-intro#metadata_caching_for_performance).
+
+### 4.2. Reviewing the metadata cache refresh schedule
+
+Run the query below in the BigQuery UI to see the refresh schedule-
+```
+SELECT *
+FROM `region-us-central1.INFORMATION_SCHEMA.JOBS_BY_PROJECT`
+WHERE job_id LIKE '%metadata_cache_refresh%'
+AND creation_time > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 6 HOUR)
+ORDER BY start_time DESC
+LIMIT 10;
+```
+
+![README](../04-images/m05-09.png)   
+<br><br>
+
+### 4.3. Triggering metadata cache refresh on-demand
+
+There may be situations where you may need to trigger a metadata cache refresh, ahead of schedule. You can do so with the following command, from the BigQuery UI-
+```
+BQ.REFRESH_EXTERNAL_TABLE('project-id.my_dataset.my_table')
+```
 
 <hr>
 
-## 5. Review performance benefits of BigLake
+## 5. Understand the performance benefits of BigLake
+
+While the difference in the performance in the results above is not material, the performance benefits of Biglake - like all big data solutions, can be reaped at scale. Note the metadata caching possible (performance with staleness tradeoff).
+
+## 6. Query the Hudi snapshot BigLake table via Apache Spark
+
+<hr>
 
 
 
