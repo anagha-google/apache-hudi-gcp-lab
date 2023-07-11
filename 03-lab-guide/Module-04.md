@@ -37,20 +37,22 @@ Upon launching, the BigQuerySyncTool-
 ### 1.3. Querying the Hudi dataset in BigQuery
 Involves just querying the external table.<br>
 
-### 1.4. Architectural considerations
+### 1.4. What is takes to use the tooling as it stands
+
+1. Build Hudi from source (requires Java 8)
+2. Copy/scp the same to a Dataproc cluster
+3. Run the Spark application that uses the BigQuerySyncTool
+
+### 1.5. Architectural considerations
 1. The manifest is a listing of the Parquet files of the Hudi dataset that constitute a "point in time" snapshot; Therefore the external table reflects the point in time state of the Hudi dataset.
 2. Run the BigQuerySyncTool tool as frequently as you need to query fresh data
 3. The table persists/remains post the initial run of the BigQuerySyncTool, just the manifest is replaced with each execution
 4. If the Hudi schema changes, the external table will reflect the latest schema
 5. If the Hudi dataset has deletes/updates, and if Parquet underneath the external tables gets deleted, the query will not fail, it will merely not reflect the data within the files that were deleted
 6. JFYI - predicate pushdowns are supported, partition pruning is supported whether you query via BigQuery SQL or via Apache Spark and using the BigQuery Spark connector
-8. When you query the external table, follow the typical best practices, such as explicitly calling out the columns you want to select, apply the partition keys for performance and such..
+7. When you query the external table, follow the typical best practices, such as explicitly calling out the columns you want to select, apply the partition keys for performance and such..
+8. The Dataproc cluster - latest version has Java 11, do not build Hudi (requires) on the Dataproc cluster. Changes you may make to build Hudi may potentially negatively impact other configuration on the cluster.
 
-### 1.5. What is takes to use the tooling as it stands
-
-1. Build Hudi from source (requires Java 8)
-2. Copy/scp the same to cluster
-3. Run the Spark application that uses the BigQuerySyncTool
 
 ### 1.6. What's coming in Dataproc
 
@@ -75,6 +77,16 @@ The BigQuerySyncTool will be included as part of the base Dataproc image.
 
 ![README](../04-images/m04-00-4.png)   
 <br><br>
+
+<hr>
+
+## Software Versions in Dataproc on GCE
+
+Dataproc GCE cluster image: 2.1.14-debian11 <br>
+Java: 11.0.19 <br>
+Spark: 3.3.0 <br>
+Scala: 2.12.14 <br>
+Hudi: 0.12.0 <br>
 
 <hr>
    
