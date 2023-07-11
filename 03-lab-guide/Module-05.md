@@ -1,5 +1,45 @@
 # Module 5: BigLake external tables on Hudi snapshots
 
+This module covers creating BigLake tables on top of Apache Hudi parquet snapshots created in the prior module.
+
+**Prerequisites:**<br>
+Completion of all prior lab modules
+
+<hr>
+
+## Lab Module Goals
+Demystify Biglake and value proposition of BigLake for Apache Hudi datasets through a simple, practical example.
+
+1. Understand how to create Biglake tables on Apache Hudi manifests
+2. Understand impact of periodic execution of Hudi BigQuerySyncTool
+3. Understand architectural considerations with respect to BigLake tables
+
+<hr>
+
+## Lab Module Flow
+
+![README](../04-images/m05-00-1.png)   
+<br><br>
+
+
+## Lab Module Solution Architecture 
+
+![README](../04-images/m05-00-2.png)   
+<br><br>
+
+![README](../04-images/m05-00-3.png)   
+<br><br>
+
+<hr>
+
+<hr>
+   
+## Lab Module Duration 
+15 minutes or less.
+
+<hr>
+
+
 ## About BigLake 
 BigLake is feature that provides the following capabilities-
 1. A read-only external table abstraction over structured data in Cloud Storage in supported formats.
@@ -33,6 +73,7 @@ BigLake is feature that provides the following capabilities-
 4. Include a process to sync to BigQuery/BigLake metastore, in your data engineering pipelines, for freshest data for querying via BQ SQL, with row and column level security enforced at read time
 5. Configure the refresh of BigLake metadata cache based on the need for freshness is a must. Understand the nuances of metadata cache refresh
 6. For latency sensitive workloads, materialized views can be created (native BigQuery)
+7. The external table limit of 10,000 files does not apply with the manifest support showcased in the lab
   
 <br>
 
