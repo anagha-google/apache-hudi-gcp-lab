@@ -205,7 +205,7 @@ LIMIT 10;
 ![README](../04-images/m05-09.png)   
 <br><br>
 
-### 4.3. Triggering metadata cache refresh on-demand
+### 4.3. Triggering metadata cache refresh manually
 
 If you have unpredictble needs for data freshness, you may be best served with on-demand metadata cache refresh, versus AUTOMATIC as demonstrated in the lab above. 
 You can do so with the following command-
@@ -228,7 +228,7 @@ Grab the command displayed in Cloud Shell.
 ![README](../04-images/m05-10.png)   
 <br><br>
 
-#### 4.3.2. Execute the metadata cache refresh in BigQuery UI
+#### 4.3.2. Execute the metadata cache refresh, manually, in BigQuery UI
 Paste this and run, in the BigQuery UI-
 ![README](../04-images/m05-11.png)   
 <br><br>
