@@ -160,8 +160,8 @@ INFORMATIONAL
 23/07/10 20:50:36 INFO AbstractTableFileSystemView: Building file system view for partition (trip_year=2020/trip_month=12/trip_day=16)
 23/07/10 20:50:36 INFO ManifestFileWriter: Writing base file names to manifest file: 2004
 23/07/10 20:50:38 INFO HoodieBigQuerySyncClient: External table created using manifest file.
-23/07/10 20:50:38 INFO BigQuerySyncTool: Completed table nyc_taxi_hudi_bq creation using the manifest file
-23/07/10 20:50:38 INFO BigQuerySyncTool: Sync table complete for nyc_taxi_hudi_bq
+23/07/10 20:50:38 INFO BigQuerySyncTool: Completed table nyc_taxi_trips_hudi_bigquery creation using the manifest file
+23/07/10 20:50:38 INFO BigQuerySyncTool: Sync table complete for nyc_taxi_trips_hudi_bigquery
 ```
 
 <hr>
@@ -194,8 +194,6 @@ gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2019/trip_m
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2019/trip_month=1/trip_day=1/d2f6bd7f-976f-45c1-a86f-8a7c5747ea6f-0_156-28-4483_20230710174218046.parquet
 ```
 
-
-
 <hr>
 
 ## 9. Entities created by BigQuerySyncTool in BigQuery
@@ -219,11 +217,11 @@ Author's output-
 ```
 INFORMATIONAL
 ...
-+------------------------+----------+--------+-------------------+------------------+
-|     tableId            |   Type   | Labels | Time Partitioning | Clustered Fields |
-+------------------------+----------+--------+-------------------+------------------+
-| nyc_taxi_hudi_bigquery | EXTERNAL |        |                   |                  |
-+------------------------+----------+--------+-------------------+------------------+
++------------------------------+----------+--------+-------------------+------------------+
+|     tableId                  |   Type   | Labels | Time Partitioning | Clustered Fields |
++------------------------------+----------+--------+-------------------+------------------+
+| nyc_taxi_trips_hudi_bigquery | EXTERNAL |        |                   |                  |
++------------------------------+----------+--------+-------------------+------------------+
 ```
 <hr>
 
@@ -231,14 +229,14 @@ INFORMATIONAL
 
 Run this query in the BigQuery UI and study the DDL- 
 ```
-SELECT ddl FROM gaia_product_ds.INFORMATION_SCHEMA.TABLES WHERE table_name="nyc_taxi_hudi_bigquery"
+SELECT ddl FROM gaia_product_ds.INFORMATION_SCHEMA.TABLES WHERE table_name="nyc_taxi_trips_hudi_bigquery"
 ```
 
 Author's output-
 ```
 THIS IS JUST FYI...
 
-CREATE EXTERNAL TABLE `apache-hudi-lab.gaia_product_ds.nyc_taxi_hudi_bigquery`
+CREATE EXTERNAL TABLE `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_bigquery`
 WITH PARTITION COLUMNS
 OPTIONS(
   format="PARQUET",
@@ -262,7 +260,7 @@ SELECT
   taxi_type,
   SUM(total_amount) AS total_revenue
 FROM
-  gaia_product_ds.nyc_taxi_hudi_bq
+  gaia_product_ds.nyc_taxi_trips_hudi_bigquery
 WHERE
   trip_year=2021
   AND trip_month=1
