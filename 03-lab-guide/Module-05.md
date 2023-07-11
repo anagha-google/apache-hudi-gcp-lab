@@ -39,7 +39,7 @@ Demystify Biglake and value proposition of BigLake for Apache Hudi datasets thro
 ![README](../04-images/m05-00-5.png)   
 <br><br>
 
-<hr>
+
 
 <hr>
    
