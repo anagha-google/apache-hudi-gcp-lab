@@ -7,7 +7,7 @@ Successful completion of prior module
 
 ## Lab Module Goals
 
-Fundamentaly, this module covers creating a Parquet dataset of NYC Taxi dataset. The following are implicit. 
+Fundamentaly, this module covers creating a Parquet dataset of NYC taxi trip data available in BigQuery as a public dataset. The following are implicit. 
 
 | # | Goal | 
 | :-- | :--- |  
@@ -15,7 +15,6 @@ Fundamentaly, this module covers creating a Parquet dataset of NYC Taxi dataset.
 | 2 |  Provide gentle introduction to Dataproc on Google Compute Engine through practical example, if unfamiliar - specifically Dataproc Spark jobs API|
 | 3 |  Provide gentle introduction to Apache Spark connector for BigQuery (native tables) through practical example, if unfamiliar  | 
 | 4 |  Provide gentle introduction to Apache Spark connector for Cloud Storage through practical example, if unfamiliar  | 
-| 5 |  Provide gentle introduction to gsutil commands on Cloud Storage to work with data & stats | 
    
 ## Lab Module Duration
 
