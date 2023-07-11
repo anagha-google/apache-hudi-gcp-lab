@@ -293,4 +293,4 @@ This requires running the BigQuerySyncTool to update the manifest. Once this man
 
 <hr>
 
-This concludes the module.
+This concludes the module. Proceed to the [next module](Module-05.md).
