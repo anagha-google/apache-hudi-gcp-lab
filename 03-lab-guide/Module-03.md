@@ -307,7 +307,7 @@ Parquet dataset-
 +---------+--------------------+
 ```
 
-The counts are slightly different due to the author's choice of composite Hudi record key (column combination) and the Hudi precombine field. Because its not a material difference, we will proceed with the lab.
+The counts are slightly different due to the author's choice of composite Hudi record key (column combination) and the Hudi precombine field. Because its not a material difference relative to the lab goals, we will proceed with the lab.
 
 <hr>
 
