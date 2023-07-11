@@ -26,7 +26,7 @@ Learn more about the tooling in the [Apache Hudi documentation](https://hudi.apa
 
 ### 1.2. Under the hood
 
-The sync tool syncs a Hudi table at a time, and requires running a Spark application. 
+The sync tool syncs a single Hudi table, and requires running a Spark application. 
 Upon launching the BigQuerySyncTool-
 1. Creates a manifest file reflecting the latest snapshot of the table, and persists the same in the .hoodie directory of the Hudi dataset.
 2. Creates an external table in BigQuery
