@@ -1,6 +1,6 @@
 # Module 4: Create BigQuery external tables on Hudi datasets in your data lake
 
-This lab module introduces Apache Hudi tooling for integrating Hudi tables in a data lake on Cloud Storage into BigQuery as external tables.
+This lab module introduces Apache Hudi tooling for integrating Hudi datasets in a data lake on Cloud Storage into BigQuery as external tables.
 
 ### Prerequisite for the module
 Completion of prior lab modules, including creation of Hudi dataset.
@@ -13,7 +13,7 @@ Completion of prior lab modules, including creation of Hudi dataset.
 ## 1. Native Apache Hudi integration tooling for BigQuery
 
 ### 1.1. About
-Apache Hudi offers a BigQuerySyncTool - a utility that reads Hudi metadata of a Hudi table in Cloud Storage, and creates a BigQuery external table on a point-in-time snapshot of the same data. This external table is read only and can be queried using BigQuery SQL from the BigQuery UI and other supported BigQuery querying avenues and uses BigQuery compute under the hood.
+Apache Hudi offers a BigQuerySyncTool - a uni-directional sync utility that reads Hudi metadata of a Hudi table in Cloud Storage, and creates a BigQuery external table on a point-in-time snapshot of the same data. This external table can be queried using BigQuery SQL from the BigQuery UI and other supported BigQuery querying avenues and uses BigQuery compute under the hood.
 
 Learn more about the tooling in the [Apache Hudi documentation](https://hudi.apache.org/docs/gcp_bigquery/).
 
@@ -74,13 +74,11 @@ tar -cvzf hudi.tgz hudi
 ## 3. scp the tarball to the cluster
 
 Run the command to scp to the cluster
-
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
 PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
 
 gcloud compute scp hudi.tgz --zone "us-central1-a" gaia-dpgce-cpu-$PROJECT_NBR-m:~/ --tunnel-through-iap --project "apache-hudi-lab"
-
 ```
 
 <hr>
