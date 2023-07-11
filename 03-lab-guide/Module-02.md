@@ -32,7 +32,7 @@ Fundamentaly, this module covers creating a Parquet dataset of NYC taxi trip dat
 
 ## Lab Solution Architecture
 
-![README](../04-images/m02-01.png)   
+![README](../04-images/m02-00-2.png)   
 <br><br>
 
 
