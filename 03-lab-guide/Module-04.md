@@ -51,7 +51,7 @@ Involves just querying the external table.<br>
 5. If the Hudi dataset has deletes/updates, and if Parquet underneath the external tables gets deleted, the query will not fail, it will merely not reflect the data within the files that were deleted
 6. JFYI - predicate pushdowns are supported, partition pruning is supported whether you query via BigQuery SQL or via Apache Spark and using the BigQuery Spark connector
 7. When you query the external table, follow the typical best practices, such as explicitly calling out the columns you want to select, apply the partition keys for performance and such..
-8. The Dataproc cluster - latest version has Java 11, do not build Hudi (requires) on the Dataproc cluster. Changes you may make to build Hudi may potentially negatively impact other configuration on the cluster.
+8. The Dataproc cluster - latest version has Java 11, do not build Hudi (requires Java 8) on the Dataproc cluster. Changes you may make to build Hudi may potentially negatively impact other configuration on the cluster.
 
 
 ### 1.6. What's coming in Dataproc
