@@ -44,14 +44,16 @@ Involves just querying the external table.<br>
 3. Run the Spark application that uses the BigQuerySyncTool
 
 ### 1.5. Architectural considerations
-1. The manifest is a listing of the Parquet files of the Hudi dataset that constitute a "point in time" snapshot; Therefore the external table reflects the point in time state of the Hudi dataset.
-2. Run the BigQuerySyncTool tool as frequently as you need to query fresh data
-3. The table persists/remains post the initial run of the BigQuerySyncTool, just the manifest is replaced with each execution
-4. If the Hudi schema changes, the external table will reflect the latest schema
-5. If the Hudi dataset has deletes/updates, and if Parquet underneath the external tables gets deleted, the query will not fail, it will merely not reflect the data within the files that were deleted
-6. JFYI - predicate pushdowns are supported, partition pruning is supported whether you query via BigQuery SQL or via Apache Spark and using the BigQuery Spark connector
-7. When you query the external table, follow the typical best practices, such as explicitly calling out the columns you want to select, apply the partition keys for performance and such..
-8. The Dataproc cluster - latest version has Java 11, do not build Hudi (requires Java 8) on the Dataproc cluster. Changes you may make to build Hudi may potentially negatively impact other configuration on the cluster.
+1. The tool syncs just one Hudi dataset/table
+2. The manifest is a listing of the Parquet files of the Hudi dataset that constitute a "point in time" snapshot; Therefore the external table reflects the point in time state of the Hudi dataset.
+3. Run the BigQuerySyncTool tool as frequently as you need to query fresh data
+4. The table persists/remains post the initial run of the BigQuerySyncTool, just the manifest is replaced with each execution
+5. If the Hudi schema changes, the external table will reflect the latest schema
+6. If the Hudi dataset has deletes/updates, and if Parquet underneath the external tables gets deleted, the query will not fail, it will merely not reflect the data within the files that were deleted
+7. JFYI - predicate pushdowns are supported, partition pruning is supported whether you query via BigQuery SQL or via Apache Spark and using the BigQuery Spark connector
+8. When you query the external table, follow the typical best practices, such as explicitly calling out the columns you want to select, apply the partition keys for performance and such..
+9. The Dataproc cluster - latest version has Java 11, do not build Hudi (requires Java 8) on the Dataproc cluster. Changes you may make to build Hudi may potentially negatively impact other configuration on the cluster.
+10. Consider including exectuion of the BigQuerySyncTool as part of your data engineering pipelines
 
 
 ### 1.6. What's coming in Dataproc
