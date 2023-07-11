@@ -149,10 +149,31 @@ LIMIT 10;
 
 ### 4.3. Triggering metadata cache refresh on-demand
 
-There may be situations where you may need to trigger a metadata cache refresh, ahead of schedule. You can do so with the following command, from the BigQuery UI-
+If you have unpredictble needs for data freshness, you may be best served with on-demand metadata cache refresh, versus AUTOMATIC as demonstrated in the lab above. 
+You can do so with the following command-
 ```
-BQ.REFRESH_EXTERNAL_TABLE('project-id.my_dataset.my_table')
+CALL BQ.REFRESH_EXTERNAL_TABLE_CACHE('project-id.my_dataset.my_table')
 ```
+
+Note that this can be executed only if the metadata cache refresh is NOT set to AUTOMATIC.
+
+#### 4.3.1. Generate the metadata cache refresh command
+Let's build the command to execute the refresh (you can also manually substitute values). Paste the below in Cloud Shell-
+```
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+
+echo "CALL BQ.REFRESH_EXTERNAL_TABLE_CACHE(\"$PROJECT_ID.gaia_product_ds.nyc_taxi_trips_hudi_biglake\")"
+```
+
+Grab the command displayed in Cloud Shell.
+
+![README](../04-images/m05-10.png)   
+<br><br>
+
+#### 4.3.2. Execute the metadata cache refresh in BigQuery UI
+Paste this and run, in the BigQuery UI-
+![README](../04-images/m05-11.png)   
+<br><br>
 
 <hr>
 
