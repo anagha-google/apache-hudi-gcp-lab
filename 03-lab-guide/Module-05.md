@@ -15,12 +15,18 @@ BigLake is feature that provides the following capabilities-
 
 <br>
 
+<hr>
+
 ## Value proposition of BigLake for Hudi datasets
 
 Note: BigLake is currently, a read-only external table framework; To add/update/delete data in your Hudi tables, you still need to use technologies such as Apache Spark on Cloud Dataproc. 
 
 - BigLake offers **row, column level security** over Hudi (point-in-time) snapshots of Hudi tables in Cloud Storage
-- BigLake **query acceleration** over Hudi (point-in-time) snapshots of Hudi tables in Cloud Storage.
+- BigLake **query acceleration** over Hudi (point-in-time) snapshots of Hudi tables in Cloud Storage
+
+<br>
+
+<hr>
 
 ## Architectural considerations
 1. You dont need to create a BigQuery and BigLake table each time you run the Hudi BigQuerySyncTool, just the very first time
@@ -29,6 +35,8 @@ Note: BigLake is currently, a read-only external table framework; To add/update/
 4. Configure the refresh of BigLake metadata cache based on the need for freshness is a must. Understand the nuances of metadata cache refresh
   
 <br>
+
+<hr>
 
 ## 1. Create a BigLake table definition over the Hudi snapshot parquet & manifest in GCS
 
