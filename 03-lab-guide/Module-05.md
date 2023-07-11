@@ -20,7 +20,7 @@ BigLake is feature that provides the following capabilities-
 ## Value proposition of BigLake for Hudi datasets
 
 - BigLake offers **row, column level security** over Hudi (point-in-time) snapshots of Hudi tables in Cloud Storage
-- BigLake **query acceleration** over Hudi (point-in-time) snapshots of Hudi tables in Cloud Storage
+- BigLake **query acceleration** over Hudi (point-in-time) snapshots of Hudi tables in Cloud Storage, realizable on scale
 
 <br>
 
@@ -32,6 +32,7 @@ BigLake is feature that provides the following capabilities-
 3. For BigLake tables that are based on Parquet files (as is the case with Hudi snapshots), table statistics are collected during the metadata cache refresh and will improve query plans.
 4. Include a process to sync to BigQuery/BigLake metastore, in your data engineering pipelines, for freshest data for querying via BQ SQL, with row and column level security enforced at read time
 5. Configure the refresh of BigLake metadata cache based on the need for freshness is a must. Understand the nuances of metadata cache refresh
+6. For latency sensitive workloads, materialized views can be created (native BigQuery)
   
 <br>
 
