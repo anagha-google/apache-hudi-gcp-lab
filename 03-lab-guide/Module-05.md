@@ -24,8 +24,12 @@ Demystify Biglake and value proposition of BigLake for Apache Hudi datasets thro
 
 ## Lab Module Solution Architecture 
 
+### Interactive Exploration
+
 ![README](../04-images/m05-00-2.png)   
 <br><br>
+
+### Iterative syncs
 
 ![README](../04-images/m05-00-3.png)   
 <br><br>
