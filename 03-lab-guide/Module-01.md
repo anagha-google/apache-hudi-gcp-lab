@@ -6,13 +6,29 @@ In this module, you will provision the services needed for the lab.
 2. Then configure your preferences for the lab
 3. And run terraform for provisioning
    
-**Lab Module Duration:** <br>
-~45-55 minutes 
-
 **Prerequisite:** <br>
-Create a new project manually for this lab. You need to be the owner. 
+1. A GCP project
+2. Owner privileges on the project
 
-## 1. Clone the repo
+<hr>
+
+## Lab Module Goals
+
+| # | About | 
+| -- | :--- |  
+| 1 |  Set up your lab environment with Terraform | 
+| 2 |  Validate provisioning of services | 
+Optionally, stufy the Terraform, so you can repurpose it for your workloads.
+
+<hr>
+
+## Lab Module Flow
+![README](../04-images/m01-01.png)   
+<br><br>
+
+<hr>
+
+## 1. Clone the repo on Cloud Shell
 Run this on Cloud Shell scoped to the project you created for the lab.
 ```
 cd ~
@@ -36,7 +52,9 @@ THIS IS FYI - DO NOT EXECUTE
 ```
 Explore the repo really quick.
 
-## 3. Familiarize yourself with the layout of the Terraform root directory
+<hr>
+
+## 3. Familiarize yourself with the layout of the Terraform root directory and optionally the scripts
 ```
 THIS IS FYI - DO NOT EXECUTE
 ~/apache-hudi-gcp-lab/00-provisioning-automation
@@ -62,6 +80,8 @@ THIS IS FYI - DO NOT EXECUTE
            
 ```
 
+<hr>
+
 ## 4. Configure your preferences in the preferences script
 
 Edit the file configure.sh under 00-setup for your preferences.<br>
@@ -69,6 +89,7 @@ E.g.
 1. Update the GCP region and zone to match your preference.<br>
 2. Update the Dataproc version as needed.<br>
 3. Update the Cloud Composer version as needed.<br>
+4. Update the "UPDATE_ORG_POLICIES" boolean to false if you dont have the requisite privileges/if the policies are already configured as they should be for the lab - review the script at - 00-provisioning-automation/module_apis_and_policies/main.tf
 
 If you are okay with provisioning as designed by the author, skip the step of editing and move to step 4.
 
@@ -172,6 +193,21 @@ terraform apply --auto-approve >> provisioning.log
 Tail the log if you wish to in a separate tab of Cloud Shell to monitor to completion. This will take approximately 45 minutes to run and complete. At the end of this , all services needed for this will be provisioned in your project, code copied over, all permissioning will be complete.
 
 <hr> 
+
+## 9. Validate infrastructure provisioning
+
+| # | Review | 
+| -- | :--- |  
+| 1 |  Network, subnet, firewall rule | 
+| 2 |  IAM setup - user managed service account and your own permissions | 
+| 3 |  Buckets created | 
+| 4 |  Assets uploaded to buckets | 
+| 5 |  Dataproc Metastore Service setup (Hive Metastore) | 
+| 6 |  Dataproc History Server setup (Spark History Server) | 
+| 7 |  Dataproc GCE cluster | 
+| 8 |  Jupyter notebooks attached to the cluster | 
+| 9 |  Cloud Composer setup | 
+| 10 |  Dataplex Lakes and Zones setup |
 
 This concludes the module, proceed to the [next module](Module-02.md).
 
