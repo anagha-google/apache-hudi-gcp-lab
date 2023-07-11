@@ -195,7 +195,9 @@ Tail the log if you wish to in a separate tab of Cloud Shell to monitor to compl
 
 <hr> 
 
-## 9. Validate infrastructure provisioning
+## 9. Validate provisioning done in this module
+
+From the Cloud Console, browse through the following. Optionally, study the Terraform scripts for each service prior to browsing, so you understand what to validate.
 
 | # | Review | 
 | -- | :--- |  
