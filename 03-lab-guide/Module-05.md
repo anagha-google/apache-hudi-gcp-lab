@@ -181,9 +181,25 @@ Paste this and run, in the BigQuery UI-
 
 While the difference in the performance in the results above is not material, the performance benefits of Biglake - like all big data solutions, can be reaped at scale. Note the metadata caching possible (performance with staleness tradeoff).
 
-## 6. Query the Hudi snapshot BigLake table via Apache Spark
+## 6. Query the Hudi snapshot BigLake table from Apache Spark, with the BigQuery Apache Spark connector
 
-A notebook has been pre-created and is attached to the Dataproc cluster.
+The BigQuery Spark connector supports full BigQuery SQL pushdown (predicate, projection) and uses the BigQuery compute for execution and returns only the results. Learn more about the connector, [here](https://github.com/GoogleCloudDataproc/spark-bigquery-connector).<br>
+
+A notebook has been pre-created and is attached to the Dataproc cluster - that demonstrates querying a BigLake table from Apache Spark with fully query pushdown.
+Navigate to the notebook and run the same.
+
+![README](../04-images/m05-12.png)   
+<br><br>
+
+![README](../04-images/m05-13.png)   
+<br><br>
+
+![README](../04-images/m05-14.png)   
+<br><br>
+
+![README](../04-images/m05-15.png)   
+<br><br>
+
 <hr>
 
 
