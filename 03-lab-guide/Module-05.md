@@ -29,7 +29,7 @@ Demystify Biglake and value proposition of BigLake for Apache Hudi datasets thro
 ![README](../04-images/m05-00-2.png)   
 <br><br>
 
-### Iterative syncs
+### Iterative Integration
 
 ![README](../04-images/m05-00-3.png)   
 <br><br>
