@@ -12,11 +12,6 @@ Demystify Apache Hudi sync tooling into BigQuery by example.
 
 <hr>
 
-## Lab Module Flow
-
-![README](../04-images/m04-00-1.png)   
-<br><br>
-
 ## 1. Native Apache Hudi integration tooling for BigQuery
 
 ### 1.1. About
@@ -55,6 +50,12 @@ The BigQuerySyncTool will be included as part of the base Dataproc image.
 <br>
 
 <hr>
+
+## Lab Module Flow
+
+![README](../04-images/m04-00-1.png)   
+<br><br>
+
 
 ## Lab Module Solution Architecture 
 
