@@ -91,13 +91,9 @@ Hudi: 0.12.0 <br>
 <hr>
    
 ## Lab Module Duration 
-10 minutes or less.
+15 minutes or less.
 
 <hr>
-
-
-
-
 
 ## 2. Building Hudi from source
 
