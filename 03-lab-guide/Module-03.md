@@ -1,14 +1,28 @@
 # Module 3: Generate Hudi data for the lab
 
-In this module and next, we will generate Hudi (base) data for the lab, based off of the Parquet data from the previous module and we will persist to our data lake in Cloud Storage.
+In this module we will generate Hudi (base) data for the lab, based off of the Parquet data from the previous module and we will persist to our data lake in Cloud Storage.
 
-We will do the data generation via a script that is pre-created and available in this repo and then explore the Hudi dataset from a pre-created Dataproc Jupyter notebook attached to your cluster. The script also creates an external table defintion on the Hudi dataset in Dataproc Metastore (Apache Hive Metastore). There are some sample Spark SQL queries to explore the data in the notebook.
-   
-**Lab Module Duration:** <br>
-30 minutes 
+We will do the data generation via a PySpark script that is pre-created and available in this repo, (and in your cloud storage code bucket), and then explore the Hudi dataset from a pre-created Dataproc Jupyter notebook attached to your cluster. The script also creates an external table defintion on the Hudi dataset in Dataproc Metastore (Apache Hive Metastore). There are some sample Spark SQL queries to explore the data in the notebook.
 
 **Prerequisite:** <br>
 Successful completion of prior module
+
+## Lab Module Goals
+
+Fundamentaly, this module covers creating a Hudi dataset of NYC taxi trip data available in Cloud Storage as a Parquet dataset. The following are implicit. The lab also introduces Jupyter Spark notebooks on Dataproc on Compute Engine if unfamiliar.
+
+## Lab Module Flow
+
+![README](../04-images/m03-00-1.png)   
+<br><br>
+
+## Lab Module Solution Architecture 
+
+![README](../04-images/m03-00-2.png)   
+<br><br>
+   
+## Lab Module Duration 
+40 minutes or less.
 
 <hr>
 
