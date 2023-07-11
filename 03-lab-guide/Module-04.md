@@ -13,24 +13,25 @@ Completion of prior lab modules, including creation of Hudi dataset.
 ## 1. Native Apache Hudi integration tooling for BigQuery
 
 ### 1.1. About
-Apache Hudi offers a BigQuerySyncTool - a uni-directional sync utility that reads Hudi metadata of a Hudi table in Cloud Storage, and creates a BigQuery external table on a point-in-time snapshot of the same data. This external table can be queried using BigQuery SQL from the BigQuery UI and other supported BigQuery querying avenues and uses BigQuery compute under the hood.
+Apache Hudi offers a BigQuerySyncTool - a uni-directional sync utility that reads Hudi metadata of a Hudi table in Cloud Storage, and creates a BigQuery external table on a point-in-time parquet snapshot of the same data. This external table can be queried using BigQuery SQL from the BigQuery UI and other supported BigQuery querying avenues.
 
 Learn more about the tooling in the [Apache Hudi documentation](https://hudi.apache.org/docs/gcp_bigquery/).
 
 ### 1.2. Under the hood
 
 The sync tool syncs a Hudi table at a time, and requires running a Spark application. 
-Upon launching the app-
-1. It creates a manifest file reflecting the latest snapshot of the table, and persists the same in the .hoodie directory of the Hudi dataset.
-2. It creates an external table in BigQuery
+Upon launching the BigQuerySyncTool-
+1. Creates a manifest file reflecting the latest snapshot of the table, and persists the same in the .hoodie directory of the Hudi dataset.
+2. Creates an external table in BigQuery
 
 ### 1.3. Querying the Hudi dataset in BigQuery
-To query the Hudi dataset, one must query the external table. Its important to understand the architectural considerations.<br>
+Query the external table.<br>
 
 ### 1.4. Architectural considerations
-1. The manifest is a "point in time" snapshot, therefore the view reflects point in time state of the Hudi dataset.
-2. Run the sync tool as frequently as you need to query fresh data
-3. The data in BigQuery if updated, will not sync (back) with the Hudi dataset in Cloud Storage.
+1. The manifest is a listing of the Parquet files of the Hudi dataset that constitute a "point in time" snapshot; Therefore the external table reflects the point in time state of the Hudi dataset.
+2. Run the BigQuerySyncTool tool as frequently as you need to query fresh data
+3. If the Hudi schema changes, the external table will reflect the latest schema.
+4. When you query the external table, follow the typical best practices, such as explicitly calling out the columns you want to select, apply the partition keys for performance and such..
 
 ### 1.5. What is takes to use the tooling as it stands
 
