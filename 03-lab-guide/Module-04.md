@@ -221,11 +221,11 @@ Author's output-
 ```
 INFORMATIONAL
 ...
-+------------------+----------+--------+-------------------+------------------+
-|     tableId      |   Type   | Labels | Time Partitioning | Clustered Fields |
-+------------------+----------+--------+-------------------+------------------+
-| nyc_taxi_hudi_bq | EXTERNAL |        |                   |                  |
-+------------------+----------+--------+-------------------+------------------+
++------------------------+----------+--------+-------------------+------------------+
+|     tableId            |   Type   | Labels | Time Partitioning | Clustered Fields |
++------------------------+----------+--------+-------------------+------------------+
+| nyc_taxi_hudi_bigquery | EXTERNAL |        |                   |                  |
++------------------------+----------+--------+-------------------+------------------+
 ```
 <hr>
 
@@ -233,14 +233,14 @@ INFORMATIONAL
 
 Run this query in the BigQuery UI and study the DDL- 
 ```
-SELECT ddl FROM gaia_product_ds.INFORMATION_SCHEMA.TABLES WHERE table_name="nyc_taxi_hudi_bq"
+SELECT ddl FROM gaia_product_ds.INFORMATION_SCHEMA.TABLES WHERE table_name="nyc_taxi_hudi_bigquery"
 ```
 
 Author's output-
 ```
 THIS IS JUST FYI...
 
-CREATE EXTERNAL TABLE `apache-hudi-lab.gaia_product_ds.nyc_taxi_hudi_bq`
+CREATE EXTERNAL TABLE `apache-hudi-lab.gaia_product_ds.nyc_taxi_hudi_bigquery`
 WITH PARTITION COLUMNS
 OPTIONS(
   format="PARQUET",
