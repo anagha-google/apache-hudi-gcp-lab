@@ -1,16 +1,16 @@
 # Module 5: BigLake external tables on Hudi snapshots
 
-## BigLake in a nutshell
+## About BigLake 
 BigLake is feature that provides the following capabilities-
-1. A readonly  external table abstraction over structured data in Cloud Storage in supported formats.
-2. Query acceleration through metadata caching, statistics capture and more
-3. Greater security over data lakes through row level security, column level security and data masking made possible with a set of commands
+1. A read-only external table abstraction over structured data in Cloud Storage in supported formats.
+2. Query acceleration through metadata caching with bounded staleness, statistics capture and more
+3. Greater security over data lakes through row level security, column level security and data masking made possible without additional software like Apache Ranger
 4. Biglake offers decoupling of security - external tables from underlying storage (grant access to table without granting access to data in Cloud Storage)
 5. Run queries from BigQuery UI on BigQuery native tables and BigLake tables seamlessly
-6. Read/write to BigQuery and BigLake tables seamlessly from Apache Spark on Dataproc
+6. Read/write to BigQuery and BigLake tables seamlessly from Apache Spark on Dataproc including with full query pushdown
 7. Read from BigQuery and BigLake tables seamlessly and visualize with your favorite dashboarding solution
 8. Automated scheduled metadata cache refresh per requirement for data freshness
-9. Ability to view the metadata cache refresh schedule, alter the same
+9. Ability to view the metadata cache refresh schedule
 10. Ability to refresh the metadata cache on demand
 
 <br>
@@ -18,8 +18,6 @@ BigLake is feature that provides the following capabilities-
 <hr>
 
 ## Value proposition of BigLake for Hudi datasets
-
-Note: BigLake is currently, a read-only external table framework; To add/update/delete data in your Hudi tables, you still need to use technologies such as Apache Spark on Cloud Dataproc. 
 
 - BigLake offers **row, column level security** over Hudi (point-in-time) snapshots of Hudi tables in Cloud Storage
 - BigLake **query acceleration** over Hudi (point-in-time) snapshots of Hudi tables in Cloud Storage
@@ -29,16 +27,17 @@ Note: BigLake is currently, a read-only external table framework; To add/update/
 <hr>
 
 ## Architectural considerations
-1. You dont need to create a BigQuery and BigLake table each time you run the Hudi BigQuerySyncTool, just the very first time
-2. For BigLake tables that are based on Parquet files (as is the case with Hudi snapshots), table statistics are collected during the metadata cache refresh and will improve query plans.
-3. Include a process to sync to BigQuery/BigLake metastore, in your data engineering pipelines, for freshest data for querying via BQ SQL, with row and column level security enforced at read time
-4. Configure the refresh of BigLake metadata cache based on the need for freshness is a must. Understand the nuances of metadata cache refresh
+1. BigLake over Hudi snapshots is read-only;  To add/update/delete data in your Hudi tables, you still need to use technologies such as Apache Spark on Cloud Dataproc.
+2. You dont need to create a BigLake table each time you run the Hudi BigQuerySyncTool, just the very first time
+3. For BigLake tables that are based on Parquet files (as is the case with Hudi snapshots), table statistics are collected during the metadata cache refresh and will improve query plans.
+4. Include a process to sync to BigQuery/BigLake metastore, in your data engineering pipelines, for freshest data for querying via BQ SQL, with row and column level security enforced at read time
+5. Configure the refresh of BigLake metadata cache based on the need for freshness is a must. Understand the nuances of metadata cache refresh
   
 <br>
 
 <hr>
 
-## 1. Create a BigLake table definition over the Hudi snapshot parquet & manifest in GCS
+## 1. Create a BigLake table over the Hudi snapshot parquet & manifest in GCS
 
 ### 1.1. Generate a SQL for the DDL command to be executed in BigQuery UI (one time activity)
 
