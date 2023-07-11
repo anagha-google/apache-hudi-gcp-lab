@@ -10,6 +10,11 @@ Completion of all prior lab modules
 ## Lab Module Goals
 Demystify Apache Hudi sync tooling into BigQuery by example.
 
+1. Understand end-to-end the process to use the Hudi BigQuerySyncTool
+2. And architectural considerations
+3. And be able to demo the integration
+4. Repurpose code/commands for your workloads
+
 <hr>
 
 ## 1. Native Apache Hudi integration tooling for BigQuery
@@ -25,6 +30,9 @@ The sync tool syncs a Hudi table at a time, and requires running a Spark applica
 Upon launching the BigQuerySyncTool-
 1. Creates a manifest file reflecting the latest snapshot of the table, and persists the same in the .hoodie directory of the Hudi dataset.
 2. Creates an external table in BigQuery
+
+![README](../04-images/m04-00-5.png)   
+<br><br>
 
 ### 1.3. Querying the Hudi dataset in BigQuery
 Query the external table.<br>
