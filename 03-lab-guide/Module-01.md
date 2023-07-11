@@ -18,6 +18,7 @@ In this module, you will provision the services needed for the lab.
 | :-- | :--- |  
 | 1 |  Set up your lab environment with Terraform | 
 | 2 |  Validate provisioning of services | 
+
 Optionally, stufy the Terraform, so you can repurpose it for your workloads.
 
 <hr>
