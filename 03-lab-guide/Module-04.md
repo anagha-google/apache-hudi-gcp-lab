@@ -145,7 +145,7 @@ hudi/packaging/hudi-gcp-bundle/target/hudi-gcp-bundle-0.14.0-SNAPSHOT.jar \
 --project-id $PROJECT_ID \
 --dataset-name gaia_product_ds \
 --dataset-location $LOCATION \
---table nyc_taxi_hudi_bq \
+--table nyc_taxi_trips_hudi_bigquery \
 --source-uri gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/trip_year=*  \
 --source-uri-prefix gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/ \
 --base-path gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/ \
