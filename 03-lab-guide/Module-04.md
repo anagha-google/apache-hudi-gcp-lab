@@ -10,7 +10,7 @@ Completion of all prior lab modules
 ## Lab Module Goals
 Demystify Apache Hudi sync tooling into BigQuery by example.
 
-1. Understand end-to-end the process to use the Hudi BigQuerySyncTool
+1. Understand end-to-end, the process to use the Hudi BigQuerySyncTool, and its nuances
 2. And architectural considerations
 3. And be able to demo the integration
 4. Repurpose code/commands for your workloads
