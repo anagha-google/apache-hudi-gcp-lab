@@ -24,7 +24,7 @@ Optionally, stufy the Terraform, so you can repurpose it for your workloads.
 <hr>
 
 ## Lab Module Flow
-![README](../04-images/m01-01.png)   
+![README](../04-images/m01-00.png)   
 <br><br>
 
 <hr>
