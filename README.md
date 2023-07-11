@@ -13,12 +13,12 @@ The lab includes Terraform for provisioning automation. The lab guide is detaile
 
 1. Comprehensive knowledge of Hudi support on Google Cloud
 2. Ability to demonstrate Hudi support on Google Cloud - across products
-3. Sample code/commands and such that can be repurposed for your Hudi workloads
+3. Sample code/commands/such that can be repurposed for your Hudi workloads
 4. Terraform code that can be repurposed for your Hudi workloads
 
 ## Lab Duration
 
-~4-5 hours
+~6 hours
 
 ## Lab Flow
 
