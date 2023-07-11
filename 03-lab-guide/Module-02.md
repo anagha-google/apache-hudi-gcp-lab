@@ -22,7 +22,7 @@ Fundamentaly, this module covers creating a Parquet dataset of NYC taxi trip dat
 
 <hr>
 
-## Lab Flow
+## Lab Module Flow
 
 ![README](../04-images/m02-00.png)   
 <br><br>
@@ -30,7 +30,7 @@ Fundamentaly, this module covers creating a Parquet dataset of NYC taxi trip dat
 <hr>
 
 
-## Lab Solution Architecture
+## Lab Module Solution Architecture
 
 ![README](../04-images/m02-00-2.png)   
 <br><br>
