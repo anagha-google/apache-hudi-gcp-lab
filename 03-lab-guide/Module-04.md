@@ -33,7 +33,8 @@ Query the external table.<br>
 3. The table persists post the initial run of the BigQuerySyncTool, just the manifest is replaced
 4. If the Hudi schema changes, the external table will reflect the latest schema.
 5. If the Hudi dataset has deletes/updates, and if Parquet underneath the external tables gets deleted, the query will not fail, it will merely not reflect the data within the files that were deleted
-6. When you query the external table, follow the typical best practices, such as explicitly calling out the columns you want to select, apply the partition keys for performance and such..
+6. JFYI - predicate pushdowns are supported, partition pruning is supported whether you query via BigQuery SQL or via Apache Spark and using the BigQuery Spark connector
+8. When you query the external table, follow the typical best practices, such as explicitly calling out the columns you want to select, apply the partition keys for performance and such..
 
 ### 1.5. What is takes to use the tooling as it stands
 
@@ -169,7 +170,7 @@ INFORMATIONAL
 
 <hr>
 
-## 8. The Hudi manifest file
+## 8. The Hudi manifest file created by BigQuerySyncTool 
 
 A manifest file called latest-snapshot.csv gets created in the .hoodie directory of the Hudi dataset in Cloud Storage in a folder called manifest. It merely has a listing of all the files in the latest Hudi snapshot.<br>
 
@@ -228,7 +229,7 @@ INFORMATIONAL
 ```
 <hr>
 
-### 9.3. The DDL of the external table created by the Hudi BigQuerySyncTool
+### 9.3. Review the DDL of the external table created by the Hudi BigQuerySyncTool
 
 Run this query in the BigQuery UI and study the DDL- 
 ```
@@ -280,7 +281,13 @@ GROUP BY
 
 ## 11. Querying fresh data
 
-This requires running the BigQuerySyncTool to update the manifest. Once this manifest is updated, the queries will run against the latest snapshot of the data. 
+This requires running the BigQuerySyncTool to generate the latest manifest. Once this manifest is updated, the queries will run against the latest snapshot of the data. 
+
+## 12. Consistency considerations
+
+
+
+
 
 <hr>
 
