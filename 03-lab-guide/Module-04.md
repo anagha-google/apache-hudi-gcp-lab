@@ -285,13 +285,11 @@ This requires running the BigQuerySyncTool to generate the latest manifest. Once
 
 ## 12. Consistency considerations
 
-
-
-
+The BigQuerySyncTool merely creates a manifest file on a Hudi snapshot, and a BigQuery external table. The files in the manifest file can get deleted from record deletions, or compaction for any number of reasons. Queries executed will not fail if files listed in the manifest are physically missing in the Hudi data lake; however, the data will be (understandingly) missing in the query results.
 
 <hr>
 
-## 12. Best practices
+## 13. Best practices
 
 1. Dataproc: Avoid connecting to the master node and running the utility, prefer using the Dataproc jobs API instead. This will be much easier when the default image includes Hudi in totality.
 2. External tables: Prefer Biglake tables for query acceleration, and fine grained access control - row and column level and including masking
