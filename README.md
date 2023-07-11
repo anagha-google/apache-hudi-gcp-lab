@@ -4,5 +4,5 @@
 
 ## Lab flow
 
-![README](../04-images/m00-01.png)   
+![README](04-images/m00-01.png)   
 <br><br>
