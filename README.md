@@ -50,5 +50,36 @@ The lab includes Terraform for provisioning automation. The lab guide is detaile
 
 <hr>
 
+## Contributing
+See the contributing instructions to get started contributing.
 
+<hr>
+
+## License
+All solutions within this repository are provided under the Apache 2.0 license. Please see the LICENSE file for more detailed terms and conditions.
+
+<hr>
+
+## Disclaimer
+This repository and its contents are not an official Google Product.
+
+<hr>
+
+## Issues
+Share you feedback, ideas, by logging issues.
+
+<hr>
+
+## Release History
+#	Release Summary	Date	Contributor
+1.	Initial release of quickstart labs series	20230303	Anagha Khanolkar
+2.	Initial release of data mesh banking labs	20230306	Mansi Maharana
+3.	Additional modules (AutoDQ) to quickstart labs series	20230320	Anagha Khanolkar
+4.	Additional modules (DQ tasks) to quickstart labs series	20230321	Anagha Khanolkar
+5.	Additional modules (DQ tasks) to quickstart labs series	20230328	Anagha Khanolkar
+6.	Module on Biglake	20230411	Anagha Khanolkar
+
+| # | Release Summary | Date | Contributor |
+| :-- | :--- |  :--- |  :--- |  
+| 1 |  Module 1-5 | 20230711 | Anagha Khanolkar, Google Cloud |
 
