@@ -2,9 +2,9 @@
 
 ## About the lab
 
-Apache Hudi is a powerful table format with a number of capabilities that make it compelling to data engineers and it is making its way into enterprise architecture across the Google Cloud customer base. Due to its increasing popularity and customer demand, Cloud Dataproc, Google's Open Data Analytics managed platform, introduced Hudi libraries and configuration as part of its base image. The BigQuery product team improved the native BigQuery integration available in Apache Hudi.   
+Apache Hudi is a powerful table format with a number of capabilities that make it compelling to data engineers and it is making its way into enterprise architecture across the Google Cloud customer base. Due to its increasing popularity and customer demand, Cloud Dataproc, Google's Open Data Analytics managed platform, introduced Hudi libraries and configuration as part of its base image and the BigQuery product team improved the native BigQuery integration available in Apache Hudi.   
 
-The lab is a self paced, fully scripted module series that strives to demystify Apache Hudi integration in GCP services - specifically, Dataproc on GCE, Dataproc Metastore Service, BigQuery, BigLake, Dataplex and more, through simple hands on exercises. The labs starts with Hudi integration across products in scope, followed by Apache Hudi quickstart notebooks (work in progress) that gently introduce Apache Hudi itself if you are new to the table format.
+The lab is an effort to grow awareness about Apache Hudi on Google Cloud and is a community contribution. It is self paced, fully scripted, a module series that strives to demystify Apache Hudi integration in GCP services - specifically, Dataproc, Dataproc Metastore Service, BigQuery, BigLake, Dataplex and more, through simple hands on exercises. The labs starts with Hudi integration across products in scope, followed by Apache Hudi quickstart notebooks (work in progress) that gently introduce Apache Hudi itself if you are new to the table format.
 
 The lab includes Terraform for provisioning automation. The lab guide is detailed with comprehensive instructions, screenshots, commands and such to provide a smooth learning experience. The lab guide can be read like a book if time constrained, for a visual overview of Hudi support on Google Cloud. 
 
@@ -47,6 +47,7 @@ The lab includes Terraform for provisioning automation. The lab guide is detaile
 | [Module 07](03-lab-guide/Module-07.md) |  Auto Data Quality on Hudi snapshot BigLake tables, powered by Dataplex |
 | Module 08 |  Data Lineage with BigQuery/BigLake Hudi external tables |
 | Module 09 |  Apache Hudi quickstart notebooks to learn Hudi |
+| Module 10 |  Data Catalog and Business Glossary for Hudi datasets & tables |
 
 <hr>
 
