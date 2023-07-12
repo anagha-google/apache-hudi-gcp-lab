@@ -60,7 +60,7 @@ BigLake is feature that provides the following capabilities-
 7. Read from BigQuery and BigLake tables seamlessly and visualize with your favorite dashboarding solution
 8. Automated scheduled metadata cache refresh per requirement for data freshness
 9. Ability to view the metadata cache refresh schedule
-10. Ability to refresh the metadata cache on demand
+10. Ability to refresh the metadata cache on demand, manually
 
 <br>
 
