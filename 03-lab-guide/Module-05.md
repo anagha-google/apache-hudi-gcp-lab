@@ -36,7 +36,7 @@ Demystify Biglake and value proposition of BigLake for Apache Hudi datasets thro
 
 ### Metadata Cache Refresh Options With Biglake
 
-![README](../04-images/m05-00-5.png)   
+![README](../04-images/m05-00-4.png)   
 <br><br>
 
 
