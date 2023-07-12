@@ -34,12 +34,6 @@ The lab includes Terraform for provisioning automation. The lab guide is detaile
 
 <hr>
 
-
-## Lab Solution Architecture
-
-<hr>
-
-
 ## Lab Modules
 
 
