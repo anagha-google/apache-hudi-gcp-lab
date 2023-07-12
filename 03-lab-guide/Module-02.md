@@ -40,7 +40,7 @@ Fundamentaly, this module covers creating a Parquet dataset of NYC taxi trip dat
 
 <hr>
 
-## Relevant Collateral
+## References
 
 | # | Asset/Artifact/Documentation | 
 | :-- | :--- |  
