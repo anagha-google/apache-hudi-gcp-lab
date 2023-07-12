@@ -21,6 +21,7 @@ Demystify Biglake and value proposition of BigLake for Apache Hudi datasets thro
 ![README](../04-images/m05-00-1.png)   
 <br><br>
 
+<hr>
 
 ## Lab Module Solution Architecture 
 
@@ -29,17 +30,19 @@ Demystify Biglake and value proposition of BigLake for Apache Hudi datasets thro
 ![README](../04-images/m05-00-2.png)   
 <br><br>
 
+<hr>
+
 ### Iterative Hudi-BigQuery-Biglake Integration
 
 ![README](../04-images/m05-00-3.png)   
 <br><br>
 
+<hr>
+
 ### Metadata Cache Refresh Options With Biglake
 
 ![README](../04-images/m05-00-4.png)   
 <br><br>
-
-
 
 <hr>
    
