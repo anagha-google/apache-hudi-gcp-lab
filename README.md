@@ -1,4 +1,4 @@
-# Apache Hudi support on Google Cloud Platform
+# Demystifying Apache Hudi support on Google Cloud Platform
 
 ## About the lab
 
