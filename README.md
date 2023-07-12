@@ -40,7 +40,7 @@ The lab includes Terraform for provisioning automation. The lab guide is detaile
 | :-- | :--- |  
 | [Module 01](03-lab-guide/Module-01.md) |  Infrastructure provisioning with Terraform | 
 | [Module 02](03-lab-guide/Module-02.md) |  Generate Parquet data for the lab with Apache Spark on Cloud Dataproc-GCE |
-| [Module 03](03-lab-guide/Module-03.md) |  Generate Hudi data for the lab with Apache Spark on Cloud Dataproc-GCE | 
+| [Module 03](03-lab-guide/Module-03.md) |  Generate Hudi data for the lab with Apache Spark on Cloud Dataproc-GCE<br>Register Hudi table definitions into Dataproc Metastore<br>Explore Hudi tables from Jupyter notebooks on Dataproc with SparkSQL  | 
 | [Module 04](03-lab-guide/Module-04.md) |  Integrate Hudi snapshot into BigQuery with the Apache Hudi BigQuerySyncTool |
 | [Module 05](03-lab-guide/Module-05.md) |  Create BigLake external table on the Hudi snapshot |
 | Module 06 |  Fine Grained Access Control on Hudi Data Lakes, powered by BigLake |
