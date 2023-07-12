@@ -36,7 +36,7 @@ The lab includes Terraform for provisioning automation. The lab guide is detaile
 
 ## Lab Modules
 
-| # | Goal | 
+| Module | Focus | 
 | :-- | :--- |  
 | [Module 01](03-lab-guide/Module-01.md) |  Infrastructure provisioning with Terraform | 
 | [Module 02](03-lab-guide/Module-02.md) |  Generate Parquet data for the lab with Apache Spark on Cloud Dataproc-GCE |
