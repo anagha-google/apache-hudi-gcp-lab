@@ -1,2 +1,2 @@
 
-# Module 6: External table security powered by BigLake 
+# Module 6: Fine Grained Access Control powered by BigLake 
