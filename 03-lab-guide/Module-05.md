@@ -1,4 +1,4 @@
-# Module 5: BigLake external tables on Hudi snapshots
+# Module 5: Create BigLake external tables on Hudi snapshots
 
 This module covers creating BigLake tables on top of Apache Hudi parquet snapshots created in the prior module.
 
