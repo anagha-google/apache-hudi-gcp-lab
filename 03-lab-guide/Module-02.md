@@ -127,9 +127,6 @@ The transformations however are applied in Spark, the technology used to generat
 
 ### 2.1. Navigate to Cloud Dataproc UI on the Cloud Console, review the processing cluster
 
-![README](../04-images/m02-01.png)   
-<br><br>
-
 Click on the cluster with the keyword 'dpgce' in the name-
 ![README](../04-images/m02-01-a.png)   
 <br><br>
