@@ -11,7 +11,7 @@ The lab includes Terraform for provisioning automation. The lab guide is detaile
 <hr>
 
 
-## Lab goals
+## Lab Goals
 
 1. Provide comprehensive, hands-on knowledge of Hudi support on Google Cloud, across Data Analytics services
 2. Provide sample code/commands/such that can be repurposed for your Hudi workloads
