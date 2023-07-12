@@ -15,6 +15,8 @@ Fundamentaly, this module covers creating a Parquet dataset of NYC taxi trip dat
 | 2 |  Provide gentle introduction to Dataproc on Google Compute Engine through practical example, if unfamiliar - specifically Dataproc Spark jobs API|
 | 3 |  Provide gentle introduction to Apache Spark connector for BigQuery (native tables) through practical example, if unfamiliar  | 
 | 4 |  Provide gentle introduction to Apache Spark connector for Cloud Storage through practical example, if unfamiliar  | 
+
+<hr>
    
 ## Lab Module Duration
 
