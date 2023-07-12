@@ -112,6 +112,22 @@ echo $DDL
 
 Capture the DDL emitted, we will paste this in the BigQuery UI.
 
+```
+INFORMATIONAL - AUTHOR'S OUTPUT - will not work for you
+
+
+CREATE OR REPLACE EXTERNAL TABLE gaia_product_ds.nyc_taxi_trips_hudi_biglake
+WITH PARTITION COLUMNS (trip_year string,trip_month string, trip_day string)
+WITH CONNECTION `apache-hudi-lab.us-central1.gaia_bq_connection`
+OPTIONS(
+uris=["gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/absolute-path-manifest/latest-snapshot.csv"],
+hive_partition_uri_prefix ="gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/",
+format="PARQUET",
+file_set_spec_type="NEW_LINE_DELIMITED_MANIFEST",
+metadata_cache_mode="AUTOMATIC",
+max_staleness=INTERVAL '1' DAY );
+```
+
 ![README](../04-images/m05-01.png)   
 <br><br>
 
