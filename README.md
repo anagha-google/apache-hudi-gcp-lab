@@ -43,11 +43,11 @@ The lab includes Terraform for provisioning automation. The lab guide is detaile
 | [Module 03](03-lab-guide/Module-03.md) |  Generate Hudi data for the lab with Apache Spark on Cloud Dataproc-GCE<br>Register Hudi table definitions into Dataproc Metastore<br>Explore Hudi tables from Jupyter notebooks on Dataproc with SparkSQL  | 
 | [Module 04](03-lab-guide/Module-04.md) |  Integrate Hudi snapshot into BigQuery with the Apache Hudi BigQuerySyncTool |
 | [Module 05](03-lab-guide/Module-05.md) |  Create BigLake external table on the Hudi snapshot |
-| Module 06 |  Fine Grained Access Control on Hudi Data Lakes, powered by BigLake |
-| [Module 07](03-lab-guide/Module-07.md) |  Auto Data Quality on Hudi snapshot BigLake tables, powered by Dataplex |
-| Module 08 |  Data Lineage with BigQuery/BigLake Hudi external tables, powered by Dataplex |
-| Module 09 |  Quickstart Spark notebooks in Scala and Python to kick the tires with Apache Hudi |
-| Module 10 |  Data Catalog and Business Glossary for Hudi datasets & tables |
+| Module 06 |  Implement Fine Grained Access Control on Hudi Data Lakes, powered by BigLake |
+| [Module 07](03-lab-guide/Module-07.md) |  Run Data Profiling and Data Quality on Hudi snapshot BigLake tables, powered by Dataplex |
+| Module 08 |  Visualize Data Lineage with BigQuery/BigLake Hudi external tables, powered by Dataplex |
+| Module 09 |  Execute quickstart Spark notebooks in Scala and Python to kick the tires with Apache Hudi |
+| Module 10 |  Review automated technical metadata harevesting into Data Catalog and upload a Business Glossary for a Hudi snapshot table |
 
 <hr>
 
