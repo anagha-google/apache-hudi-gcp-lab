@@ -7,6 +7,8 @@ We will do the data generation via a PySpark script that is pre-created and avai
 **Prerequisite:** <br>
 Successful completion of prior module
 
+<hr>
+
 ## Lab Module Goals
 
 Fundamentaly, this module covers creating a Hudi dataset of NYC taxi trip data available in Cloud Storage as a Parquet dataset. The following are implicit. The lab also introduces Jupyter Spark notebooks on Dataproc on Compute Engine if unfamiliar.
