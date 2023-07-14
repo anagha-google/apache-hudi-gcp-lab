@@ -1,6 +1,8 @@
 
 # Module 6: Fine Grained Access Control powered by BigLake 
 
+WORK IN PROGRESS
+
 To run this lab module, you need the ability to create two users. If you dont, you can just read this module to understand Fine Grained Access Control possible with BigLake.
 
 <hr>
