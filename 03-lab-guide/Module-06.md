@@ -26,7 +26,7 @@ From admin.google.com, create the three users.<br>
 ### 3.1. Create a policy for Yellow Taxi data
 
 In the sample below, the author is granting "yellow-taxi-marketing-mgr" access to yellow taxi data. Edit it to reflect your user.<br>
-Run the command in the BigQuery UI-
+Run the command below, after updating with your user, in the BigQuery UI-
 ```
 CREATE OR REPLACE ROW ACCESS POLICY yellow_taxi_filter
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
@@ -37,7 +37,7 @@ FILTER USING (taxi_type = "yellow")
 ### 3.2. Create a policy for Green Taxi data
 
 In the sample below, the author is granting "green-taxi-marketing-mgr" access to green taxi data. Edit it to reflect your user.<br>
-Run the command in the BigQuery UI-
+Run the command below, after updating with your user, in the BigQuery UI-
 ```
 CREATE OR REPLACE ROW ACCESS POLICY green_taxi_filter
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
