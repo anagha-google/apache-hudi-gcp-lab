@@ -89,6 +89,7 @@ TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1
 
 ### 4.2. Create a policy tag called "FinancialData" under the taxonomy
 
+Run this in Cloud Shell-
 ```
 
 FINANCIAL_POLICY="FinancialData"
@@ -115,4 +116,32 @@ INFORMATIONAL ONLY - DONT RUN THIS
 Lets grab the Policy Tag ID for the next step:
 ```
 FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep policyTags | cut -d'/' -f8`
+```
+
+### 4.3. Assign the policy to the data-engineer to disallow them from accessing financials
+
+Run this in Cloud Shell, after editing the command to reflect your data-engineer email:
+```
+DATA_ENGINEER_EMAIL="data-engineer@akhanolkar.altostrat.com"
+
+curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
+    -H "Content-Type: application/json; charset=utf-8" \
+  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${FINANCIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/datacatalog.categoryFineGrainedReader\",\"members\":[\"user:$DATA_ENGINEER_EMAIL\"]}]}}"
+```
+
+Author's output:
+```
+INFORMATIONAL-
+{
+  "version": 1,
+  "etag": "BwYAas+l/7g=",
+  "bindings": [
+    {
+      "role": "roles/datacatalog.categoryFineGrainedReader",
+      "members": [
+        "user:data-engineer@akhanolkar.altostrat.com"
+      ]
+    }
+  ]
+}
 ```
