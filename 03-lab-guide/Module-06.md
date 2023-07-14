@@ -17,7 +17,7 @@ We will implement the following security setup-
 | green-taxi-marketing-mgr@YOUR_DOMAIN.com |  Only green taxi trips | All columns | 
 | data-engineer@YOUR_DOMAIN.com |  All trips | All columns except fare and tips |
 
-
+<hr>
 
 ## 2. Create users 
 
@@ -34,7 +34,7 @@ Run the command below, after updating with your user, in the BigQuery UI-
 ```
 CREATE OR REPLACE ROW ACCESS POLICY yellow_taxi_filter
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
-GRANT TO ("user:yellow-taxi-marketing-mgr@akhanolkar.altostrat.com")
+GRANT TO ("user:REPLACE_WITH_YOUR_YELLOW_TAXI_USER_EQUIVALENT")
 FILTER USING (taxi_type = "yellow")
 ```
 
@@ -45,7 +45,7 @@ Run the command below, after updating with your user, in the BigQuery UI-
 ```
 CREATE OR REPLACE ROW ACCESS POLICY green_taxi_filter
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
-GRANT TO ("user:green-taxi-marketing-mgr@akhanolkar.altostrat.com")
+GRANT TO ("user:REPLACE_WITH_YOUR_YELLOW_TAXI_USER_EQUIVALENT")
 FILTER USING (taxi_type = "green")
 ```
 
@@ -126,7 +126,7 @@ FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxon
 
 Run this in Cloud Shell, after editing the command to reflect your data-engineer email:
 ```
-DATA_ENGINEER_EMAIL="data-engineer@akhanolkar.altostrat.com"
+YOUR_DATA_ENGINEER_USER_EQUIVALENT="PASTE_EMAIL_HERE"
 
 curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
     -H "Content-Type: application/json; charset=utf-8" \
@@ -159,20 +159,24 @@ roles/viewer<br>
 roles/storage.admin<br>
 roles/dataproc.editor<br>
 
-E.g. Substitute the users below with yours:
+E.g. Substitute the users below with yours and run in Cloud Shell:
 
 ```
-gcloud projects add-iam-policy-binding $PROJECT_ID --member user:data-engineer@akhanolkar.altostrat.com --role=roles/viewer
-gcloud projects add-iam-policy-binding $PROJECT_ID --member user:yellow-taxi-marketing-mgr@akhanolkar.altostrat.com --role=roles/viewer
-gcloud projects add-iam-policy-binding $PROJECT_ID --member user:green-taxi-marketing-mgr@akhanolkar.altostrat.com --role=roles/viewer
+YOUR_YELLOW_TAXI_USER_EQUIVALENT="PASTE_EMAIL_HERE"
+YOUR_GREEN_TAXI_USER_EQUIVALENT="PASTE_EMAIL_HERE"
+YOUR_DATA_ENGINEER_USER_EQUIVALENT="PASTE_EMAIL_HERE"
 
-gcloud projects add-iam-policy-binding $PROJECT_ID --member user:data-engineer@akhanolkar.altostrat.com --role=roles/storage.admin
-gcloud projects add-iam-policy-binding $PROJECT_ID --member user:yellow-taxi-marketing-mgr@akhanolkar.altostrat.com --role=roles/storage.admin
-gcloud projects add-iam-policy-binding $PROJECT_ID --member user:green-taxi-marketing-mgr@akhanolkar.altostrat.com --role=roles/storage.admin
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_YELLOW_TAXI_USER_EQUIVALENT --role=roles/viewer
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_GREEN_TAXI_USER_EQUIVALENT --role=roles/viewer
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_DATA_ENGINEER_USER_EQUIVALENT --role=roles/viewer
 
-gcloud projects add-iam-policy-binding $PROJECT_ID --member user:data-engineer@akhanolkar.altostrat.com --role=roles/dataproc.editor
-gcloud projects add-iam-policy-binding $PROJECT_ID --member user:yellow-taxi-marketing-mgr@akhanolkar.altostrat.com --role=roles/dataproc.editor
-gcloud projects add-iam-policy-binding $PROJECT_ID --member user:green-taxi-marketing-mgr@akhanolkar.altostrat.com --role=roles/dataproc.editor
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_YELLOW_TAXI_USER_EQUIVALENT --role=roles/viewer
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_GREEN_TAXI_USER_EQUIVALENT --role=roles/storage.admin
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_DATA_ENGINEER_USER_EQUIVALENT --role=roles/storage.admin
+
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_YELLOW_TAXI_USER_EQUIVALENT --role=roles/viewer
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_GREEN_TAXI_USER_EQUIVALENT --role=roles/dataproc.editor
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_DATA_ENGINEER_USER_EQUIVALENT --role=roles/dataproc.editor
 ```
 
 <hr>
