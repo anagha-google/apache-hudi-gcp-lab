@@ -15,6 +15,8 @@ We will implement the following security setup-
 | green-taxi-marketing-mgr@YOUR_DOMAIN.com |  Only green taxi trips | All columns | 
 | data-engineer@YOUR_DOMAIN.com |  All trips | All columns except fare and tips |
 
+
+
 ## 2. Create users 
 
 From admin.google.com, create the three users.<br>
@@ -146,7 +148,34 @@ INFORMATIONAL-
 }
 ```
 
-## 5. Column Level Security in action
+<hr>
+
+## 5. Grant roles to the three users
+
+Grant all the three users, the following roles:<br>
+roles/viewer<br>
+roles/storage.admin<br>
+roles/dataproc.editor<br>
+
+E.g. Substitute the users below with yours:
+
+```
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:data-engineer@akhanolkar.altostrat.com --role=roles/viewer
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:yellow-taxi-marketing-mgr@akhanolkar.altostrat.com --role=roles/viewer
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:green-taxi-marketing-mgr@akhanolkar.altostrat.com --role=roles/viewer
+
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:data-engineer@akhanolkar.altostrat.com --role=roles/storage.admin
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:yellow-taxi-marketing-mgr@akhanolkar.altostrat.com --role=roles/storage.admin
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:green-taxi-marketing-mgr@akhanolkar.altostrat.com --role=roles/storage.admin
+
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:data-engineer@akhanolkar.altostrat.com --role=roles/dataproc.editor
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:yellow-taxi-marketing-mgr@akhanolkar.altostrat.com --role=roles/dataproc.editor
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:green-taxi-marketing-mgr@akhanolkar.altostrat.com --role=roles/dataproc.editor
+```
+
+<hr>
+
+## 6. Column Level Security in action
 
 ### 5.1. Sign-in to the BigQuery UI as the data engineer & query the table
 
