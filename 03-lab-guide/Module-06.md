@@ -122,15 +122,16 @@ Lets grab the Policy Tag ID for the next step:
 FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep policyTags | cut -d'/' -f8`
 ```
 
-### 4.3. Assign the policy to the data-engineer to disallow them from accessing financials
+### 4.3. Assign the policy to the taxi marketing managers to allow access to financials
 
-Run this in Cloud Shell, after editing the command to reflect your data-engineer email:
+Run this in Cloud Shell, after editing the command to reflect your user specific emails:
 ```
-YOUR_DATA_ENGINEER_USER_EQUIVALENT="PASTE_EMAIL_HERE"
+YELLOW_TAXI_USER_EMAIL="PASTE_EMAIL_HERE"
+GREEN_TAXI_USER_EMAIL="PASTE_EMAIL_HERE"
 
 curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
     -H "Content-Type: application/json; charset=utf-8" \
-  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${FINANCIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/datacatalog.categoryFineGrainedReader\",\"members\":[\"user:$DATA_ENGINEER_EMAIL\"]}]}}"
+  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${FINANCIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/datacatalog.categoryFineGrainedReader\",\"members\":[\"user:$YELLOW_TAXI_USER_EMAIL\",\"user:$GREEN_TAXI_USER_EMAIL\" ]}]}}"
 ```
 
 Author's output:
@@ -183,6 +184,10 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_DATA_ENGI
 
 ## 6. Column Level Security in action
 
-### 5.1. Sign-in to the BigQuery UI as the data engineer & query the table
+To showcase, column level security, we set up 
+
+### 6.1. Sign-in to the BigQuery UI as the data engineer & query the table
 
 Paste in the BigQuery UI:
+
+
