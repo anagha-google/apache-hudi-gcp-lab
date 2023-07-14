@@ -145,3 +145,9 @@ INFORMATIONAL-
   ]
 }
 ```
+
+## 5. Column Level Security in action
+
+### 5.1. Sign-in to the BigQuery UI as the data engineer & query the table
+
+Paste in the BigQuery UI:
