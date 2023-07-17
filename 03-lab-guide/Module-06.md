@@ -9,32 +9,18 @@ To run this lab module, you need the ability to create two users. If you dont, y
 
 ## 1. Security setup
 
-We will implement the following security setup-
-
-| User example | Row Access | Column Access
-| :-- | :--- |  :--- |  
-| yellow-taxi-marketing-mgr@YOUR_DOMAIN.com |  Only yellow taxi trips | All columns | 
-| green-taxi-marketing-mgr@YOUR_DOMAIN.com |  Only green taxi trips | All columns | 
-| data-engineer@YOUR_DOMAIN.com |  All trips | All columns except fare and tips |
-
-<hr>
-
-## 2. Create users 
-
-From admin.google.com, create the three users.<br>
-
-<hr>
 
 ## 3. Create access policies for Row Level Security (RLS)
 
 ### 3.1. Create a policy for Yellow Taxi data
 
-In the sample below, the author is granting "yellow-taxi-marketing-mgr" access to yellow taxi data. Edit it to reflect your user.<br>
+In the sample below, the author is granting the group "yellow-taxi-marketing-mgr" access to yellow taxi data. Edit it to reflect your user. <br>
 Run the command below, after updating with your user, in the BigQuery UI-
 ```
-CREATE OR REPLACE ROW ACCESS POLICY yellow_taxi_filter
+YELLOW_TAXI_GROUP_EMAIL="PASTE_YOUR_GROUP_HERE"
+CREATE OR REPLACE ROW ACCESS POLICY yellow_taxi_rap
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
-GRANT TO ("user:REPLACE_WITH_YOUR_YELLOW_TAXI_USER_EQUIVALENT")
+GRANT TO ("group:$YELLOW_TAXI_GROUP_EMAIL")
 FILTER USING (taxi_type = "yellow")
 ```
 
@@ -43,9 +29,10 @@ FILTER USING (taxi_type = "yellow")
 In the sample below, the author is granting "green-taxi-marketing-mgr" access to green taxi data. Edit it to reflect your user.<br>
 Run the command below, after updating with your user, in the BigQuery UI-
 ```
-CREATE OR REPLACE ROW ACCESS POLICY green_taxi_filter
+GREEN_TAXI_GROUP_EMAIL="PASTE_YOUR_GROUP_HERE"
+CREATE OR REPLACE ROW ACCESS POLICY green_taxi_rap
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
-GRANT TO ("user:REPLACE_WITH_YOUR_YELLOW_TAXI_USER_EQUIVALENT")
+GRANT TO ("group:$GREEN_TAXI_GROUP_EMAIL")
 FILTER USING (taxi_type = "green")
 ```
 
