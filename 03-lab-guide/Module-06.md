@@ -3,11 +3,20 @@
 
 WORK IN PROGRESS
 
-To run this lab module, you need the ability to create two users. If you dont, you can just read this module to understand Fine Grained Access Control possible with BigLake.
-
 <hr>
 
 ## 1. Security setup
+
+## 1.1. Create IAM groups
+
+Create three IAM groups, as shown below.
+
+
+## 1.2. Create IAM users belonging to the three groups
+
+
+
+
 
 
 ## 3. Create access policies for Row Level Security (RLS)
