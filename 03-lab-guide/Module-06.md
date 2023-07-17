@@ -11,17 +11,28 @@ WORK IN PROGRESS
 
 Create three IAM groups, as shown below.
 
+![README](../04-images/m06-01.png)   
+<br><br>
+
 
 ## 1.2. Create IAM users belonging to the three groups
 
+Create three IAM users, and add them to the groups created above, as shown below.
 
-
-
+![README](../04-images/m06-02.png)   
+<br><br>
 
 
 ## 3. Create access policies for Row Level Security (RLS)
 
-### 3.1. Create a policy for Yellow Taxi data
+### 3.1. RLS security setup for the lab
+
+We will create row level policies that allow yellow and green taci marketing groups access to taxi trip data for the respective taxi type data (yellow taxi/green taxi).
+
+![README](../04-images/m06-03.png)   
+<br><br>
+
+### 3.2. Create a policy for Yellow Taxi data
 
 In the sample below, the author is granting the group "yellow-taxi-marketing-mgr" access to yellow taxi data. Edit it to reflect your user. <br>
 Run the command below, after updating with your user, in the BigQuery UI-
