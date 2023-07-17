@@ -122,7 +122,9 @@ Lets grab the Policy Tag ID for the next step:
 FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep policyTags | cut -d'/' -f8`
 ```
 
-### 4.3. Assign the policy to the taxi marketing managers to allow access to financials
+### 4.3. Associate the policy with specific columns in the BigLake table
+
+### 4.4. Assign the policy to the taxi marketing managers to allow access to financials
 
 Run this in Cloud Shell, after editing the command to reflect your user specific emails:
 ```
@@ -184,10 +186,19 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_DATA_ENGI
 
 ## 6. Column Level Security in action
 
-To showcase, column level security, we set up 
+To showcase column level security, we set up the following:
 
-### 6.1. Sign-in to the BigQuery UI as the data engineer & query the table
+| User  |  Column Access |
+| :-- | :--- |
+| yellow-taxi-marketing-mgr | All columns | 
+| green-taxi-marketing-mgr | All columns | 
+| data-engineer |  All trips | All columns except fare, tips & total amount |
+
+### 6.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
 
 Paste in the BigQuery UI:
 
+```
+
+```
 
