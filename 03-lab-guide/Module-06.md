@@ -564,6 +564,9 @@ To showcase column level security, we set up the following:
 
 <br><br>
 
+![README](../04-images/m06-13a.png)   
+<br><br>
+
 ### 5.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
 
 Paste in the BigQuery UI:
