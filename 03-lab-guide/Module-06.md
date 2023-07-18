@@ -16,7 +16,7 @@ Create three IAM groups, similar to below from admin.google.com.
 ![README](../04-images/m06-01.png)   
 <br><br>
 
-<br>
+
 
 ### 1.2. Create IAM users belonging to the three groups
 
@@ -25,7 +25,7 @@ Create three IAM users, and add them to the groups created above, as shown below
 ![README](../04-images/m06-02.png)   
 <br><br>
 
-<br>
+
 
 <hr>
 
