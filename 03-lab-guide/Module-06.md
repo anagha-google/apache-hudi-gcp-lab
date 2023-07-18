@@ -554,15 +554,7 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_DATA_ENGI
 
 ## 5. Column Level Security on BigLake tables **in action** with BQSQL from the BigQuery UI
 
-To showcase column level security, we set up the following:
-
-| User  |  Column Access |
-| :-- | :--- |
-| yellow-taxi-marketing-mgr | All columns | 
-| green-taxi-marketing-mgr | All columns | 
-| data-engineer |  All trips | All columns except fare, tips & total amount |
-
-<br><br>
+To showcase column level security, we configured CLS as follows:
 
 ![README](../04-images/m06-13a.png)   
 <br><br>
