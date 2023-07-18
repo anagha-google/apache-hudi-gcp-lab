@@ -208,7 +208,7 @@ FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxon
 
 #### 3.4.1. Create a schema file locally with the policy tag assigned to fare_amount and tip_amount
 
-In Cloud Shell, paste the following into a file called nyc_taxi_trips_hudi_biglake_schema.json in your root directory-
+In Cloud Shell, create a new file called nyc_taxi_trips_hudi_biglake_schema.json in your root directory and paste the below into it-
 ```
 [
   {
@@ -611,16 +611,46 @@ Lets add masking to the setup we already did-
 
 <br><br>
 
+### 6.1. [Step 2] Create a policy tag called "ConfidentialData" under the taxonomy we already created earlier
 
+Run this in Cloud Shell-
+```
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+LOCATION="us-central1"
 
-### 6.1. Create a Dataproc "personal auth" cluster for the data engineer
+TAXONOMY="BusinessCritical-NYCT"
+TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1 $TAXONOMY | grep taxonomies | cut -d'/' -f6`
+CONFIDENTIAL_POLICY_NM="ConfidentialData"
 
+rm -rf ~/requestPolicyTagCreate.json
+echo "{ \"displayName\": \"$CONFIDENTIAL_POLICY_NM\" }" >>  requestPolicyTagCreate.json
 
-### 6.2. Launch the exploration notebook on the BigLake table & run it
+curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
+    -H "Content-Type: application/json; charset=utf-8" \
+    -d @requestPolicyTagCreate.json \
+    "https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags"
 
+```
 
-Note that 
+Sample output of author-
+```
+INFORMATIONAL ONLY - DONT RUN THIS
+{
+  "name": "projects/apache-hudi-lab/locations/us-central1/taxonomies/2067815749752692148/policyTags/4607361211901247622",
+  "displayName": "ConfidentialData"
+}
+```
 
+Lets grab the Confidential Policy Tag ID for the next step:
+```
+CONFIDENTIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep -A1 ConfidentialData  | grep policyTags | cut -d'/' -f8`
+```
+
+![README](../04-images/m06-11.png)   
+<br><br>
+
+<br><br>
 
 ## 7. Row Level Security on BigLake tables **in action** - with BQSQL from the BigQuery UI
 
