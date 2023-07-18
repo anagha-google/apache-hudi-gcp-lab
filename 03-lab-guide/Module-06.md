@@ -56,7 +56,7 @@ GRANT TO ("group:nyc-yellow-taxi-marketing@akhanolkar.altostrat.com","group:nyc-
 FILTER USING (taxi_type = "yellow");
 ```
 
-![README](../04-images/m06-04.png)   
+![README](../04-images/m06-05.png)   
 <br><br>
 
 
@@ -80,9 +80,21 @@ ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
 GRANT TO ("group:nyc-green-taxi-marketing@akhanolkar.altostrat.com","group:nyc-taxi-tech-stop@akhanolkar.altostrat.com")
 FILTER USING (taxi_type = "green");
 ```
-![README](../04-images/m06-05.png)   
+![README](../04-images/m06-06.png)   
 <br><br>
 
+### 3.4. RLS from the BigQuery UI
+
+Navigate to the RLS policies as shown below-
+
+![README](../04-images/m06-04.png)   
+<br><br>
+
+![README](../04-images/m06-07.png)   
+<br><br>
+
+![README](../04-images/m06-08.png)   
+<br><br>
 
 <hr>
 
