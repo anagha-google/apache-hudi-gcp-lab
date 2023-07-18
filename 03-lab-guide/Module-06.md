@@ -477,10 +477,7 @@ INFORMATIONAL-
 
 ### 3.6. [Step 5] Enforce the column level access control
 
-Before we enforce, here is the taxonomy-
-
-![README](../04-images/m06-11.png)   
-<br><br>
+Before we enforce, here is the taxonomy and policy tag we created-
 
 ![README](../04-images/m06-15.png)   
 <br><br>
