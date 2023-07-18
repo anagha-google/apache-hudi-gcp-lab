@@ -28,19 +28,19 @@ Create three IAM users, and add them to the groups created above, as shown below
 
 ## 3. Create access policies for Row Level Security (RLS)
 
-### What's involved
+### 3.1. What's involved
 
 ![README](../04-images/m06-12.png)   
 <br><br>
 
-### 3.1. RLS security setup for the lab
+### 3.2. RLS security setup for the lab
 
 We will create row level policies that allow yellow and green taxi marketing groups access to taxi trip data for the respective taxi type data (yellow taxi/green taxi). The tech stop team gets access to all taxi types.
 
 ![README](../04-images/m06-03.png)   
 <br><br>
 
-### 3.2. Create a RLS policy for Yellow Taxi data
+### 3.3. Create a RLS policy for Yellow Taxi data
 
 In the sample below, the author is granting the groups, nyc-yellow-taxi-marketing@ and nyc-taxi-tech-stop@ access to yellow taxi data. <br>
 
@@ -65,7 +65,7 @@ FILTER USING (taxi_type = "yellow");
 <br><br>
 
 
-### 3.3. Create a RLS policy for Green Taxi data
+### 3.4. Create a RLS policy for Green Taxi data
 
 In the sample below, the author is granting the groups, nyc-green-taxi-marketing@ and nyc-taxi-tech-stop@ access to green taxi data. <br>
 
@@ -88,7 +88,7 @@ FILTER USING (taxi_type = "green");
 ![README](../04-images/m06-06.png)   
 <br><br>
 
-### 3.4. View the RLS policies configured from the BigQuery UI
+### 3.5. View the RLS policies configured from the BigQuery UI
 
 Navigate to the RLS policies as shown below-
 
@@ -101,11 +101,20 @@ Navigate to the RLS policies as shown below-
 ![README](../04-images/m06-08.png)   
 <br><br>
 
+### 3.6. Managing RLS
+
+[Documentation](https://cloud.google.com/bigquery/docs/managing-row-level-security)
+
 <hr>
 
 ## 4. Create access policies for Column Level Security (CLS)
 
-### 4.1. Create a taxonomy called "BusinessCritical-NYCT"
+### 4.1. What's involved
+
+![README](../04-images/m06-13.png)   
+<br><br>
+
+### 4.2. [Step 1] Create a taxonomy called "BusinessCritical-NYCT"
 
 Run this in Cloud Shell-
 ```
@@ -150,7 +159,7 @@ TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1
 ![README](../04-images/m06-10.png)   
 <br><br>
 
-### 4.2. Create a policy tag called "FinancialData" under the taxonomy
+### 4.3. [Step 2] Create a policy tag called "FinancialData" under the taxonomy
 
 Run this in Cloud Shell-
 ```
@@ -184,9 +193,236 @@ FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxon
 ![README](../04-images/m06-11.png)   
 <br><br>
 
-### 4.3. Associate the policy with specific columns in the BigLake table
+### 4.4. [Step 3] Associate the policy with specific columns in the BigLake table
 
-### 4.4. Assign the policy to the taxi marketing managers to allow access to financials
+#### 4.4.1. Create a schema file locally with the policy tag assigned to fare_amount and tip_amount
+
+In Cloud Shell, paste the following into a file called nyc_taxi_trips_hudi_biglake_schema.json in your root directory-
+```
+[
+  {
+    "mode": "NULLABLE",
+    "name": "_hoodie_commit_time",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "_hoodie_commit_seqno",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "_hoodie_record_key",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "_hoodie_partition_path",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "_hoodie_file_name",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "taxi_type",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_hour",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_minute",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "vendor_id",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "pickup_datetime",
+    "type": "TIMESTAMP"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "dropoff_datetime",
+    "type": "TIMESTAMP"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "store_and_forward",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "rate_code",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "pickup_location_id",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "dropoff_location_id",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "passenger_count",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_distance",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "fare_amount",
+    "type": "NUMERIC",
+    "policyTags": {
+      "names": ["projects/YOUR_PROJECT_ID/locations/YOUR_BQ_LOCATION/taxonomies/YOUR_TAXONOMY_ID/policyTags/YOUR_POLICY_TAG_ID"]
+    }
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "surcharge",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "mta_tax",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "tip_amount",
+    "type": "NUMERIC",
+    "policyTags": {
+      "names": ["projects/YOUR_PROJECT_ID/locations/YOUR_BQ_LOCATION/taxonomies/YOUR_TAXONOMY_ID/policyTags/YOUR_POLICY_TAG_ID"]
+    }
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "tolls_amount",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "improvement_surcharge",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "total_amount",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "payment_type_code",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "congestion_surcharge",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_type",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "ehail_fee",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "partition_date",
+    "type": "DATE"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "distance_between_service",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "time_between_service",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_year",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_month",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_day",
+    "type": "STRING"
+  }
+]
+```
+
+#### 4.4.2. Update the schema file with your variables
+
+Paste in Cloud Shell-
+```
+# Variables
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+LOCATION="us-central1"
+TAXONOMY="BusinessCritical-NYCT"
+FINANCIAL_POLICY="FinancialData"
+
+# Capture IDs
+TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1 $TAXONOMY | grep taxonomies | cut -d'/' -f6`
+FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep policyTags | cut -d'/' -f8`
+
+echo "Taxonomy ID is $TAXONOMY_ID"
+echo "Financial Policy Tag ID is $FINANCIAL_POLICY_TAG_ID"
+
+# Substitute the variables in the schema file
+sed -i s/YOUR_PROJECT_ID/$PROJECT_ID/g ~/nyc_taxi_trips_hudi_biglake_schema.json
+sed -i s/YOUR_BQ_LOCATION/$LOCATION/g ~/nyc_taxi_trips_hudi_biglake_schema.json
+sed -i s/YOUR_TAXONOMY_ID/$TAXONOMY_ID/g ~/nyc_taxi_trips_hudi_biglake_schema.json
+sed -i s/YOUR_POLICY_TAG_ID/$FINANCIAL_POLICY_TAG_ID/g ~/nyc_taxi_trips_hudi_biglake_schema.json
+```
+
+Once you execute these commands, your schema file should have your values in them instead of the placeholders.
+
+
+#### 4.4.3. Update the Biglake table schema with the file
+
+Run the below in Cloud Shell-
+```
+bq update \
+   $PROJECT_ID:gaia_product_ds.nyc_taxi_trips_hudi_biglake ~/nyc_taxi_trips_hudi_biglake_schema.json
+```
+
+#### 4.4.4. Validate the table update in the BigQuery UI
+
+
+![README](../04-images/m06-14.png)   
+<br><br>
+
+
+### 4.5. Assign the policy to the taxi marketing managers to allow access to financials
 
 Run this in Cloud Shell, after editing the command to reflect your user specific emails:
 ```
@@ -203,12 +439,13 @@ Author's output:
 INFORMATIONAL-
 {
   "version": 1,
-  "etag": "BwYAas+l/7g=",
+  "etag": "BwYAurecRgQ=",
   "bindings": [
     {
       "role": "roles/datacatalog.categoryFineGrainedReader",
       "members": [
-        "user:data-engineer@akhanolkar.altostrat.com"
+        "user:green-taxi-marketing-mgr@akhanolkar.altostrat.com",
+        "user:yellow-taxi-marketing-mgr@akhanolkar.altostrat.com"
       ]
     }
   ]
