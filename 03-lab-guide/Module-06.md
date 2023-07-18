@@ -5,8 +5,9 @@ WORK IN PROGRESS
 
 <hr>
 
-## 1. Security setup
+## 1. Foundational Security Setup for the lab module
 
+We will create three IAM groups and three users belonging to them.
 <br>
 
 ### 1.1. Create IAM groups
