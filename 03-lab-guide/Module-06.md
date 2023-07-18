@@ -116,6 +116,9 @@ Navigate to the RLS policies as shown below-
 ![README](../04-images/m06-13.png)   
 <br><br>
 
+![README](../04-images/m06-13a.png)   
+<br><br>
+
 <br><br>
 
 ### 3.2. [Step 1] Create a taxonomy called "BusinessCritical-NYCT"
