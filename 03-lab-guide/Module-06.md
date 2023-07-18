@@ -114,6 +114,8 @@ Navigate to the RLS policies as shown below-
 ![README](../04-images/m06-13.png)   
 <br><br>
 
+<br><br>
+
 ### 4.2. [Step 1] Create a taxonomy called "BusinessCritical-NYCT"
 
 Run this in Cloud Shell-
@@ -159,6 +161,8 @@ TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1
 ![README](../04-images/m06-10.png)   
 <br><br>
 
+<br><br>
+
 ### 4.3. [Step 2] Create a policy tag called "FinancialData" under the taxonomy
 
 Run this in Cloud Shell-
@@ -191,6 +195,8 @@ FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxon
 ```
 
 ![README](../04-images/m06-11.png)   
+<br><br>
+
 <br><br>
 
 ### 4.4. [Step 3] Associate the policy with specific columns in the BigLake table
@@ -379,6 +385,8 @@ In Cloud Shell, paste the following into a file called nyc_taxi_trips_hudi_bigla
 ]
 ```
 
+<br><br>
+
 #### 4.4.2. Update the schema file with your variables
 
 Paste in Cloud Shell-
@@ -407,6 +415,9 @@ sed -i s/YOUR_POLICY_TAG_ID/$FINANCIAL_POLICY_TAG_ID/g ~/nyc_taxi_trips_hudi_big
 Once you execute these commands, your schema file should have your values in them instead of the placeholders.
 
 
+<br><br>
+
+
 #### 4.4.3. Update the Biglake table schema with the file
 
 Run the below in Cloud Shell-
@@ -415,11 +426,15 @@ bq update \
    $PROJECT_ID:gaia_product_ds.nyc_taxi_trips_hudi_biglake ~/nyc_taxi_trips_hudi_biglake_schema.json
 ```
 
+<br><br>
+
 
 #### 4.4.4. Validate the table update in the BigQuery UI
 
 
 ![README](../04-images/m06-14.png)   
+<br><br>
+
 <br><br>
 
 
@@ -452,6 +467,8 @@ INFORMATIONAL-
   ]
 }
 ```
+
+<br><br>
 
 ### 4.6. [Step 5] Enforce the column level access control
 
@@ -531,6 +548,8 @@ To showcase column level security, we set up the following:
 | yellow-taxi-marketing-mgr | All columns | 
 | green-taxi-marketing-mgr | All columns | 
 | data-engineer |  All trips | All columns except fare, tips & total amount |
+
+<br><br>
 
 ### 6.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
 
