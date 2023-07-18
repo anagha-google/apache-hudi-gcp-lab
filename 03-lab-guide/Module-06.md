@@ -28,6 +28,11 @@ Create three IAM users, and add them to the groups created above, as shown below
 
 ## 3. Create access policies for Row Level Security (RLS)
 
+### What's involved
+
+![README](../04-images/m06-12.png)   
+<br><br>
+
 ### 3.1. RLS security setup for the lab
 
 We will create row level policies that allow yellow and green taxi marketing groups access to taxi trip data for the respective taxi type data (yellow taxi/green taxi). The tech stop team gets access to all taxi types.
