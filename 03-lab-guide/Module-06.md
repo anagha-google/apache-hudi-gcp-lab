@@ -578,7 +578,15 @@ Paste in the BigQuery UI, columns other than fare_amount and tip_amount:
 SELECT taxi_type, pickup_location_id, dropoff_location_id, pickup_datetime, dropoff_datetime FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` LIMIT 2
 ```
 
+OR
+
+```
+SELECT * EXCEPT (fare_amount, tip_amount) FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` LIMIT 2
+```
+
 You should see results returned. Effectively ONLY the Data Engineer is restricted from accessing the columns fare_amount and tip_amount as configured.
+
+
 
 ![README](../04-images/m06-20.png)   
 <br><br>
