@@ -600,8 +600,27 @@ You should see the rows returned.
 
 <hr>
 
+## 6. Configuring Column Level Security - masking - on BigLake tables 
+
+Lets add masking to the setup we already did-
+
+| User  |  Column Access | Access type | 
+| :-- | :--- | :--- |
+| yellow-taxi-marketing-mgr | All columns | Clear-text |
+| green-taxi-marketing-mgr | All columns | Clear-text |
+| data-engineer |  All trips | All columns except fare, tips & total amount | Masking of total_amount column |
+
+<br><br>
 
 
+
+### 6.1. Create a Dataproc "personal auth" cluster for the data engineer
+
+
+### 6.2. Launch the exploration notebook on the BigLake table & run it
+
+
+Note that 
 
 
 ## 7. Row Level Security on BigLake tables **in action** - with BQSQL from the BigQuery UI
