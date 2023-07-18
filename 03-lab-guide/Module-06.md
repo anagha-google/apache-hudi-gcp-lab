@@ -7,7 +7,7 @@ WORK IN PROGRESS
 
 ## 1. Security setup
 
-## 1.1. Create IAM groups
+### 1.1. Create IAM groups
 
 Create three IAM groups, similar to below from admin.google.com.
 
@@ -16,7 +16,7 @@ Create three IAM groups, similar to below from admin.google.com.
 
 
 
-## 1.2. Create IAM users belonging to the three groups
+### 1.2. Create IAM users belonging to the three groups
 
 Create three IAM users, and add them to the groups created above, as shown below.
 
@@ -49,7 +49,7 @@ FILTER USING (taxi_type = "yellow");
 
 Here is the author's command-
 ```
-THIS IS FYI only
+---THIS IS FYI only--------------------------------
 CREATE OR REPLACE ROW ACCESS POLICY yellow_taxi_rap
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
 GRANT TO ("group:nyc-yellow-taxi-marketing@akhanolkar.altostrat.com","group:nyc-taxi-tech-stop@akhanolkar.altostrat.com")
@@ -72,11 +72,9 @@ GRANT TO ("group:YOUR_GREEN_TAXI_IAM_GROUP", "group:YOUR_TECH_STOP_IAM_GROUP")
 FILTER USING (taxi_type = "green");
 ```
 
-
-
 Here is the author's command-
 ```
-THIS IS FYI only
+---THIS IS FYI only--------------------------------
 CREATE OR REPLACE ROW ACCESS POLICY green_taxi_rap
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
 GRANT TO ("group:nyc-green-taxi-marketing@akhanolkar.altostrat.com","group:nyc-taxi-tech-stop@akhanolkar.altostrat.com")
