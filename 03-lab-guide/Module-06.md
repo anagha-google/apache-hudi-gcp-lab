@@ -35,7 +35,7 @@ We will create row level policies that allow yellow and green taxi marketing gro
 ![README](../04-images/m06-03.png)   
 <br><br>
 
-### 3.2. Create a policy for Yellow Taxi data
+### 3.2. Create a RLS policy for Yellow Taxi data
 
 In the sample below, the author is granting the groups, nyc-yellow-taxi-marketing@ and nyc-taxi-tech-stop@ access to yellow taxi data. <br>
 
@@ -60,7 +60,7 @@ FILTER USING (taxi_type = "yellow");
 <br><br>
 
 
-### 3.3. Create a policy for Green Taxi data
+### 3.3. Create a RLS policy for Green Taxi data
 
 In the sample below, the author is granting the groups, nyc-green-taxi-marketing@ and nyc-taxi-tech-stop@ access to green taxi data. <br>
 
