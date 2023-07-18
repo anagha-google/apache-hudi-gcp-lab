@@ -118,17 +118,21 @@ Navigate to the RLS policies as shown below-
 
 ## 3. Configuring Column Level Security (CLS) on BigLake tables
 
-### 3.1. What's involved
-
-![README](../04-images/m06-13.png)   
-<br><br>
+### 3.1. CLS security setup for the lab
 
 ![README](../04-images/m06-13a.png)   
 <br><br>
 
 <br><br>
 
-### 3.2. [Step 1] Create a taxonomy called "BusinessCritical-NYCT"
+### 3.2. What's involved
+
+![README](../04-images/m06-13.png)   
+<br><br>
+
+<br><br>
+
+### 3.3. [Step 1] Create a taxonomy called "BusinessCritical-NYCT"
 
 Run this in Cloud Shell-
 ```
@@ -175,7 +179,7 @@ TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1
 
 <br><br>
 
-### 3.3. [Step 2] Create a policy tag called "FinancialData" under the taxonomy
+### 3.4. [Step 2] Create a policy tag called "FinancialData" under the taxonomy
 
 Run this in Cloud Shell-
 ```
@@ -211,9 +215,9 @@ FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxon
 
 <br><br>
 
-### 3.4. [Step 3] Associate the policy with specific columns in the BigLake table
+### 3.5. [Step 3] Associate the policy with specific columns in the BigLake table
 
-#### 3.4.1. Create a schema file locally with the policy tag assigned to fare_amount and tip_amount
+#### 3.5.1. Create a schema file locally with the policy tag assigned to fare_amount and tip_amount
 
 In Cloud Shell, create a new file called nyc_taxi_trips_hudi_biglake_schema.json in your root directory and paste the below into it-
 ```
@@ -399,7 +403,7 @@ In Cloud Shell, create a new file called nyc_taxi_trips_hudi_biglake_schema.json
 
 <br><br>
 
-#### 3.4.2. Update the schema file with your variables
+#### 3.5.2. Update the schema file with your variables
 
 Paste in Cloud Shell-
 ```
@@ -430,7 +434,7 @@ Once you execute these commands, your schema file should have your values in the
 <br><br>
 
 
-#### 3.4.3. Update the Biglake table schema with the file
+#### 3.5.3. Update the Biglake table schema with the file
 
 Run the below in Cloud Shell-
 ```
@@ -441,7 +445,7 @@ bq update \
 <br><br>
 
 
-#### 3.4.4. Validate the table update in the BigQuery UI
+#### 3.5.4. Validate the table update in the BigQuery UI
 
 
 ![README](../04-images/m06-14.png)   
@@ -450,7 +454,7 @@ bq update \
 <br><br>
 
 
-### 3.5. [Step 4] Assign the policy to the taxi marketing managers to allow access to financials
+### 3.6. [Step 4] Assign the policy to the taxi marketing managers to allow access to financials
 
 Run this in Cloud Shell, after editing the command to reflect your user specific emails:
 ```
@@ -482,7 +486,7 @@ INFORMATIONAL-
 
 <br><br>
 
-### 3.6. [Step 5] Enforce the column level access control
+### 3.7. [Step 5] Enforce the column level access control
 
 Before we enforce, here is the taxonomy and policy tag we created-
 
