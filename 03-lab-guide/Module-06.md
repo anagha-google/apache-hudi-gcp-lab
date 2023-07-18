@@ -40,6 +40,13 @@ We will create row level policies that allow yellow and green taxi marketing gro
 ![README](../04-images/m06-03.png)   
 <br><br>
 
+To summarize:
+
+![README](../04-images/m06-03a.png)   
+<br><br>
+
+
+
 ### 2.3. Create a RLS policy for Yellow Taxi data
 
 In the sample below, the author is granting the groups, nyc-yellow-taxi-marketing@ and nyc-taxi-tech-stop@ access to yellow taxi data. <br>
