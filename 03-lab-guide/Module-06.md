@@ -415,6 +415,7 @@ bq update \
    $PROJECT_ID:gaia_product_ds.nyc_taxi_trips_hudi_biglake ~/nyc_taxi_trips_hudi_biglake_schema.json
 ```
 
+
 #### 4.4.4. Validate the table update in the BigQuery UI
 
 
@@ -422,7 +423,7 @@ bq update \
 <br><br>
 
 
-### 4.5. Assign the policy to the taxi marketing managers to allow access to financials
+### 4.5. [Step 4] Assign the policy to the taxi marketing managers to allow access to financials
 
 Run this in Cloud Shell, after editing the command to reflect your user specific emails:
 ```
@@ -451,6 +452,24 @@ INFORMATIONAL-
   ]
 }
 ```
+
+### 4.6. [Step 5] Enforce the column level access control
+
+Paste in Cloud Shell-
+```
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+LOCATION="us-central1"
+FULLY_QUALIFIED_POLICY_TAG_ID="projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/$FINANCIAL_POLICY_TAG_ID"
+
+curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
+    -H "Content-Type: application/json; charset=utf-8" \
+    --data "{\"dataPolicyType\":\"COLUMN_LEVEL_SECURITY_POLICY\", \"dataPolicyId\": \"$FINANCIAL_POLICY_TAG_ID\", \"policyTag\": \"$FULLY_QUALIFIED_POLICY_TAG_ID\" }" \
+    "https://bigquerydatapolicy.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/dataPolicies"
+```
+
+Verify the same in the BigQuery UI-
+
 
 <hr>
 
