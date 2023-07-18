@@ -15,6 +15,7 @@ Create three IAM groups, as shown below.
 <br><br>
 
 
+
 ## 1.2. Create IAM users belonging to the three groups
 
 Create three IAM users, and add them to the groups created above, as shown below.
@@ -23,38 +24,67 @@ Create three IAM users, and add them to the groups created above, as shown below
 <br><br>
 
 
+<hr>
+
 ## 3. Create access policies for Row Level Security (RLS)
 
 ### 3.1. RLS security setup for the lab
 
-We will create row level policies that allow yellow and green taci marketing groups access to taxi trip data for the respective taxi type data (yellow taxi/green taxi).
+We will create row level policies that allow yellow and green taxi marketing groups access to taxi trip data for the respective taxi type data (yellow taxi/green taxi). The tech stop team gets access to all taxi types.
 
 ![README](../04-images/m06-03.png)   
 <br><br>
 
 ### 3.2. Create a policy for Yellow Taxi data
 
-In the sample below, the author is granting the group "yellow-taxi-marketing-mgr" access to yellow taxi data. Edit it to reflect your user. <br>
-Run the command below, after updating with your user, in the BigQuery UI-
+In the sample below, the author is granting the groups, nyc-yellow-taxi-marketing@ and nyc-taxi-tech-stop@ access to yellow taxi data. <br>
+
+Run the command below, after updating with your IAM groups, in the BigQuery UI-
 ```
-YELLOW_TAXI_GROUP_EMAIL="PASTE_YOUR_GROUP_HERE"
 CREATE OR REPLACE ROW ACCESS POLICY yellow_taxi_rap
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
-GRANT TO ("group:$YELLOW_TAXI_GROUP_EMAIL")
-FILTER USING (taxi_type = "yellow")
+GRANT TO ("group:YOUR_YELLOW_TAXI_IAM_GROUP", "group:YOUR_TECH_STOP_IAM_GROUP")
+FILTER USING (taxi_type = "yellow");
 ```
 
-### 3.2. Create a policy for Green Taxi data
-
-In the sample below, the author is granting "green-taxi-marketing-mgr" access to green taxi data. Edit it to reflect your user.<br>
-Run the command below, after updating with your user, in the BigQuery UI-
+Here is the author's command-
 ```
-GREEN_TAXI_GROUP_EMAIL="PASTE_YOUR_GROUP_HERE"
+THIS IS FYI only
+CREATE OR REPLACE ROW ACCESS POLICY yellow_taxi_rap
+ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
+GRANT TO ("group:nyc-yellow-taxi-marketing@akhanolkar.altostrat.com","group:nyc-taxi-tech-stop@akhanolkar.altostrat.com")
+FILTER USING (taxi_type = "yellow");
+```
+
+![README](../04-images/m06-04.png)   
+<br><br>
+
+
+### 3.3. Create a policy for Green Taxi data
+
+In the sample below, the author is granting the groups, nyc-green-taxi-marketing@ and nyc-taxi-tech-stop@ access to green taxi data. <br>
+
+Run the command below, after updating with your IAM groups, in the BigQuery UI-
+```
 CREATE OR REPLACE ROW ACCESS POLICY green_taxi_rap
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
-GRANT TO ("group:$GREEN_TAXI_GROUP_EMAIL")
-FILTER USING (taxi_type = "green")
+GRANT TO ("group:YOUR_GREEN_TAXI_IAM_GROUP", "group:YOUR_TECH_STOP_IAM_GROUP")
+FILTER USING (taxi_type = "green");
 ```
+
+
+
+Here is the author's command-
+```
+THIS IS FYI only
+CREATE OR REPLACE ROW ACCESS POLICY green_taxi_rap
+ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
+GRANT TO ("group:nyc-green-taxi-marketing@akhanolkar.altostrat.com","group:nyc-taxi-tech-stop@akhanolkar.altostrat.com")
+FILTER USING (taxi_type = "green");
+```
+![README](../04-images/m06-05.png)   
+<br><br>
+
 
 <hr>
 
