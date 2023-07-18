@@ -455,7 +455,16 @@ INFORMATIONAL-
 
 ### 4.6. [Step 5] Enforce the column level access control
 
-Paste in Cloud Shell-
+Before we enforce, here is the taxonomy-
+
+![README](../04-images/m06-11.png)   
+<br><br>
+
+![README](../04-images/m06-15.png)   
+<br><br>
+
+
+Enforce by pasting in Cloud Shell-
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
 PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
@@ -469,6 +478,15 @@ curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-
 ```
 
 Verify the same in the BigQuery UI-
+
+![README](../04-images/m06-16.png)   
+<br><br>
+
+![README](../04-images/m06-17.png)   
+<br><br>
+
+![README](../04-images/m06-18.png)   
+<br><br>
 
 
 <hr>
@@ -517,6 +535,29 @@ To showcase column level security, we set up the following:
 Paste in the BigQuery UI:
 
 ```
+SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` LIMIT 2
+```
+
+You should see the following error:
+
+![README](../04-images/m06-19.png)   
+<br><br>
+
+### 6.2. Repeat exercise as yellow taxi user
+Paste in the BigQuery UI:
 
 ```
+SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` where taxi_type='yellow' LIMIT 2
+```
+
+You should see the rows returned.
+
+### 6.3. Repeat exercise as green taxi user
+Paste in the BigQuery UI:
+
+```
+SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` where taxi_type='green' LIMIT 2
+```
+
+You should see the rows returned.
 
