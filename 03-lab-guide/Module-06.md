@@ -138,6 +138,13 @@ Lets grab the Taxonomy ID for the next step:
 TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1 $TAXONOMY | grep taxonomies | cut -d'/' -f6`
 ```
 
+![README](../04-images/m06-09.png)   
+<br><br>
+
+
+![README](../04-images/m06-10.png)   
+<br><br>
+
 ### 4.2. Create a policy tag called "FinancialData" under the taxonomy
 
 Run this in Cloud Shell-
@@ -168,6 +175,9 @@ Lets grab the Policy Tag ID for the next step:
 ```
 FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep policyTags | cut -d'/' -f8`
 ```
+
+![README](../04-images/m06-11.png)   
+<br><br>
 
 ### 4.3. Associate the policy with specific columns in the BigLake table
 
