@@ -1,7 +1,7 @@
 
 # Module 6: Fine Grained Access Control powered by BigLake 
 
-WORK IN PROGRESS
+This module showcases Row Level Security, Column Level Security (access control and data masking) made possible with BigLake on your Hudi snapshots sitting in Cloud Storage. 
 
 <hr>
 
