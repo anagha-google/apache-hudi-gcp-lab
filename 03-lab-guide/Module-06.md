@@ -83,7 +83,7 @@ FILTER USING (taxi_type = "green");
 ![README](../04-images/m06-06.png)   
 <br><br>
 
-### 3.4. RLS from the BigQuery UI
+### 3.4. View the RLS policies configured from the BigQuery UI
 
 Navigate to the RLS policies as shown below-
 
