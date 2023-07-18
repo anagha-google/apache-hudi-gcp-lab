@@ -520,7 +520,7 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_DATA_ENGI
 
 <hr>
 
-## 6. Column Level Security in action
+## 6. Column Level Security in action -  with BQSQL from the BigQuery UI
 
 To showcase column level security, we set up the following:
 
@@ -571,4 +571,69 @@ SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` wher
 ```
 
 You should see the rows returned.
+
+<hr>
+
+## 8. Row Level Security in action - with BQSQL from the BigQuery UI
+
+To showcase row level security, we set up the following:
+
+| User  |  Row Access |
+| :-- | :--- |
+| yellow-taxi-marketing-mgr | Only rows with taxi_type='yellow' | 
+| green-taxi-marketing-mgr | Only rows with taxi_type='green' | 
+| data-engineer |  All trips | All rows regardless of taxi_type |
+
+<br>
+
+### 8.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
+
+Paste in the BigQuery UI:
+
+```
+(SELECT taxi_type, pickup_location_id, dropoff_location_id, pickup_datetime, dropoff_datetime FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` 
+where trip_year='2022' and trip_month='1' and trip_day='31' and taxi_type='yellow' limit 1)
+UNION ALL
+(SELECT taxi_type, pickup_location_id, dropoff_location_id, pickup_datetime, dropoff_datetime FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake`
+where trip_year='2022' and trip_month='1' and trip_day='31' and taxi_type='green' limit 1)
+```
+
+You should see rows returned and no errors as we have excluded columns the data engineer is retricted from viewing.
+
+![README](../04-images/m06-21.png)   
+<br><br>
+
+### 8.2. Sign-in to the BigQuery UI as the **yellow taxi marketing manager** & query the table from the BigQuery UI
+
+Paste in the BigQuery UI:
+
+```
+(SELECT taxi_type, pickup_location_id, dropoff_location_id, pickup_datetime, dropoff_datetime FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` 
+where trip_year='2022' and trip_month='1' and trip_day='31' and taxi_type='yellow' limit 1)
+UNION ALL
+(SELECT taxi_type, pickup_location_id, dropoff_location_id, pickup_datetime, dropoff_datetime FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake`
+where trip_year='2022' and trip_month='1' and trip_day='31' and taxi_type='green' limit 1)
+```
+
+You should see the warning --> "Your query results may be limited because you do not have access to certain rows" <-- and only rows granted access to are returned - in this case, yellow taxi trips ONLY.
+
+![README](../04-images/m06-22.png)   
+<br><br>
+
+### 8.3. Sign-in to the BigQuery UI as the **green taxi marketing manager** & query the table from the BigQuery UI
+
+Paste in the BigQuery UI:
+
+```
+(SELECT taxi_type, pickup_location_id, dropoff_location_id, pickup_datetime, dropoff_datetime FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` 
+where trip_year='2022' and trip_month='1' and trip_day='31' and taxi_type='yellow' limit 1)
+UNION ALL
+(SELECT taxi_type, pickup_location_id, dropoff_location_id, pickup_datetime, dropoff_datetime FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake`
+where trip_year='2022' and trip_month='1' and trip_day='31' and taxi_type='green' limit 1)
+```
+
+You should see the warning --> "Your query results may be limited because you do not have access to certain rows" <-- and only rows granted access to are returned - in this case, green taxi trips ONLY.
+
+![README](../04-images/m06-23.png)   
+<br><br>
 
