@@ -9,7 +9,7 @@ WORK IN PROGRESS
 
 ## 1.1. Create IAM groups
 
-Create three IAM groups, as shown below.
+Create three IAM groups, similar to below from admin.google.com.
 
 ![README](../04-images/m06-01.png)   
 <br><br>
