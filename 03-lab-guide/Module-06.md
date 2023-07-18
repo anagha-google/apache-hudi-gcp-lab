@@ -28,12 +28,9 @@ Create three IAM users, and add them to the groups created above, as shown below
 
 ## 2. Configuring Row Level Security (RLS) on BigLake tables
 
-### 2.1. What's involved
 
-![README](../04-images/m06-12.png)   
-<br><br>
 
-### 2.2. RLS security setup for the lab
+### 2.1. RLS security setup for the lab
 
 We will create row level policies that allow yellow and green taxi marketing groups access to taxi trip data for the respective taxi type data (yellow taxi/green taxi). The tech stop team gets access to all taxi types.
 
@@ -45,7 +42,10 @@ To summarize:
 ![README](../04-images/m06-03a.png)   
 <br><br>
 
+### 2.2. What's involved
 
+![README](../04-images/m06-12.png)   
+<br><br>
 
 ### 2.3. Create a RLS policy for Yellow Taxi data
 
