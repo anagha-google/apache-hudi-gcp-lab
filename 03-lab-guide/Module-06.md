@@ -14,7 +14,7 @@ Create three IAM groups, similar to below from admin.google.com.
 ![README](../04-images/m06-01.png)   
 <br><br>
 
-
+<br><br>
 
 ### 1.2. Create IAM users belonging to the three groups
 
@@ -23,24 +23,25 @@ Create three IAM users, and add them to the groups created above, as shown below
 ![README](../04-images/m06-02.png)   
 <br><br>
 
+<br><br>
 
 <hr>
 
-## 3. Create access policies for Row Level Security (RLS)
+## 2. Configuring Row Level Security (RLS) on BigLake tables
 
-### 3.1. What's involved
+### 2.1. What's involved
 
 ![README](../04-images/m06-12.png)   
 <br><br>
 
-### 3.2. RLS security setup for the lab
+### 2.2. RLS security setup for the lab
 
 We will create row level policies that allow yellow and green taxi marketing groups access to taxi trip data for the respective taxi type data (yellow taxi/green taxi). The tech stop team gets access to all taxi types.
 
 ![README](../04-images/m06-03.png)   
 <br><br>
 
-### 3.3. Create a RLS policy for Yellow Taxi data
+### 2.3. Create a RLS policy for Yellow Taxi data
 
 In the sample below, the author is granting the groups, nyc-yellow-taxi-marketing@ and nyc-taxi-tech-stop@ access to yellow taxi data. <br>
 
@@ -65,7 +66,7 @@ FILTER USING (taxi_type = "yellow");
 <br><br>
 
 
-### 3.4. Create a RLS policy for Green Taxi data
+### 2.4. Create a RLS policy for Green Taxi data
 
 In the sample below, the author is granting the groups, nyc-green-taxi-marketing@ and nyc-taxi-tech-stop@ access to green taxi data. <br>
 
@@ -88,7 +89,7 @@ FILTER USING (taxi_type = "green");
 ![README](../04-images/m06-06.png)   
 <br><br>
 
-### 3.5. View the RLS policies configured from the BigQuery UI
+### 2.5. View the RLS policies configured from the BigQuery UI
 
 Navigate to the RLS policies as shown below-
 
@@ -101,22 +102,24 @@ Navigate to the RLS policies as shown below-
 ![README](../04-images/m06-08.png)   
 <br><br>
 
-### 3.6. Managing RLS
+### 2.6. Managing RLS on BigLake tables
 
 [Documentation](https://cloud.google.com/bigquery/docs/managing-row-level-security)
 
+<br><br>
+
 <hr>
 
-## 4. Create access policies for Column Level Security (CLS)
+## 3. Configuring Column Level Security (CLS) on BigLake tables
 
-### 4.1. What's involved
+### 3.1. What's involved
 
 ![README](../04-images/m06-13.png)   
 <br><br>
 
 <br><br>
 
-### 4.2. [Step 1] Create a taxonomy called "BusinessCritical-NYCT"
+### 3.2. [Step 1] Create a taxonomy called "BusinessCritical-NYCT"
 
 Run this in Cloud Shell-
 ```
@@ -163,7 +166,7 @@ TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1
 
 <br><br>
 
-### 4.3. [Step 2] Create a policy tag called "FinancialData" under the taxonomy
+### 3.3. [Step 2] Create a policy tag called "FinancialData" under the taxonomy
 
 Run this in Cloud Shell-
 ```
@@ -199,9 +202,9 @@ FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxon
 
 <br><br>
 
-### 4.4. [Step 3] Associate the policy with specific columns in the BigLake table
+### 3.4. [Step 3] Associate the policy with specific columns in the BigLake table
 
-#### 4.4.1. Create a schema file locally with the policy tag assigned to fare_amount and tip_amount
+#### 3.4.1. Create a schema file locally with the policy tag assigned to fare_amount and tip_amount
 
 In Cloud Shell, paste the following into a file called nyc_taxi_trips_hudi_biglake_schema.json in your root directory-
 ```
@@ -387,7 +390,7 @@ In Cloud Shell, paste the following into a file called nyc_taxi_trips_hudi_bigla
 
 <br><br>
 
-#### 4.4.2. Update the schema file with your variables
+#### 3.4.2. Update the schema file with your variables
 
 Paste in Cloud Shell-
 ```
@@ -418,7 +421,7 @@ Once you execute these commands, your schema file should have your values in the
 <br><br>
 
 
-#### 4.4.3. Update the Biglake table schema with the file
+#### 3.4.3. Update the Biglake table schema with the file
 
 Run the below in Cloud Shell-
 ```
@@ -429,7 +432,7 @@ bq update \
 <br><br>
 
 
-#### 4.4.4. Validate the table update in the BigQuery UI
+#### 3.4.4. Validate the table update in the BigQuery UI
 
 
 ![README](../04-images/m06-14.png)   
@@ -438,7 +441,7 @@ bq update \
 <br><br>
 
 
-### 4.5. [Step 4] Assign the policy to the taxi marketing managers to allow access to financials
+### 3.5. [Step 4] Assign the policy to the taxi marketing managers to allow access to financials
 
 Run this in Cloud Shell, after editing the command to reflect your user specific emails:
 ```
@@ -470,7 +473,7 @@ INFORMATIONAL-
 
 <br><br>
 
-### 4.6. [Step 5] Enforce the column level access control
+### 3.6. [Step 5] Enforce the column level access control
 
 Before we enforce, here is the taxonomy-
 
@@ -508,7 +511,7 @@ Verify the same in the BigQuery UI-
 
 <hr>
 
-## 5. Grant roles to the three users
+## 4. Grant roles to the three users
 
 Grant all the three users, the following roles:<br>
 roles/viewer<br>
@@ -539,7 +542,7 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_DATA_ENGI
 
 <hr>
 
-## 6. Column Level Security in action -  with BQSQL from the BigQuery UI
+## 5. Column Level Security on BigLake tables **in action** with BQSQL from the BigQuery UI
 
 To showcase column level security, we set up the following:
 
@@ -551,7 +554,7 @@ To showcase column level security, we set up the following:
 
 <br><br>
 
-### 6.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
+### 5.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
 
 Paste in the BigQuery UI:
 
@@ -575,7 +578,7 @@ You should see results returned. Effectively ONLY the Data Engineer is restricte
 ![README](../04-images/m06-20.png)   
 <br><br>
 
-### 6.2. Repeat exercise as yellow taxi user
+### 5.2. Repeat exercise as yellow taxi user
 Paste in the BigQuery UI:
 
 ```
@@ -585,7 +588,7 @@ SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` wher
 You should see the rows returned.
 <br><br>
 
-### 6.3. Repeat exercise as green taxi user
+### 5.3. Repeat exercise as green taxi user
 Paste in the BigQuery UI:
 
 ```
@@ -597,7 +600,11 @@ You should see the rows returned.
 
 <hr>
 
-## 8. Row Level Security in action - with BQSQL from the BigQuery UI
+
+
+
+
+## 7. Row Level Security on BigLake tables **in action** - with BQSQL from the BigQuery UI
 
 To showcase row level security, we set up the following:
 
@@ -609,7 +616,7 @@ To showcase row level security, we set up the following:
 
 <br>
 
-### 8.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
+### 7.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
 
 Paste in the BigQuery UI:
 
@@ -626,7 +633,7 @@ You should see rows returned and no errors as we have excluded columns the data 
 ![README](../04-images/m06-21.png)   
 <br><br>
 
-### 8.2. Sign-in to the BigQuery UI as the **yellow taxi marketing manager** & query the table from the BigQuery UI
+### 7.2. Sign-in to the BigQuery UI as the **yellow taxi marketing manager** & query the table from the BigQuery UI
 
 Paste in the BigQuery UI:
 
@@ -643,7 +650,7 @@ You should see the warning --> "Your query results may be limited because you do
 ![README](../04-images/m06-22.png)   
 <br><br>
 
-### 8.3. Sign-in to the BigQuery UI as the **green taxi marketing manager** & query the table from the BigQuery UI
+### 7.3. Sign-in to the BigQuery UI as the **green taxi marketing manager** & query the table from the BigQuery UI
 
 Paste in the BigQuery UI:
 
