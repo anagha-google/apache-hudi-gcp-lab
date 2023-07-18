@@ -518,6 +518,8 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_GREEN_TAX
 gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_DATA_ENGINEER_USER_EQUIVALENT --role=roles/dataproc.editor
 ```
 
+<br><br>
+
 <hr>
 
 ## 6. Column Level Security in action -  with BQSQL from the BigQuery UI
@@ -562,6 +564,7 @@ SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` wher
 ```
 
 You should see the rows returned.
+<br><br>
 
 ### 6.3. Repeat exercise as green taxi user
 Paste in the BigQuery UI:
@@ -571,6 +574,7 @@ SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` wher
 ```
 
 You should see the rows returned.
+<br><br>
 
 <hr>
 
