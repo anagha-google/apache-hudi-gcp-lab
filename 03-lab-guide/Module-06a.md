@@ -35,6 +35,9 @@ roles/dataproc.editor<br>
 E.g. Substitute the users below with yours and run in Cloud Shell:
 
 ```
+
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+
 YOUR_YELLOW_TAXI_USER_EQUIVALENT="PASTE_EMAIL_HERE"
 YOUR_GREEN_TAXI_USER_EQUIVALENT="PASTE_EMAIL_HERE"
 YOUR_DATA_ENGINEER_USER_EQUIVALENT="PASTE_EMAIL_HERE"
