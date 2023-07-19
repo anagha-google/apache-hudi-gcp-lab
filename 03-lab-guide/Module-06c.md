@@ -159,7 +159,7 @@ bq update \
 
 <br><br>
 
-### 3.5. [Step 6] Grant the taxi marketing managers clear-text access to columns policy tagged as "ConfidentialData"
+### 3.5. [Step 6] Grant the taxi marketing managers clear-text access to columns that are policy tagged as "ConfidentialData"
 
 Run this in Cloud Shell, after editing the command to reflect your user specific emails:
 ```
@@ -205,7 +205,7 @@ INFORMATIONAL-DO NOT RUN THIS-
 <hr>
 
 
-### 3.6. [Step 7] Grant the data engineer maskedReader role for the data policy
+### 3.6. [Step 7] Grant the data engineer (data) masked access to the columns that are policy tagged as "ConfidentialData"
 
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
