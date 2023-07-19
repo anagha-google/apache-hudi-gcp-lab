@@ -34,8 +34,16 @@ Lets add masking to the setup we already did-
 
 ## 3. Lab
 
-### 3.1. [Step 2] Create a policy tag called "ConfidentialData" under the taxonomy we already created earlier
-(Step 1 is creating a Taxonomy which we already did in a [proir module](Module-06b.md))<br><br>
+### 3.1. [Step 1] Create a Taxonomy
+
+We already created a taxonomy called "BusinessCritical-NYCT" in a [proir module](Module-06b.md), we will reuse the same.
+
+<br>
+
+<hr>
+
+### 3.2. [Step 2] Create a policy tag called "ConfidentialData" under the taxonomy we already created earlier
+(Step 1 is creating a Taxonomy which we already did in a <br><br>
 
 Run this in Cloud Shell-
 ```
@@ -75,11 +83,11 @@ Here is what the Taxonomy looks in the BigQuery UI-
 ![README](../04-images/m06-24.png)   
 <br><br>
 
-<br><br>
+<br>
 
 <hr>
 
-### 3.2. [Step 3] Create a (masking) data policy associated with the ConfidentialData policy tag created above
+### 3.3. [Step 3] Create a (masking) data policy associated with the ConfidentialData policy tag created above
 
 Paste the below in Cloud Shell-
 ```
@@ -119,10 +127,12 @@ Here is what the Taxonomy looks in the BigQuery UI after adding the masking data
 ![README](../04-images/m06c-01.png)   
 <br><br>
 
+<br>
+
 <hr>
 
 
-### 3.3. [Step 4] Update the BigLake table schema file to associate the policy tag, "ConfidentialData" with the "total_amount" column in the BigLake table
+### 3.4. [Step 4] Update the BigLake table schema file to associate the policy tag, "ConfidentialData" with the "total_amount" column in the BigLake table
 
 We have a file locally already, that we created that has the schema of the BigLake table with the updates we made for the FinancialData policy tag. Lets add the ConfidentialData policy tag to the total_amount column. 
 
@@ -151,7 +161,9 @@ rm dummy.json
 
 <br><br>
 
-### 3.4. [Step 5] Update the BigLake table with the schema file 
+<hr>
+
+### 3.5. [Step 5] Update the BigLake table with the schema file 
 
 Run the below in Cloud Shell-
 ```
@@ -164,9 +176,11 @@ bq update \
 ![README](../04-images/m06-25.png)   
 <br><br>
 
-<br><br>
+<br>
 
-### 3.5. [Step 6] Grant the taxi marketing managers clear-text access to columns that are policy tagged as "ConfidentialData"
+<hr>
+
+### 3.6. [Step 6] Grant the taxi marketing managers clear-text access to columns that are policy tagged as "ConfidentialData"
 
 Run this in Cloud Shell, after editing the command to reflect your user specific emails:
 ```
@@ -216,7 +230,7 @@ Here is what the ACLs look like in the UI-
 <hr>
 
 
-### 3.6. [Step 7] Grant the data engineer (data) masked access to the columns that are policy tagged as "ConfidentialData"
+### 3.7. [Step 7] Grant the data engineer (data) masked access to the columns that are policy tagged as "ConfidentialData"
 
 Paste the below in Cloud Shell-
 ```
@@ -248,6 +262,10 @@ INFORMATIONAL-DO NOT RUN THIS-
   ]
 }
 ```
+
+<br>
+
+<hr>
 
 ## 4. Column Level Masking in action in BigLake table on Hudi snapshot
 
