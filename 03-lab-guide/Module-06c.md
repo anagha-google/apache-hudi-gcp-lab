@@ -35,7 +35,7 @@ Lets add masking to the setup we already did-
 ## 3. Lab
 
 ### 3.1. [Step 2] Create a policy tag called "ConfidentialData" under the taxonomy we already created earlier
-(Step 1 is creating a Taxonomy which we already did earlier in this lab module)<br><br>
+(Step 1 is creating a Taxonomy which we already did in a [proir module](Module-06b.md))<br><br>
 
 Run this in Cloud Shell-
 ```
@@ -115,7 +115,7 @@ Here is the author's output-
 <hr>
 
 
-### 3.3. [Step 4] Update the BigLake table schema file to include/associate the policy tag, "ConfidentialData" with the "total_amount" column in the BigLake table
+### 3.3. [Step 4] Update the BigLake table schema file to associate the policy tag, "ConfidentialData" with the "total_amount" column in the BigLake table
 
 We have a file locally already, that we created that has the schema of the BigLake table with the updates we made for the FinancialData policy tag. Lets add the ConfidentialData policy tag to the total_amount column. 
 
@@ -159,7 +159,7 @@ bq update \
 
 <br><br>
 
-### 3.5. [Step 6] Assign the policy to the taxi marketing managers to allow clear-text access to confidential data
+### 3.5. [Step 6] Grant the taxi marketing managers clear-text access to columns policy tagged as "ConfidentialData"
 
 Run this in Cloud Shell, after editing the command to reflect your user specific emails:
 ```
@@ -238,14 +238,4 @@ INFORMATIONAL-DO NOT RUN THIS-
 ```
 
 
-### 3.7. [Step 8] Grant the data engineer maskedReader role for the data policy
 
-```
-
-```
-
-Author's output:
-```
-INFORMATIONAL-DO NOT RUN THIS-
-
-```
