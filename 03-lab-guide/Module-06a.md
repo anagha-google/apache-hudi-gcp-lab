@@ -163,13 +163,7 @@ Navigate to the RLS policies as shown below-
 
 ## 3. Row Level Security on BigLake tables **in action** - with BQSQL from the BigQuery UI
 
-To showcase row level security, we set up the following:
-
-| User  |  Row Access |
-| :-- | :--- |
-| yellow-taxi-marketing-mgr | Only rows with taxi_type='yellow' | 
-| green-taxi-marketing-mgr | Only rows with taxi_type='green' | 
-| data-engineer |  All trips | All rows regardless of taxi_type |
+We configured row level security as shown below. Lets see it in action. 
 
 ![README](../04-images/m06-03a.png)   
 <br><br>
