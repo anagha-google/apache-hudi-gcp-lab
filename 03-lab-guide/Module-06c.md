@@ -161,6 +161,199 @@ rm dummy.json
 
 <br><br>
 
+Author's sample-
+```
+This is informational ONLY-
+
+[
+  {
+    "mode": "NULLABLE",
+    "name": "_hoodie_commit_time",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "_hoodie_commit_seqno",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "_hoodie_record_key",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "_hoodie_partition_path",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "_hoodie_file_name",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "taxi_type",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_hour",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_minute",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "vendor_id",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "pickup_datetime",
+    "type": "TIMESTAMP"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "dropoff_datetime",
+    "type": "TIMESTAMP"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "store_and_forward",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "rate_code",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "pickup_location_id",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "dropoff_location_id",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "passenger_count",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_distance",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "fare_amount",
+    "type": "NUMERIC",
+    "policyTags": {
+      "names": [
+        "projects/apache-hudi-lab/locations/us-central1/taxonomies/2067815749752692148/policyTags/3588092525560622523"
+      ]
+    }
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "surcharge",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "mta_tax",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "tip_amount",
+    "type": "NUMERIC",
+    "policyTags": {
+      "names": [
+        "projects/apache-hudi-lab/locations/us-central1/taxonomies/2067815749752692148/policyTags/3588092525560622523"
+      ]
+    }
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "tolls_amount",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "improvement_surcharge",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "total_amount",
+    "type": "NUMERIC",
+    "policyTags": {
+      "names": [
+        "projects/apache-hudi-lab/locations/us-central1/taxonomies/2067815749752692148/policyTags/4607361211901247622"
+      ]
+    }
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "payment_type_code",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "congestion_surcharge",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_type",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "ehail_fee",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "partition_date",
+    "type": "DATE"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "distance_between_service",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "time_between_service",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_year",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_month",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "trip_day",
+    "type": "STRING"
+  }
+]
+```
+
 <hr>
 
 ### 3.5. [Step 5] Update the BigLake table with the schema file 
