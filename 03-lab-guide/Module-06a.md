@@ -85,7 +85,9 @@ To summarize:
 
 <hr>
 
-### 2.3. Create a RLS policy for Yellow Taxi data
+## 3. Lab
+
+### 3.1. Create a RLS policy for Yellow Taxi data
 
 In the sample below, the author is granting the groups, nyc-yellow-taxi-marketing@ and nyc-taxi-tech-stop@ access to yellow taxi data. <br>
 
@@ -113,7 +115,7 @@ FILTER USING (taxi_type = "yellow");
 <hr>
 
 
-### 2.4. Create a RLS policy for Green Taxi data
+### 3.2. Create a RLS policy for Green Taxi data
 
 In the sample below, the author is granting the groups, nyc-green-taxi-marketing@ and nyc-taxi-tech-stop@ access to green taxi data. <br>
 
@@ -139,7 +141,7 @@ FILTER USING (taxi_type = "green");
 
 <hr>
 
-### 2.5. View the RLS policies configured from the BigQuery UI
+### 3.3. View the RLS policies configured from the BigQuery UI
 
 Navigate to the RLS policies as shown below-
 
@@ -155,7 +157,7 @@ Navigate to the RLS policies as shown below-
 
 <hr>
 
-### 2.6. Managing RLS on BigLake tables
+### 3.4. Managing RLS on BigLake tables
 
 [Documentation](https://cloud.google.com/bigquery/docs/managing-row-level-security)
 
@@ -164,7 +166,7 @@ Navigate to the RLS policies as shown below-
 <hr>
 
 
-## 3. Row Level Security on BigLake tables **in action** - with BQSQL from the BigQuery UI
+## 4. Row Level Security on BigLake tables **in action** - with BQSQL from the BigQuery UI
 
 We configured row level security as shown below. Lets see it in action. 
 
@@ -175,7 +177,7 @@ We configured row level security as shown below. Lets see it in action.
 
 <hr>
 
-### 3.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
+### 4.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
 
 Paste in the BigQuery UI:
 
@@ -195,7 +197,7 @@ You should see rows returned and no errors as we have excluded columns the data 
 
 <hr>
 
-### 3.2. Sign-in to the BigQuery UI as the **yellow taxi marketing manager** & query the table from the BigQuery UI
+### 4.2. Sign-in to the BigQuery UI as the **yellow taxi marketing manager** & query the table from the BigQuery UI
 
 Paste in the BigQuery UI:
 
@@ -215,7 +217,7 @@ You should see the warning --> "Your query results may be limited because you do
 
 <hr>
 
-### 3.3. Sign-in to the BigQuery UI as the **green taxi marketing manager** & query the table from the BigQuery UI
+### 4.3. Sign-in to the BigQuery UI as the **green taxi marketing manager** & query the table from the BigQuery UI
 
 Paste in the BigQuery UI:
 
