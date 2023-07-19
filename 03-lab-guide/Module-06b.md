@@ -20,6 +20,8 @@ Covered in [Module 6a](Module-06a.md).
 
 <br><br>
 
+<hr>
+
 ### 2.2. What's involved
 
 ![README](../04-images/m06-13.png)   
@@ -27,7 +29,11 @@ Covered in [Module 6a](Module-06a.md).
 
 <br><br>
 
-### 2.3. [Step 1] Create a taxonomy called "BusinessCritical-NYCT"
+<hr>
+
+## 3. Lab
+
+### 3.1. [Step 1] Create a taxonomy called "BusinessCritical-NYCT"
 
 Run this in Cloud Shell-
 ```
@@ -74,7 +80,7 @@ TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1
 
 <br><br>
 
-### 2.4. [Step 2] Create a policy tag called "FinancialData" under the taxonomy
+### 3.2. [Step 2] Create a policy tag called "FinancialData" under the taxonomy
 
 Run this in Cloud Shell-
 ```
@@ -110,9 +116,9 @@ FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxon
 
 <br><br>
 
-### 2.5. [Step 3] Associate the policy with specific columns in the BigLake table
+### 3.3. [Step 3] Associate the policy with specific columns in the BigLake table
 
-#### 2.5.1. Create a schema file locally with the policy tag assigned to fare_amount and tip_amount
+#### 3.3.1. Create a schema file locally with the policy tag assigned to fare_amount and tip_amount
 
 In Cloud Shell, create a new file called nyc_taxi_trips_hudi_biglake_schema.json in your root directory and paste the below into it-
 ```
@@ -298,7 +304,7 @@ In Cloud Shell, create a new file called nyc_taxi_trips_hudi_biglake_schema.json
 
 <br><br>
 
-#### 2.5.2. Update the schema file with your variables
+#### 3.3.2. Update the schema file with your variables
 
 Paste in Cloud Shell-
 ```
@@ -329,7 +335,7 @@ Once you execute these commands, your schema file should have your values in the
 <br><br>
 
 
-#### 2.5.3. Update the Biglake table schema with the file
+#### 3.3.3. Update the Biglake table schema with the file
 
 Run the below in Cloud Shell-
 ```
@@ -340,7 +346,7 @@ bq update \
 <br><br>
 
 
-#### 2.5.4. Validate the table update in the BigQuery UI
+#### 3.3.4. Validate the table update in the BigQuery UI
 
 
 ![README](../04-images/m06-14.png)   
@@ -349,7 +355,7 @@ bq update \
 <br><br>
 
 
-### 2.6. [Step 4] Assign the policy to the taxi marketing managers to allow access to financials
+### 3.4. [Step 4] Assign the policy to the taxi marketing managers to allow access to financials
 
 Run this in Cloud Shell, after editing the command to reflect your user specific emails:
 ```
@@ -381,7 +387,7 @@ INFORMATIONAL-
 
 <br><br>
 
-### 2.7. [Step 5] Enforce the column level access control
+### 3.5. [Step 5] Enforce the column level access control
 
 Before we enforce, here is the taxonomy and policy tag we created-
 
@@ -417,14 +423,14 @@ Verify the same in the BigQuery UI-
 <hr>
 
 
-## 3. Column Level Security on BigLake tables **in action** with BQSQL from the BigQuery UI
+## 4. Column Level Security on BigLake tables **in action** with BQSQL from the BigQuery UI
 
 To showcase column level security, we configured CLS as follows:
 
 ![README](../04-images/m06-13a.png)   
 <br><br>
 
-### 3.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
+### 4.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
 
 Paste in the BigQuery UI:
 
@@ -456,7 +462,7 @@ You should see results returned. Effectively ONLY the Data Engineer is restricte
 ![README](../04-images/m06-20.png)   
 <br><br>
 
-### 3.2. Repeat exercise as yellow taxi user
+### 4.2. Repeat exercise as yellow taxi user
 Paste in the BigQuery UI:
 
 ```
@@ -466,7 +472,7 @@ SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` wher
 You should see the rows returned.
 <br><br>
 
-### 3.3. Repeat exercise as green taxi user
+### 4.3. Repeat exercise as green taxi user
 Paste in the BigQuery UI:
 
 ```
@@ -478,138 +484,7 @@ You should see the rows returned.
 
 <hr>
 
-## 6. Configuring Column Level Masking (CLM) - on BigLake tables 
 
-### 6.1. CLM setup for the lab
-Lets add masking to the setup we already did-
-
-| User  |  Column Access | Access type | 
-| :-- | :--- | :--- |
-| yellow-taxi-marketing-mgr | All columns | Clear-text |
-| green-taxi-marketing-mgr | All columns | Clear-text |
-| data-engineer |  All columns except fare, tips & total amount | Masking of total_amount column |
-
-<br><br>
-
-### 6.2. What's involved
-
-<br><br>
-
-
-### 6.3. [Step 2] Create a policy tag called "ConfidentialData" under the taxonomy we already created earlier
-(Step 1 is creating a Taxonomy which we already did earlier in this lab module)<br><br>
-
-Run this in Cloud Shell-
-```
-PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
-PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
-LOCATION="us-central1"
-
-TAXONOMY="BusinessCritical-NYCT"
-TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1 $TAXONOMY | grep taxonomies | cut -d'/' -f6`
-CONFIDENTIAL_POLICY_NM="ConfidentialData"
-
-rm -rf ~/requestPolicyTagCreate.json
-echo "{ \"displayName\": \"$CONFIDENTIAL_POLICY_NM\" }" >>  requestPolicyTagCreate.json
-
-curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
-    -H "Content-Type: application/json; charset=utf-8" \
-    -d @requestPolicyTagCreate.json \
-    "https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags"
-
-```
-
-Sample output of author-
-```
-INFORMATIONAL ONLY - DONT RUN THIS
-{
-  "name": "projects/apache-hudi-lab/locations/us-central1/taxonomies/2067815749752692148/policyTags/4607361211901247622",
-  "displayName": "ConfidentialData"
-}
-```
-
-Lets grab the Confidential Policy Tag ID for the next step:
-```
-CONFIDENTIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep -A1 ConfidentialData  | grep policyTags | cut -d'/' -f8`
-```
-
-![README](../04-images/m06-24.png)   
-<br><br>
-
-<br><br>
-
-
-### 6.4. [Step 3] Update the BigLake table schema file to include/associate the policy tag, "ConfidentialData" with the "total_amount" column in the BigLake table
-
-We have a file locally already, that we created that has the schema of the BigLake table with the updates we made for the FinancialData policy tag. Lets add the ConfidentialData policy tag to the total_amount column. 
-
-```
-PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
-PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
-LOCATION="us-central1"
-
-TAXONOMY="BusinessCritical-NYCT"
-TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1 $TAXONOMY | grep taxonomies | cut -d'/' -f6`
-CONFIDENTIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep -A1 ConfidentialData  | grep policyTags | cut -d'/' -f8`
-
-# Policy tag spec to insert into the schema file
-POLICY_TAG_SPEC="    ,\"policyTags\": {\"names\": [\"projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/$CONFIDENTIAL_POLICY_TAG_ID\"]}"
-
-cd ~
-# Copy the schema json
-cp nyc_taxi_trips_hudi_biglake_schema.json dummy.json
-# Insert policy tag into it
-sed -i "126 a $POLICY_TAG_SPEC" dummy.json
-# Format it
-(rm -f nyc_taxi_trips_hudi_biglake_schema.json && cat dummy.json | jq . > nyc_taxi_trips_hudi_biglake_schema.json) < nyc_taxi_trips_hudi_biglake_schema.json
-# Remove the dummy.json
-rm dummy.json
-```
-
-<br><br>
-
-### 6.5. [Step 4] Update the BigLake table with the schema file 
-
-Run the below in Cloud Shell-
-```
-bq update \
-   $PROJECT_ID:gaia_product_ds.nyc_taxi_trips_hudi_biglake ~/nyc_taxi_trips_hudi_biglake_schema.json
-```
-
-<br>
-
-![README](../04-images/m06-25.png)   
-<br><br>
-
-<br><br>
-
-### 6.6. [Step 5] Assign the policy to the taxi marketing managers to allow access to confidential data
-
-Run this in Cloud Shell, after editing the command to reflect your user specific emails:
-```
-DATA_ENGINEER_USER_EMAIL="data-engineer@akhanolkar.altostrat.com"
-
-PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
-PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
-LOCATION="us-central1"
-
-TAXONOMY="BusinessCritical-NYCT"
-TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1 $TAXONOMY | grep taxonomies | cut -d'/' -f6`
-CONFIDENTIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep -A1 ConfidentialData  | grep policyTags | cut -d'/' -f8`
-
-
-curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
-    -H "Content-Type: application/json; charset=utf-8" \
-  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${CONFIDENTIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/bigquerydatapolicy.maskedReader\",\"members\":[\"user:$DATA_ENGINEER_USER_EMAIL\"]}]}}"
-
-```
-
-
-Author's output:
-```
-INFORMATIONAL-DO NOT RUN THIS-
-
-```
 
 <br>
 
