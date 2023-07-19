@@ -80,6 +80,8 @@ TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1
 
 <br><br>
 
+<hr>
+
 ### 3.2. [Step 2] Create a policy tag called "FinancialData" under the taxonomy
 
 Run this in Cloud Shell-
@@ -115,6 +117,8 @@ FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxon
 <br><br>
 
 <br><br>
+
+<hr>
 
 ### 3.3. [Step 3] Associate the policy with specific columns in the BigLake table
 
@@ -354,6 +358,8 @@ bq update \
 
 <br><br>
 
+<hr>
+
 
 ### 3.4. [Step 4] Assign the policy to the taxi marketing managers to allow access to financials
 
@@ -386,6 +392,8 @@ INFORMATIONAL-
 ```
 
 <br><br>
+
+<hr>
 
 ### 3.5. [Step 5] Enforce the column level access control
 
@@ -430,6 +438,8 @@ To showcase column level security, we configured CLS as follows:
 ![README](../04-images/m06-13a.png)   
 <br><br>
 
+<hr>
+
 ### 4.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
 
 Paste in the BigQuery UI:
@@ -462,6 +472,8 @@ You should see results returned. Effectively ONLY the Data Engineer is restricte
 ![README](../04-images/m06-20.png)   
 <br><br>
 
+<hr>
+
 ### 4.2. Repeat exercise as yellow taxi user
 Paste in the BigQuery UI:
 
@@ -471,6 +483,8 @@ SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` wher
 
 You should see the rows returned.
 <br><br>
+
+<hr>
 
 ### 4.3. Repeat exercise as green taxi user
 Paste in the BigQuery UI:
