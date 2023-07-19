@@ -295,11 +295,13 @@ This is informational ONLY-
     "mode": "NULLABLE",
     "name": "total_amount",
     "type": "NUMERIC",
+    --------------WHAT WE STARTS HERE------------------------------------------------------------------------------
     "policyTags": {
       "names": [
         "projects/apache-hudi-lab/locations/us-central1/taxonomies/2067815749752692148/policyTags/4607361211901247622"
       ]
     }
+    --------------ENDS HERE------------------------------------------------------------------------------
   },
   {
     "mode": "NULLABLE",
