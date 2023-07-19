@@ -72,10 +72,16 @@ To summarize:
 ![README](../04-images/m06-03a.png)   
 <br><br>
 
+
+<hr>
+
 ### 2.2. What's involved
 
 ![README](../04-images/m06-12.png)   
 <br><br>
+
+
+<hr>
 
 ### 2.3. Create a RLS policy for Yellow Taxi data
 
@@ -102,6 +108,9 @@ FILTER USING (taxi_type = "yellow");
 <br><br>
 
 
+<hr>
+
+
 ### 2.4. Create a RLS policy for Green Taxi data
 
 In the sample below, the author is granting the groups, nyc-green-taxi-marketing@ and nyc-taxi-tech-stop@ access to green taxi data. <br>
@@ -125,6 +134,9 @@ FILTER USING (taxi_type = "green");
 ![README](../04-images/m06-06.png)   
 <br><br>
 
+
+<hr>
+
 ### 2.5. View the RLS policies configured from the BigQuery UI
 
 Navigate to the RLS policies as shown below-
@@ -137,6 +149,9 @@ Navigate to the RLS policies as shown below-
 
 ![README](../04-images/m06-08.png)   
 <br><br>
+
+
+<hr>
 
 ### 2.6. Managing RLS on BigLake tables
 
@@ -157,7 +172,12 @@ To showcase row level security, we set up the following:
 | green-taxi-marketing-mgr | Only rows with taxi_type='green' | 
 | data-engineer |  All trips | All rows regardless of taxi_type |
 
+![README](../04-images/m06-03a.png)   
+<br><br>
+
 <br>
+
+<hr>
 
 ### 3.1. Sign-in to the BigQuery UI as the **data engineer** & query the table from the BigQuery UI
 
@@ -176,6 +196,9 @@ You should see rows returned and no errors as we have excluded columns the data 
 ![README](../04-images/m06-21.png)   
 <br><br>
 
+
+<hr>
+
 ### 3.2. Sign-in to the BigQuery UI as the **yellow taxi marketing manager** & query the table from the BigQuery UI
 
 Paste in the BigQuery UI:
@@ -192,6 +215,9 @@ You should see the warning --> "Your query results may be limited because you do
 
 ![README](../04-images/m06-22.png)   
 <br><br>
+
+
+<hr>
 
 ### 3.3. Sign-in to the BigQuery UI as the **green taxi marketing manager** & query the table from the BigQuery UI
 
