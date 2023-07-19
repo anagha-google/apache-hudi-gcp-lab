@@ -8,7 +8,7 @@ This module is a continuation of the prior module and showcases Column Level Sec
 
 ## 1. Foundational Security Setup for the lab module
 
-Covered in [Module 6a](Module-6a.md).
+Covered in [Module 6a](Module-06a.md).
 <hr>
 
 ## 2. Configuring Column Level Security (CLS) on BigLake tables
