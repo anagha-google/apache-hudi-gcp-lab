@@ -30,6 +30,7 @@ Lets add masking to the setup we already did-
 
 <br><br>
 
+<hr>
 
 ## 3. Lab
 
@@ -53,7 +54,6 @@ curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-
     -H "Content-Type: application/json; charset=utf-8" \
     -d @requestPolicyTagCreate.json \
     "https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags"
-
 ```
 
 Sample output of author-
@@ -75,8 +75,47 @@ CONFIDENTIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --ta
 
 <br><br>
 
+<hr>
 
-### 3.2. [Step 3] Update the BigLake table schema file to include/associate the policy tag, "ConfidentialData" with the "total_amount" column in the BigLake table
+### 3.2. [Step 3] Create a (masking) data policy associated with the ConfidentialData policy tag created above
+
+Paste the below in Cloud Shell-
+```
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+LOCATION="us-central1"
+
+TAXONOMY="BusinessCritical-NYCT"
+TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1 $TAXONOMY | grep taxonomies | cut -d'/' -f6`
+CONFIDENTIAL_POLICY_NM="ConfidentialData"
+CONFIDENTIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep -A1 ConfidentialData  | grep policyTags | cut -d'/' -f8`
+DATA_POLICY_ID="NYCT_Fare_Masking"
+
+curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  --data "{\"dataPolicyType\":\"DATA_MASKING_POLICY\",\"dataMaskingPolicy\":{\"predefinedExpression\":\"DEFAULT_MASKING_VALUE\"},\"policyTag\":\"projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/$CONFIDENTIAL_POLICY_TAG_ID\",\"dataPolicyId\":\"$DATA_POLICY_ID\"}" \
+"https://bigquerydatapolicy.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/dataPolicies"
+```
+
+Here is the author's output-
+```
+--THIS IS INFORMATIONAL ONLY--
+{
+  "name": "projects/apache-hudi-lab/locations/us-central1/dataPolicies/NYCT_Fare_Masking",
+  "dataPolicyType": "DATA_MASKING_POLICY",
+  "dataPolicyId": "NYCT_Fare_Masking",
+  "policyTag": "projects/apache-hudi-lab/locations/us-central1/taxonomies/2067815749752692148/policyTags/4607361211901247622",
+  "dataMaskingPolicy": {
+    "predefinedExpression": "DEFAULT_MASKING_VALUE"
+  }
+}
+
+```
+
+<hr>
+
+
+### 3.3. [Step 4] Update the BigLake table schema file to include/associate the policy tag, "ConfidentialData" with the "total_amount" column in the BigLake table
 
 We have a file locally already, that we created that has the schema of the BigLake table with the updates we made for the FinancialData policy tag. Lets add the ConfidentialData policy tag to the total_amount column. 
 
@@ -105,7 +144,7 @@ rm dummy.json
 
 <br><br>
 
-### 3.3. [Step 4] Update the BigLake table with the schema file 
+### 3.4. [Step 5] Update the BigLake table with the schema file 
 
 Run the below in Cloud Shell-
 ```
@@ -120,24 +159,23 @@ bq update \
 
 <br><br>
 
-### 3.4. [Step 5] Assign the policy to the taxi marketing managers to allow access to confidential data
+### 3.5. [Step 6] Assign the policy to the taxi marketing managers to allow clear-text access to confidential data
 
 Run this in Cloud Shell, after editing the command to reflect your user specific emails:
 ```
-DATA_ENGINEER_USER_EMAIL="data-engineer@akhanolkar.altostrat.com"
-
-PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
-PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
-LOCATION="us-central1"
+YELLOW_TAXI_USER_EMAIL="yellow-taxi-marketing-mgr@akhanolkar.altostrat.com"
+GREEN_TAXI_USER_EMAIL="green-taxi-marketing-mgr@akhanolkar.altostrat.com"
 
 TAXONOMY="BusinessCritical-NYCT"
 TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1 $TAXONOMY | grep taxonomies | cut -d'/' -f6`
+CONFIDENTIAL_POLICY_NM="ConfidentialData"
 CONFIDENTIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep -A1 ConfidentialData  | grep policyTags | cut -d'/' -f8`
+
 
 
 curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
     -H "Content-Type: application/json; charset=utf-8" \
-  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${CONFIDENTIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/bigquerydatapolicy.maskedReader\",\"members\":[\"user:$DATA_ENGINEER_USER_EMAIL\"]}]}}"
+  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${CONFIDENTIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/datacatalog.categoryFineGrainedReader\",\"members\":[\"user:$YELLOW_TAXI_USER_EMAIL\",\"user:$GREEN_TAXI_USER_EMAIL\"]}]}}"
 
 ```
 
@@ -145,11 +183,69 @@ curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-
 Author's output:
 ```
 INFORMATIONAL-DO NOT RUN THIS-
-
+{
+  "version": 1,
+  "etag": "BwYA2apTSco=",
+  "bindings": [
+    {
+      "role": "roles/datacatalog.categoryFineGrainedReader",
+      "members": [
+        "user:green-taxi-marketing-mgr@akhanolkar.altostrat.com",
+        "user:yellow-taxi-marketing-mgr@akhanolkar.altostrat.com"
+      ]
+    }
+  ]
+}
 ```
 
 <br>
 
+
+
 <hr>
 
 
+### 3.6. [Step 7] Grant the data engineer maskedReader role for the data policy
+
+```
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+LOCATION="us-central1"
+DATA_POLICY_ID="NYCT_Fare_Masking"
+DATA_ENGINEER_USER_EMAIL="data-engineer@akhanolkar.altostrat.com"
+
+curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  --data "{\"policy\":{\"bindings\":[{\"members\":[\"user:$DATA_ENGINEER_USER_EMAIL\"],\"role\":\"roles/bigquerydatapolicy.maskedReader\"}]}}" \
+ "https://bigquerydatapolicy.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/dataPolicies/$DATA_POLICY_ID:setIamPolicy" 
+```
+
+Author's output:
+```
+INFORMATIONAL-DO NOT RUN THIS-
+{
+  "version": 1,
+  "etag": "BwYA2aDzLak=",
+  "bindings": [
+    {
+      "role": "roles/bigquerydatapolicy.maskedReader",
+      "members": [
+        "user:data-engineer@akhanolkar.altostrat.com"
+      ]
+    }
+  ]
+}
+```
+
+
+### 3.7. [Step 8] Grant the data engineer maskedReader role for the data policy
+
+```
+
+```
+
+Author's output:
+```
+INFORMATIONAL-DO NOT RUN THIS-
+
+```
