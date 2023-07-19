@@ -238,4 +238,4 @@ You should see the warning --> "Your query results may be limited because you do
 
 <hr>
 
-This concludes the module. Proceed to the next module to learn and try Column Level Security on BigLake tables built on top of Hudi snapshots.
+This concludes the module. Proceed to the [next module](Module-06b.md) to learn and try Column Level Security on BigLake tables built on top of Hudi snapshots.
