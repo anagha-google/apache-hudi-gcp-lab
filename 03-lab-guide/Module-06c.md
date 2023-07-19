@@ -375,12 +375,12 @@ bq update \
 
 <hr>
 
-### 3.6. [Step 6] Grant the taxi marketing managers clear-text access to columns that are policy tagged as "ConfidentialData"
+### 3.6. [Step 6] Grant the taxi marketing managers fine grained reader and clear-text access to column that is policy tagged as "ConfidentialData"
 
 Run this in Cloud Shell, after editing the command to reflect your user specific emails:
 ```
-YELLOW_TAXI_USER_EMAIL="yellow-taxi-marketing-mgr@akhanolkar.altostrat.com"
-GREEN_TAXI_USER_EMAIL="green-taxi-marketing-mgr@akhanolkar.altostrat.com"
+YELLOW_TAXI_USER_EMAIL="--REPLACE with YOUR_YELLOW_TAXI_DUDETTE_EMAIL--"
+GREEN_TAXI_USER_EMAIL="--REPLACE with YOUR_GREEN_TAXI_DUDE_EMAIL--"
 
 TAXONOMY="BusinessCritical-NYCT"
 TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1 $TAXONOMY | grep taxonomies | cut -d'/' -f6`
@@ -425,7 +425,7 @@ Here is what the ACLs look like in the UI-
 <hr>
 
 
-### 3.7. [Step 7] Grant the data engineer (data) masked access to the columns that are policy tagged as "ConfidentialData"
+### 3.7. [Step 7] Grant the data engineer (data) masked access (replace with 0) to the column that is policy tagged as "ConfidentialData"
 
 Paste the below in Cloud Shell-
 ```
@@ -462,7 +462,49 @@ INFORMATIONAL-DO NOT RUN THIS-
 
 <hr>
 
-## 4. Column Level Masking in action in BigLake table on Hudi snapshot
+## 4. Column Level Masking in action in BigLake table on Hudi snapshot from the BigQuery UI
+
+Recap:<br>
+Here is the Column Level Masking configuration we applied in this lab module.
+
+### 4.1. Sign-in to the BigQuery UI as the Yellow Taxi user & query the table from the BigQuery UI
+
+Paste in the BigQuery UI:
+```
+SELECT total_amount,* FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` WHERE TRIP_YEAR='2019' AND trip_month='4' AND trip_day='23'  
+AND pickup_location_id='161' AND dropoff_location_id='239' AND TRIP_HOUR IN (20,19) AND VENDOR_ID='1' AND TRIP_DISTANCE IN (3.1, 3.2)
+```
+
+Here is a visual of the results expected:
+
+
+![README](../04-images/m06c-04.png)   
+<br><br>
+
+### 4.2. Sign-in to the BigQuery UI as the Green Taxi user & query the table from the BigQuery UI
+
+Paste in the BigQuery UI, the same query as #4.1 and you should see the similar results with green taxi trips.
+
+### 4.3. Sign-in to the BigQuery UI as the Data Engineer user & query the table from the BigQuery UI
+
+Paste the same SQL as 4.1, in the BigQuery UI:
+```
+SELECT total_amount,* FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` WHERE TRIP_YEAR='2019' AND trip_month='4' AND trip_day='23'  
+AND pickup_location_id='161' AND dropoff_location_id='239' AND TRIP_HOUR IN (20,19) AND VENDOR_ID='1' AND TRIP_DISTANCE IN (3.1, 3.2)
+```
+
+Here is a visual of the results expected:
+
+![README](../04-images/m06c-05.png)   
+<br><br>
+
+The total fare amount is replaced with 0, from the "DEFAULT_MASKING_VALUE" of the data masking policy applied.
+
+<br>
+
+<hr>
+
+This concludes the module, proceed to the next module.
 
 
 
