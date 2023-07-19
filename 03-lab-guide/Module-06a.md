@@ -29,7 +29,7 @@ Create three IAM users, and add them to the groups created above, as shown below
 
 Grant all the three users, the following roles:<br>
 roles/viewer<br>
-roles/storage.admin<br>
+roles/storage.objectViewer<br>
 roles/dataproc.editor<br>
 
 E.g. Substitute the users below with yours and run in Cloud Shell:
@@ -46,11 +46,11 @@ gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_YELLOW_TA
 gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_GREEN_TAXI_USER_EQUIVALENT --role=roles/viewer
 gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_DATA_ENGINEER_USER_EQUIVALENT --role=roles/viewer
 
-gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_YELLOW_TAXI_USER_EQUIVALENT --role=roles/viewer
-gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_GREEN_TAXI_USER_EQUIVALENT --role=roles/storage.admin
-gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_DATA_ENGINEER_USER_EQUIVALENT --role=roles/storage.admin
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_YELLOW_TAXI_USER_EQUIVALENT roles/storage.objectViewer
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_GREEN_TAXI_USER_EQUIVALENT roles/storage.objectViewer
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_DATA_ENGINEER_USER_EQUIVALENT roles/storage.objectViewer
 
-gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_YELLOW_TAXI_USER_EQUIVALENT --role=roles/viewer
+gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_YELLOW_TAXI_USER_EQUIVALENT --role=roles/dataproc.editor
 gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_GREEN_TAXI_USER_EQUIVALENT --role=roles/dataproc.editor
 gcloud projects add-iam-policy-binding $PROJECT_ID --member user:$YOUR_DATA_ENGINEER_USER_EQUIVALENT --role=roles/dataproc.editor
 ```
