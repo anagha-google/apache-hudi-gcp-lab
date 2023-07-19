@@ -13,9 +13,9 @@ Covered in [Module 6a](Module-06a.md).
 
 
 
-## 6. Configuring Column Level Masking (CLM) - on BigLake tables 
+## 2. Configuring Column Level Masking (CLM) - on BigLake tables 
 
-### 6.1. CLM setup for the lab
+### 2.1. CLM setup for the lab
 Lets add masking to the setup we already did-
 
 | User  |  Column Access | Access type | 
@@ -26,12 +26,14 @@ Lets add masking to the setup we already did-
 
 <br><br>
 
-### 6.2. What's involved
+### 2.2. What's involved
 
 <br><br>
 
 
-### 6.3. [Step 2] Create a policy tag called "ConfidentialData" under the taxonomy we already created earlier
+## 3. Lab
+
+### 3.1. [Step 2] Create a policy tag called "ConfidentialData" under the taxonomy we already created earlier
 (Step 1 is creating a Taxonomy which we already did earlier in this lab module)<br><br>
 
 Run this in Cloud Shell-
@@ -74,7 +76,7 @@ CONFIDENTIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --ta
 <br><br>
 
 
-### 6.4. [Step 3] Update the BigLake table schema file to include/associate the policy tag, "ConfidentialData" with the "total_amount" column in the BigLake table
+### 3.2. [Step 3] Update the BigLake table schema file to include/associate the policy tag, "ConfidentialData" with the "total_amount" column in the BigLake table
 
 We have a file locally already, that we created that has the schema of the BigLake table with the updates we made for the FinancialData policy tag. Lets add the ConfidentialData policy tag to the total_amount column. 
 
@@ -103,7 +105,7 @@ rm dummy.json
 
 <br><br>
 
-### 6.5. [Step 4] Update the BigLake table with the schema file 
+### 3.3. [Step 4] Update the BigLake table with the schema file 
 
 Run the below in Cloud Shell-
 ```
@@ -118,7 +120,7 @@ bq update \
 
 <br><br>
 
-### 6.6. [Step 5] Assign the policy to the taxi marketing managers to allow access to confidential data
+### 3.4. [Step 5] Assign the policy to the taxi marketing managers to allow access to confidential data
 
 Run this in Cloud Shell, after editing the command to reflect your user specific emails:
 ```
