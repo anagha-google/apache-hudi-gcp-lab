@@ -24,7 +24,6 @@ Create three IAM users, and add them to the groups created above, as shown below
 ![README](../04-images/m06-02.png)   
 <br><br>
 
-<hr>
 
 ### 1.3. Grant roles to the three users
 
