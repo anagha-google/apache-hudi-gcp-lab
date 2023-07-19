@@ -4,11 +4,15 @@
 
 This module is a continuation of the prior module and showcases Column Level Masking made possible with BigLake on your Hudi snapshots sitting in Cloud Storage. 
 
+<br>
+
 <hr>
 
 ## 1. Foundational Security Setup for the lab module
 
 Covered in [Module-06a](Module-06a.md).
+<br>
+
 <hr>
 
 
@@ -481,9 +485,17 @@ Here is a visual of the results expected:
 ![README](../04-images/m06c-04.png)   
 <br><br>
 
+<br>
+
+<hr>
+
 ### 4.2. Sign-in to the BigQuery UI as the Green Taxi user & query the table from the BigQuery UI
 
 Paste in the BigQuery UI, the same query as #4.1 and you should see the similar results with green taxi trips.
+
+<br>
+
+<hr>
 
 ### 4.3. Sign-in to the BigQuery UI as the Data Engineer user & query the table from the BigQuery UI
 
