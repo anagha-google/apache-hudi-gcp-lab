@@ -28,6 +28,11 @@ Lets add masking to the setup we already did-
 | green-taxi-marketing-mgr | All columns | Clear-text |
 | data-engineer |  All columns except fare, tips & total amount | Masking of total_amount column |
 
+Summary:
+
+![README](../04-images/m06c-06.png)   
+<br><br>
+
 <br><br>
 
 ### 2.2. What's involved
