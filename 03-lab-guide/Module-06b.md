@@ -498,9 +498,7 @@ You should see the rows returned.
 
 <hr>
 
-
-
-<br>
+This concludes the module. Proceed to the next module to learn and try Column Level Masking on BigLake tables built on top of Hudi snapshots.
 
 <hr>
 
