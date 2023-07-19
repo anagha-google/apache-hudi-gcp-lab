@@ -22,13 +22,9 @@ Covered in [Module-06a](Module-06a.md).
 ### 2.1. CLM setup for the lab
 Lets add masking to the setup we already did-
 
-| User  |  Column Access | Access type | 
-| :-- | :--- | :--- |
-| yellow-taxi-marketing-mgr | All columns | Clear-text |
-| green-taxi-marketing-mgr | All columns | Clear-text |
-| data-engineer |  All columns except fare, tips & total amount | Masking of total_amount column |
+We'll mask the total_amount column to show just 0, for the data engineer ONLY. The rest of the users will see clear-text values.
 
-Summary:
+
 
 ![README](../04-images/m06c-06.png)   
 <br><br>
