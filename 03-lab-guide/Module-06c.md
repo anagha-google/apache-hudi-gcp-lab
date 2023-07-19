@@ -43,7 +43,7 @@ We already created a taxonomy called "BusinessCritical-NYCT" in a [proir module]
 <hr>
 
 ### 3.2. [Step 2] Create a policy tag called "ConfidentialData" under the taxonomy we already created earlier
-(Step 1 is creating a Taxonomy which we already did in a <br><br>
+
 
 Run this in Cloud Shell-
 ```
