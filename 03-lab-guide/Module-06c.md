@@ -70,6 +70,8 @@ Lets grab the Confidential Policy Tag ID for the next step:
 CONFIDENTIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep -A1 ConfidentialData  | grep policyTags | cut -d'/' -f8`
 ```
 
+Here is what the Taxonomy looks in the BigQuery UI-
+
 ![README](../04-images/m06-24.png)   
 <br><br>
 
@@ -111,6 +113,11 @@ Here is the author's output-
 }
 
 ```
+
+Here is what the Taxonomy looks in the BigQuery UI after adding the masking data policy to the policy tag-
+
+![README](../04-images/m06c-01.png)   
+<br><br>
 
 <hr>
 
@@ -171,8 +178,6 @@ TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1
 CONFIDENTIAL_POLICY_NM="ConfidentialData"
 CONFIDENTIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep -A1 ConfidentialData  | grep policyTags | cut -d'/' -f8`
 
-
-
 curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
     -H "Content-Type: application/json; charset=utf-8" \
   https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${CONFIDENTIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/datacatalog.categoryFineGrainedReader\",\"members\":[\"user:$YELLOW_TAXI_USER_EMAIL\",\"user:$GREEN_TAXI_USER_EMAIL\"]}]}}"
@@ -198,6 +203,12 @@ INFORMATIONAL-DO NOT RUN THIS-
 }
 ```
 
+Here is what the ACLs look like in the UI-
+
+![README](../04-images/m06c-03.png)   
+<br><br>
+
+
 <br>
 
 
@@ -207,12 +218,13 @@ INFORMATIONAL-DO NOT RUN THIS-
 
 ### 3.6. [Step 7] Grant the data engineer (data) masked access to the columns that are policy tagged as "ConfidentialData"
 
+Paste the below in Cloud Shell-
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
 PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
 LOCATION="us-central1"
 DATA_POLICY_ID="NYCT_Fare_Masking"
-DATA_ENGINEER_USER_EMAIL="data-engineer@akhanolkar.altostrat.com"
+DATA_ENGINEER_USER_EMAIL="REPLACE WITH YOUR DATA ENGINEER EMAIL"
 
 curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
   -H "Content-Type: application/json; charset=utf-8" \
@@ -236,6 +248,9 @@ INFORMATIONAL-DO NOT RUN THIS-
   ]
 }
 ```
+
+## 4. Column Level Masking in action in BigLake table on Hudi snapshot
+
 
 
 
