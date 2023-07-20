@@ -152,7 +152,13 @@ Run the Data Profile Scan, as shown below. It takes about 10 minutes to complete
 
 Review the results in the Dataplex Profile UI, as shown below, and understand the feature and think about areas where profiling can help you with your workloads-
 
+![README](../04-images/m07-09.png)   
+<br><br>
+
 ![README](../04-images/m07-10.png)   
+<br><br>
+
+![README](../04-images/m07-11.png)   
 <br><br>
 
 <hr>
