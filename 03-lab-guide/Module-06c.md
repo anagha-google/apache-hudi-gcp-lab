@@ -511,7 +511,7 @@ Here is a visual of the results expected - the total fare amount is replaced wit
 
 <hr>
 
-This concludes the module, proceed to the next module.
+This concludes the module, proceed to the [next module](Module-07.md).
 
 
 
