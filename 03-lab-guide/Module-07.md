@@ -247,7 +247,7 @@ Follow the steps below, where we will execute the Data Quality scan we created.
 
 ### 3.5. Persisting the results to a BigQuery dataset
 
-This feature is on the roadmap.
+This feature is on the roadmap. Follow the author's [Dataplex Quickstart labs](https://github.com/GoogleCloudPlatform/dataplex-labs/tree/main/dataplex-quickstart-labs) for tutorials on the latest product updates.
 
 <br><br>
 
