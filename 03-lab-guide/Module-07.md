@@ -88,6 +88,11 @@ SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` LIMI
 ![README](../04-images/m07-00-02.png)   
 <br><br>
 
+<hr>
+
+<br>
+
+
 ## 1. Lab: Data Profiling
 
 Dataplex offers a data profiling feature and this lab showcases the same.
