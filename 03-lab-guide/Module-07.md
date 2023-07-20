@@ -93,7 +93,7 @@ SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` LIMI
 <br>
 
 
-## 1. Lab: Data Profiling
+## 2. Lab: Data Profiling
 
 Dataplex offers a data profiling feature and this lab showcases the same.
 
@@ -105,7 +105,7 @@ There are several types of profiling. Dataplex does column-level profiling.
 ### Value of Data Profiling
 Among other benefits, the results of profiling can ALSO be leveraged by Dataplex for rule recommendations for Auto Data Quality - the main feature that is showcased in this lab module.
 
-### 1.1. Create a Data Profile Scan on the Hudi snapshot BigLake table
+### 2.1. Create a Data Profile Scan on the Hudi snapshot BigLake table
 
 Navigate to Dataplex and create a Data Profile scan as shown below, while logged in as yourself-
 
@@ -125,7 +125,7 @@ Navigate to Dataplex and create a Data Profile scan as shown below, while logged
 
 <br>
 
-### 1.2. Run the Data Profile Scan on the Hudi snapshot BigLake table
+### 2.2. Run the Data Profile Scan on the Hudi snapshot BigLake table
 
 Run the Data Profile Scan, as shown below. It takes about 10 minutes to complete.
 
@@ -145,9 +145,16 @@ Run the Data Profile Scan, as shown below. It takes about 10 minutes to complete
 
 <br>
 
-### 1.3. Review the results
+### 2.3. Review the results
 
+Review the results in the Dataplex Profile UI, as shown below, and understand the feature and think about areas where profiling can help you with your workloads-
 
+![README](../04-images/m07-09.png)   
+<br><br>
+
+<hr>
+
+<br>
 
 
 
