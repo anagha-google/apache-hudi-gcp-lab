@@ -100,9 +100,12 @@ Dataplex offers a data profiling feature and this lab showcases the same.
 ### Terminology Levelset
 Data profiling is the analytical process of capturing useful statistics of data. The results can provide actionable insights into data quality, trends and risks, for proactive remediation to eliminate any adverse impact.
 
-There are several types of profiling. Dataplex does column-level profiling. The results of profiling can be leveraged by Dataplex for rule recommendations for Auto Data Quality - a feature that is also covered in this lab module.
+There are several types of profiling. Dataplex does column-level profiling. 
 
-### 1.1. Create a Data Profile Scan on the BigLake table on the Hudi snapshot
+### Value of Data Profiling
+Among other benefits, the results of profiling can ALSO be leveraged by Dataplex for rule recommendations for Auto Data Quality - the main feature that is showcased in this lab module.
+
+### 1.1. Create a Data Profile Scan on the Hudi snapshot BigLake table
 
 Navigate to Dataplex and create a Data Profile scan as shown below, while logged in as yourself-
 
@@ -118,5 +121,37 @@ Navigate to Dataplex and create a Data Profile scan as shown below, while logged
 ![README](../04-images/m07-04.png)   
 <br><br>
 
+<hr>
 
+<br>
+
+### 1.2. Run the Data Profile Scan on the Hudi snapshot BigLake table
+
+Run the Data Profile Scan, as shown below. It takes about 10 minutes to complete.
+
+![README](../04-images/m07-05.png)   
+<br><br>
+
+![README](../04-images/m07-06.png)   
+<br><br>
+
+![README](../04-images/m07-07.png)   
+<br><br>
+
+![README](../04-images/m07-08.png)   
+<br><br>
+
+<hr>
+
+<br>
+
+### 1.3. Review the results
+
+
+
+
+
+<hr>
+
+<br>
 
