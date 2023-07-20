@@ -20,7 +20,7 @@ SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` LIMI
 
 
 ## 1.1. Grant yourself Column Level Access from Cloud Shell
-Paste the below in Cloud Shell-
+Replace with your user emails before executing and then run in Cloud Shell-
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
 PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
@@ -31,35 +31,38 @@ CONFIDENTIAL_POLICY="ConfidentialData"
 YOUR_GCP_ACCOUNT_NAME=`gcloud auth list --filter=status:ACTIVE --format="value(account)"`
 YOUR_GREEN_TAXI_USER_EMAIL="green-taxi-marketing-mgr@akhanolkar.altostrat.com"
 YOUR_YELLOW_TAXI_USER_EMAIL="yellow-taxi-marketing-mgr@akhanolkar.altostrat.com"
+DATAPLEX_GOOGLE_MANAGED_SERVICE_ACCOUNT="service-$PROJECT_NBR@gcp-sa-dataplex.iam.gserviceaccount.com"
+
+
 
 # Capture IDs
 TAXONOMY_ID=`gcloud data-catalog taxonomies list --location=$LOCATION | grep -A1 $TAXONOMY | grep taxonomies | cut -d'/' -f6`
 FINANCIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep -A1 FinancialData | grep policyTags | cut -d'/' -f8`
 CONFIDENTIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --taxonomy=$TAXONOMY_ID --location=$LOCATION | grep -A1 $CONFIDENTIAL_POLICY  | grep policyTags | cut -d'/' -f8`
 
-# Grant youself access to columns policy tagged as FinancialData
+# Grant youself and the Dataplex service account access to columns policy tagged as FinancialData
 curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
     -H "Content-Type: application/json; charset=utf-8" \
-  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${FINANCIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/datacatalog.categoryFineGrainedReader\",\"members\":[\"user:$YOUR_GCP_ACCOUNT_NAME\", \"user:$YOUR_GREEN_TAXI_USER_EMAIL\",\"user:$YOUR_YELLOW_TAXI_USER_EMAIL\" ]}]}}"
+  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${FINANCIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/datacatalog.categoryFineGrainedReader\",\"members\":[\"user:$YOUR_GCP_ACCOUNT_NAME\", \"user:$YOUR_GREEN_TAXI_USER_EMAIL\",\"user:$YOUR_YELLOW_TAXI_USER_EMAIL\",\"serviceAccount\:$DATAPLEX_GOOGLE_MANAGED_SERVICE_ACCOUNT\" ]}]}}"
 
-# Grant youself access to columns policy tagged as ConfidentialData
+# Grant youself and the Dataplex service account access to columns policy tagged as ConfidentialData
 curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
     -H "Content-Type: application/json; charset=utf-8" \
-  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${CONFIDENTIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/datacatalog.categoryFineGrainedReader\",\"members\":[\"user:$YOUR_GCP_ACCOUNT_NAME\", \"user:$YOUR_GREEN_TAXI_USER_EMAIL\",\"user:$YOUR_YELLOW_TAXI_USER_EMAIL\" ]}]}}"
+  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${CONFIDENTIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/datacatalog.categoryFineGrainedReader\",\"members\":[\"user:$YOUR_GCP_ACCOUNT_NAME\", \"user:$YOUR_GREEN_TAXI_USER_EMAIL\",\"user:$YOUR_YELLOW_TAXI_USER_EMAIL\",\"serviceAccount\:$DATAPLEX_GOOGLE_MANAGED_SERVICE_ACCOUNT\" ]}]}}"
 ```
 
-### 1.2. Grant yourself Row Level Access from the BigQuery UI
+### 1.2. Grant yourself and the Dataplex service account Row Level Access from the BigQuery UI
 Paste the below in your BigQuery UI after replacing the identities below:
 
 ```
 CREATE OR REPLACE ROW ACCESS POLICY yellow_taxi_rap
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
-GRANT TO ("group:YOUR_YELLOW_TAXI_IAM_GROUP", "group:YOUR_TECH_STOP_IAM_GROUP", "user:YOUR_EMAIL")
+GRANT TO ("group:YOUR_YELLOW_TAXI_IAM_GROUP", "group:YOUR_TECH_STOP_IAM_GROUP", "user:YOUR_EMAIL", "serviceAccount:YOUR_DATAPLEX_SERVICE_ACCOUNT")
 FILTER USING (taxi_type = "yellow");
 
 CREATE OR REPLACE ROW ACCESS POLICY green_taxi_rap
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
-GRANT TO ("group:YOUR_GREEN_TAXI_IAM_GROUP", "group:YOUR_TECH_STOP_IAM_GROUP", "user:YOUR_EMAIL")
+GRANT TO ("group:YOUR_GREEN_TAXI_IAM_GROUP", "group:YOUR_TECH_STOP_IAM_GROUP", "user:YOUR_EMAIL", "serviceAccount:YOUR_DATAPLEX_SERVICE_ACCOUNT")
 FILTER USING (taxi_type = "green");
 ```
 
@@ -67,12 +70,12 @@ Here are the author's SQL - just for reference-
 ```
 CREATE OR REPLACE ROW ACCESS POLICY yellow_taxi_rap
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
-GRANT TO ("group:nyc-yellow-taxi-marketing@akhanolkar.altostrat.com","group:nyc-taxi-tech-stop@akhanolkar.altostrat.com", "user:admin@akhanolkar.altostrat.com")
+GRANT TO ("group:nyc-yellow-taxi-marketing@akhanolkar.altostrat.com","group:nyc-taxi-tech-stop@akhanolkar.altostrat.com", "user:admin@akhanolkar.altostrat.com","serviceAccount:service-623600433888@gcp-sa-dataplex.iam.gserviceaccount.com")
 FILTER USING (taxi_type = "yellow");
 
 CREATE OR REPLACE ROW ACCESS POLICY green_taxi_rap
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
-GRANT TO ("group:nyc-green-taxi-marketing@akhanolkar.altostrat.com","group:nyc-taxi-tech-stop@akhanolkar.altostrat.com", "user:admin@akhanolkar.altostrat.com")
+GRANT TO ("group:nyc-green-taxi-marketing@akhanolkar.altostrat.com","group:nyc-taxi-tech-stop@akhanolkar.altostrat.com", "user:admin@akhanolkar.altostrat.com","serviceAccount:service-623600433888@gcp-sa-dataplex.iam.gserviceaccount.com")
 FILTER USING (taxi_type = "green");
 
 ```
@@ -149,7 +152,7 @@ Run the Data Profile Scan, as shown below. It takes about 10 minutes to complete
 
 Review the results in the Dataplex Profile UI, as shown below, and understand the feature and think about areas where profiling can help you with your workloads-
 
-![README](../04-images/m07-09.png)   
+![README](../04-images/m07-10.png)   
 <br><br>
 
 <hr>
