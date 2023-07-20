@@ -3,6 +3,9 @@
 # Module 6c: Column Level Masking powered by BigLake 
 
 This module is a continuation of the prior module and showcases Column Level Masking made possible with BigLake on your Hudi snapshots sitting in Cloud Storage. 
+<br><br>
+
+Details about column masking are available in the [documentation](https://cloud.google.com/bigquery/docs/column-data-masking-intro), the author has provided a one stop shop example for you in this lab module.
 
 <br>
 
@@ -14,8 +17,6 @@ Covered in [Module-06a](Module-06a.md).
 <br>
 
 <hr>
-
-
 
 ## 2. Configuring Column Level Masking (CLM) - on BigLake tables 
 
