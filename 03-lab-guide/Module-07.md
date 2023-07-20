@@ -19,7 +19,7 @@ SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` LIMI
 <br><br>
 
 
-## 1.1. Grant yourself Column Level Access from Cloud Shell
+## 1.1. Grant yourself and the Dataplex Service Account Column Level Access from Cloud Shell
 Replace with your user emails before executing and then run in Cloud Shell-
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
