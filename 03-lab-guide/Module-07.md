@@ -156,6 +156,8 @@ Review the results in the Dataplex Profile UI, as shown below, and understand th
 
 <br>
 
+## 3. Lab: Auto Data Quality
+
 
 
 <hr>
