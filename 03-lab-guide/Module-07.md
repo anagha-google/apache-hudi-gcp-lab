@@ -9,7 +9,7 @@ In order to run Data Profiling and Auto Data Quality, we have to grant ourselves
 
 ## 1.1. Querying the BigLake table from the BigQuery UI
 
-Run the query below in the BigQuery UI; You should see the an error-
+Run the query below in the BigQuery UI; You should see the an error since you dont have the requisite row and column access-
 
 ```
 SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` LIMIT 2
