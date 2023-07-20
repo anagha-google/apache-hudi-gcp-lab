@@ -167,6 +167,51 @@ Review the results in the Dataplex Profile UI, as shown below, and understand th
 
 ## 3. Lab: Auto Data Quality
 
+### 3.1. Navigate to Auto Data Quality in Dataplex UI
+
+![README](../04-images/m07-12.png)   
+<br><br>
+
+### 3.2. Create a Data Quality Scan
+
+Follow the steps below, where we will use Dataplex recommendations for Data Quality rules based off of the profile scan we ran and run a Data Quality scan.
+
+![README](../04-images/m07-12.png)   
+<br><br>
+
+![README](../04-images/m07-13.png)   
+<br><br>
+
+![README](../04-images/m07-14.png)   
+<br><br>
+
+![README](../04-images/m07-15.png)   
+<br><br>
+
+![README](../04-images/m07-16.png)   
+<br><br>
+
+![README](../04-images/m07-17.png)   
+<br><br>
+
+![README](../04-images/m07-18.png)   
+<br><br>
+
+
+![README](../04-images/m07-19.png)   
+<br><br>
+
+![README](../04-images/m07-20.png)   
+<br><br>
+
+![README](../04-images/m07-21.png)   
+<br><br>
+
+![README](../04-images/m07-22.png)   
+<br><br>
+
+![README](../04-images/m07-23.png)   
+<br><br>
 
 
 <hr>
