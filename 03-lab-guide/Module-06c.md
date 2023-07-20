@@ -504,14 +504,10 @@ SELECT total_amount,* FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_
 AND pickup_location_id='161' AND dropoff_location_id='239' AND TRIP_HOUR IN (20,19) AND VENDOR_ID='1' AND TRIP_DISTANCE IN (3.1, 3.2)
 ```
 
-Here is a visual of the results expected:
+Here is a visual of the results expected - the total fare amount is replaced with 0, from the "DEFAULT_MASKING_VALUE" of the data masking policy applied:
 
 ![README](../04-images/m06c-05.png)   
 <br><br>
-
-The total fare amount is replaced with 0, from the "DEFAULT_MASKING_VALUE" of the data masking policy applied.
-
-<br>
 
 <hr>
 
