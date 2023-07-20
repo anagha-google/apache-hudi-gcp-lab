@@ -172,9 +172,11 @@ Review the results in the Dataplex Profile UI, as shown below, and understand th
 ![README](../04-images/m07-12.png)   
 <br><br>
 
+<hr>
+
 ### 3.2. Create a Data Quality Scan
 
-Follow the steps below, where we will use Dataplex recommendations for Data Quality rules based off of the profile scan we ran and run a Data Quality scan.
+Follow the steps below, where we will use Dataplex recommendations for Data Quality rules based off of the profile scan we ran and create Data Quality scan.
 
 ![README](../04-images/m07-12.png)   
 <br><br>
@@ -213,6 +215,45 @@ Follow the steps below, where we will use Dataplex recommendations for Data Qual
 ![README](../04-images/m07-23.png)   
 <br><br>
 
+<hr>
+
+### 3.3. Execute the Data Quality Scan
+
+Follow the steps below, where we will execute the Data Quality scan we created.
+
+
+![README](../04-images/m07-24.png)   
+<br><br>
+
+
+![README](../04-images/m07-25.png)   
+<br><br>
+
+![README](../04-images/m07-26.png)   
+<br><br>
+
+<hr>
+
+### 3.4. Review the Data Quality Results in the Dataplex Auto Data Quality UI
+
+![README](../04-images/m07-27.png)   
+<br><br>
+
+
+![README](../04-images/m07-28.png)   
+<br><br>
+
+<hr>
+
+### 3.5. Persisting the results to a BigQuery dataset
+
+This feature is on the roadmap.
+
+<br><br>
+
+<hr>
+
+This concludes thelab module. Please proceed to the next module.
 
 <hr>
 
