@@ -18,7 +18,7 @@ Covered in [Module-06a](Module-06a.md).
 ## 2. Configuring Column Level Masking (CLM) - on BigLake tables 
 
 ### 2.1. CLM setup for the lab
-In the previous module, we configured column level security. Lets add masking to the setup we already did. We'll mask the total_amount column to show just 0, for the data engineer ONLY. The rest of the users will see clear-text values.<br> For masking to show just 0, the masking rule to be applied is ["Default masking value"](https://cloud.google.com/bigquery/docs/column-data-masking-intro#auth-inheritance) detailed in the documentation. <br>
+In the previous module, we configured column level security. Lets add masking to the setup we already did. We'll mask the total_amount column to show just 0, for the data engineer ONLY. The rest of the users will see clear-text values.<br><br> For masking to show just 0, the masking rule to be applied is "Default masking value" as detailed in the [documentation](https://cloud.google.com/bigquery/docs/column-data-masking-intro#auth-inheritance). <br>
 
 
 ![README](../04-images/m06c-06.png)   
