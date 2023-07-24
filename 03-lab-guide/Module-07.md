@@ -5,7 +5,7 @@ This module covers Data Profiling and Auto Data Quality in Dataplex on BigLake t
 
 ## 1. Security setup
 
-In order to run Data Profiling and Auto Data Quality, we have to grant ourselves the requisite roles to allow access to all columns; This means, we need column level access, same as the Yellow and Green Taxi users.
+In order to run Data Profiling and Auto Data Quality, we have to grant ourselves the requisite roles to allow access to all columns; This means, we need column level access, same as the Yellow and Green Taxi users. Dataplex has a service account, and the same needs the read privileges as well, as well as the User Managed Service Account used in Terraform provisioning of the Dataproc cluster.
 
 ## 1.1. Querying the BigLake table from the BigQuery UI
 
@@ -19,7 +19,7 @@ SELECT * FROM `apache-hudi-lab.gaia_product_ds.nyc_taxi_trips_hudi_biglake` LIMI
 <br><br>
 
 
-## 1.1. Grant yourself and the Dataplex Service Account Column Level Access from Cloud Shell
+## 1.1. Grant yourself, your User Managed Service Account and the Dataplex Service Account Column Level Access from Cloud Shell
 Replace with your user emails before executing and then run in Cloud Shell-
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
@@ -32,6 +32,7 @@ YOUR_GCP_ACCOUNT_NAME=`gcloud auth list --filter=status:ACTIVE --format="value(a
 YOUR_GREEN_TAXI_USER_EMAIL="green-taxi-marketing-mgr@akhanolkar.altostrat.com"
 YOUR_YELLOW_TAXI_USER_EMAIL="yellow-taxi-marketing-mgr@akhanolkar.altostrat.com"
 DATAPLEX_GOOGLE_MANAGED_SERVICE_ACCOUNT="service-$PROJECT_NBR@gcp-sa-dataplex.iam.gserviceaccount.com"
+USER_MANAGED_SERVICE_ACCOUNT="gaia-lab-sa@$PROJECT_ID.iam.gserviceaccount.com"
 
 
 
@@ -43,12 +44,12 @@ CONFIDENTIAL_POLICY_TAG_ID=`gcloud data-catalog taxonomies policy-tags list --ta
 # Grant youself and the Dataplex service account access to columns policy tagged as FinancialData
 curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
     -H "Content-Type: application/json; charset=utf-8" \
-  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${FINANCIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/datacatalog.categoryFineGrainedReader\",\"members\":[\"user:$YOUR_GCP_ACCOUNT_NAME\", \"user:$YOUR_GREEN_TAXI_USER_EMAIL\",\"user:$YOUR_YELLOW_TAXI_USER_EMAIL\",\"serviceAccount\:$DATAPLEX_GOOGLE_MANAGED_SERVICE_ACCOUNT\" ]}]}}"
+  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${FINANCIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/datacatalog.categoryFineGrainedReader\",\"members\":[\"user:$YOUR_GCP_ACCOUNT_NAME\", \"user:$YOUR_GREEN_TAXI_USER_EMAIL\",\"user:$YOUR_YELLOW_TAXI_USER_EMAIL\",\"serviceAccount\:$DATAPLEX_GOOGLE_MANAGED_SERVICE_ACCOUNT\",\"serviceAccount\:$USER_MANAGED_SERVICE_ACCOUNT\" ]}]}}"
 
 # Grant youself and the Dataplex service account access to columns policy tagged as ConfidentialData
 curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
     -H "Content-Type: application/json; charset=utf-8" \
-  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${CONFIDENTIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/datacatalog.categoryFineGrainedReader\",\"members\":[\"user:$YOUR_GCP_ACCOUNT_NAME\", \"user:$YOUR_GREEN_TAXI_USER_EMAIL\",\"user:$YOUR_YELLOW_TAXI_USER_EMAIL\",\"serviceAccount\:$DATAPLEX_GOOGLE_MANAGED_SERVICE_ACCOUNT\" ]}]}}"
+  https://datacatalog.googleapis.com/v1/projects/$PROJECT_ID/locations/$LOCATION/taxonomies/$TAXONOMY_ID/policyTags/${CONFIDENTIAL_POLICY_TAG_ID}:setIamPolicy -d  "{\"policy\":{\"bindings\":[{\"role\":\"roles/datacatalog.categoryFineGrainedReader\",\"members\":[\"user:$YOUR_GCP_ACCOUNT_NAME\", \"user:$YOUR_GREEN_TAXI_USER_EMAIL\",\"user:$YOUR_YELLOW_TAXI_USER_EMAIL\",\"serviceAccount\:$DATAPLEX_GOOGLE_MANAGED_SERVICE_ACCOUNT\",\"serviceAccount\:$USER_MANAGED_SERVICE_ACCOUNT\" ]}]}}"
 ```
 
 ### 1.2. Grant yourself and the Dataplex service account Row Level Access from the BigQuery UI
@@ -70,12 +71,12 @@ Here are the author's SQL - just for reference-
 ```
 CREATE OR REPLACE ROW ACCESS POLICY yellow_taxi_rap
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
-GRANT TO ("group:nyc-yellow-taxi-marketing@akhanolkar.altostrat.com","group:nyc-taxi-tech-stop@akhanolkar.altostrat.com", "user:admin@akhanolkar.altostrat.com","serviceAccount:service-623600433888@gcp-sa-dataplex.iam.gserviceaccount.com")
+GRANT TO ("group:nyc-yellow-taxi-marketing@akhanolkar.altostrat.com","group:nyc-taxi-tech-stop@akhanolkar.altostrat.com", "user:admin@akhanolkar.altostrat.com","serviceAccount:service-623600433888@gcp-sa-dataplex.iam.gserviceaccount.com","serviceAccount:gaia-lab-sa@apache-hudi-lab.iam.gserviceaccount.com")
 FILTER USING (taxi_type = "yellow");
 
 CREATE OR REPLACE ROW ACCESS POLICY green_taxi_rap
 ON gaia_product_ds.nyc_taxi_trips_hudi_biglake
-GRANT TO ("group:nyc-green-taxi-marketing@akhanolkar.altostrat.com","group:nyc-taxi-tech-stop@akhanolkar.altostrat.com", "user:admin@akhanolkar.altostrat.com","serviceAccount:service-623600433888@gcp-sa-dataplex.iam.gserviceaccount.com")
+GRANT TO ("group:nyc-green-taxi-marketing@akhanolkar.altostrat.com","group:nyc-taxi-tech-stop@akhanolkar.altostrat.com", "user:admin@akhanolkar.altostrat.com","serviceAccount:service-623600433888@gcp-sa-dataplex.iam.gserviceaccount.com","serviceAccount:gaia-lab-sa@apache-hudi-lab.iam.gserviceaccount.com")
 FILTER USING (taxi_type = "green");
 
 ```
