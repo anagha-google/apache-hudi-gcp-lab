@@ -337,8 +337,8 @@ We will learn about the disparity in module 9
 
 ### 3.3. The size of the data
 No compression code was explicitly specified.
-The Hudi dataset is uncompressed.
-(versus Parquet - compressed with snappy by default)
+The Hudi dataset is gzip compressed  by default.
+(versus Parquet - compressed with snappy)
 ```
 gsutil du -sh $DATA_BUCKET_HUDI_FQP
 ```
