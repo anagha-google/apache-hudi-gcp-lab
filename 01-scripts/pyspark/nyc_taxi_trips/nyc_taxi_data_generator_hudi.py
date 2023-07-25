@@ -98,7 +98,7 @@ def fnMain(logger, args):
             'hoodie.table.name': TABLE_NAME,
             'hoodie.datasource.write.table.name': TABLE_NAME,
             'hoodie.datasource.write.table.type': 'COPY_ON_WRITE',
-            'hoodie.datasource.write.keygenerator.class':'org.apache.hudi.keygen.CustomKeyGenerator',
+            'hoodie.datasource.write.keygenerator.class':'org.apache.hudi.keygen.ComplexKeyGenerator',
             'hoodie.datasource.write.recordkey.field': 'taxi_type,trip_year,trip_month,trip_day,vendor_id,pickup_datetime,dropoff_datetime,pickup_location_id,dropoff_location_id',
             'hoodie.datasource.write.partitionpath.field': 'trip_year:SIMPLE,trip_month:SIMPLE,trip_day:SIMPLE',
             'hoodie.datasource.write.precombine.field': 'pickup_datetime',
