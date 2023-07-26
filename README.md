@@ -47,8 +47,8 @@ The lab includes Terraform for provisioning automation. The lab guide is detaile
 | [06b](03-lab-guide/Module-06b.md) | Implement Column Level Access Control powered by BigLake |
 | [06c](03-lab-guide/Module-06c.md) | Implement Column Level Masking powered by BigLake |
 | [07](03-lab-guide/Module-07.md) | Run Data Profiling and Data Quality on Hudi snapshot BigLake tables, powered by Dataplex |
-| 08 | Visualize Data Lineage with BigQuery/BigLake Hudi external tables, powered by Dataplex |
-| 09 | Execute quickstart Spark notebooks in Scala and Python to kick the tires with Apache Hudi |
+| 08 | Visualize Data Lineage of Spark pipelines (involving Hudi snapshot BigQuery/BigLake Hudi external tables), powered by Dataplex |
+| 09 | Execute quickstart Spark notebooks in Python to kick the tires with Apache Hudi |
 | 10 | Review automated technical metadata harevesting into Data Catalog and upload a Business Glossary for a Hudi snapshot table |
 
 <hr>
