@@ -4,7 +4,7 @@
 # This script -
 # 1. Reads a Parquet dataset tables with NYC yellow & Green taxi trips and 
 # 2. Persists to GCS as Hudi in the 
-# 3. Hive partition scheme of trip_year=YYYY/trip_month=MM,/trip_day=DD
+# 3. Hive partition scheme of trip_date=YYYY-MM-DD
 # ............................................................
 
 
@@ -98,13 +98,13 @@ def fnMain(logger, args):
             'hoodie.table.name': TABLE_NAME,
             'hoodie.datasource.write.table.name': TABLE_NAME,
             'hoodie.datasource.write.table.type': 'COPY_ON_WRITE',
-            'hoodie.datasource.write.keygenerator.class':'org.apache.hudi.keygen.ComplexKeyGenerator',
-            'hoodie.datasource.write.recordkey.field': 'taxi_type,trip_year,trip_month,trip_day,vendor_id,pickup_datetime,dropoff_datetime,pickup_location_id,dropoff_location_id',
-            'hoodie.datasource.write.partitionpath.field': 'trip_year,trip_month,trip_day',
+            'hoodie.datasource.write.recordkey.field': 'trip_id',
+            'hoodie.datasource.write.partitionpath.field': 'trip_date',
             'hoodie.datasource.write.precombine.field': 'pickup_datetime',
             'hoodie.datasource.write.hive_style_partitioning': 'true',
             'hoodie.partition.metafile.use.base.format': 'true', 
-            'hoodie.datasource.write.drop.partition.columns': 'true'
+            'hoodie.datasource.write.drop.partition.columns': 'true',
+            'hoodie.datasource.write.operation': 'insert'
         }
 
 
@@ -115,7 +115,7 @@ def fnMain(logger, args):
             print(f"TRIP YEAR={taxi_trip_year}")
 
             tripsYearScopedDF = spark.sql(f"SELECT * FROM temp_trips where trip_year={taxi_trip_year}")
-
+            
             tripsYearScopedDF.write.format("hudi"). \
                 options(**hudi_options). \
                 mode("append"). \
@@ -169,7 +169,3 @@ if __name__ == "__main__":
     arguments = fnParseArguments()
     logger = fnConfigureLogger()
     fnMain(logger, arguments)
-
-
-
-
