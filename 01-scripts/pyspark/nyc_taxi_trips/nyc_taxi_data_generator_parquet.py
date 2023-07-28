@@ -69,29 +69,58 @@ def fnMain(logger, args):
             print(f"TRIP YEAR={taxi_trip_year}")
             
             # Read yellow taxi data, canonicalize the schema
+            # ...................................................................................
+
+            # ..Read from BQ
             yellowTaxiTripsDF = spark.read \
               .format('bigquery') \
               .load(f"bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_{taxi_trip_year}")
+
+            # ..Create a temp table
             yellowTaxiTripsDF.createOrReplaceTempView("yellow_taxi_trips")
-            yellowTaxiTripsHomogenizedDF=spark.sql(YELLOW_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE.replace("YYYY",str(taxi_trip_year)))
+
+            # ..Count
             yellowTripCount=yellowTaxiTripsHomogenizedDF.count()
             print(f"Yellow trip count=str({yellowTripCount})")
+
+            # ..Load a dataframe with yellow taxi trips in a canonical schema (common for yellow and green taxis)
+            yellowTaxiTripsHomogenizedDF=spark.sql(YELLOW_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE.replace("YYYY",str(taxi_trip_year)))
+
+
             
             
             # Read green taxi data, canonicalize the schema
+            # ...................................................................................
+
+            # ..Read from BQ
             greenTaxiTripsDF = spark.read \
               .format('bigquery') \
               .load(f"bigquery-public-data.new_york_taxi_trips.tlc_green_trips_{taxi_trip_year}")
+
+            # ..Create a temp table
             greenTaxiTripsDF.createOrReplaceTempView("green_taxi_trips")
-            greenTaxiTripsHomogenizedDF=spark.sql(GREEN_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE.replace("YYYY",str(taxi_trip_year)))
+
+            # ..Count
             greenTripCount=greenTaxiTripsHomogenizedDF.count()
             print(f"Green trip count=str({greenTripCount})")
+
+             # ..Load a dataframe with yellow taxi trips in a canonical schema (common for yellow and green taxis)
+            greenTaxiTripsHomogenizedDF=spark.sql(GREEN_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE.replace("YYYY",str(taxi_trip_year)))
+
         
+            # Prepare to persist
+
+            # ..Union the two dataframes
             taxiTripsHomogenizedUnionedDF=yellowTaxiTripsHomogenizedDF.union(greenTaxiTripsHomogenizedDF)
+
+            # ..Add a unique key
             taxiTripsHomogenizedKeyedDF=taxiTripsHomogenizedUnionedDF.withColumn("trip_id", monotonically_increasing_id())
+
+            # ..Count
             taxiTripsCountForTheYear=taxiTripsHomogenizedUnionedDF.count()
             print(f"Trip count for the year=str({taxiTripsCountForTheYear})")
         
+            # ..Persist
             print(f"Starting write for year {taxi_trip_year}...")
             taxiTripsHomogenizedKeyedDF.write.partitionBy("trip_date").parquet(f"{peristencePath}", mode='append')
             print(f"Completed write for year {taxi_trip_year}...")
