@@ -315,6 +315,7 @@ gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet
 --id nyc_taxi_data_generator_parquet_$RANDOM \
 --region $DATAPROC_LOCATION \
 --project $PROJECT_ID \
+--properties "spark.executor.memory=6g" \
 -- --projectID=$PROJECT_ID --peristencePath="$DATA_BUCKET_FQP" 
 
 ```
