@@ -7,7 +7,7 @@
 # 3. Homogenizes the schema across the datasets and
 # 4. Unions the two datasets and
 # 5. Persists to GCS as parquet in the 
-# 6. Hive partition scheme of trip_year=YYYY/trip_month=MM,/trip_day=DD
+# 6. Hive partition scheme of trip_date=YYYY_MM_DD
 # ............................................................
 
 import sys,logging,argparse
