@@ -7,7 +7,7 @@
 # 3. Homogenizes the schema across the datasets and
 # 4. Unions the two datasets and
 # 5. Persists to GCS as parquet in the 
-# 6. Hive partition scheme of trip_year=YYYY/trip_month=MM,/trip_day=DD
+# 6. Hive partition scheme of trip_date=YYYY-MM-DD
 # ............................................................
 
 import sys,logging,argparse
@@ -48,11 +48,11 @@ def fnMain(logger, args):
     peristencePath = args.peristencePath
 
     # 2. Query to read BQ 
-    YELLOW_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE="SELECT DISTINCT 'yellow' as taxi_type,extract(year from pickup_datetime) as trip_year,extract(month from pickup_datetime) as trip_month,extract(day from pickup_datetime) as trip_day,extract(hour from pickup_datetime) as trip_hour, extract(minute from pickup_datetime) as trip_minute,vendor_id as vendor_id, pickup_datetime as pickup_datetime, dropoff_datetime as dropoff_datetime, store_and_fwd_flag as store_and_forward, Rate_Code as rate_code, pickup_location_id as pickup_location_id, dropoff_location_id as dropoff_location_id, Passenger_Count as passenger_count, trip_distance, fare_amount, imp_surcharge as surcharge, mta_tax as mta_tax, tip_amount, tolls_amount,cast(null as numeric) as improvement_surcharge,total_amount,payment_type as payment_type_code,cast(null as numeric) as congestion_surcharge, cast(null as string) as trip_type,cast(null as numeric) as ehail_fee,date(pickup_datetime) as partition_date,cast(null as numeric) as distance_between_service,cast(null as integer) as time_between_service from yellow_taxi_trips where extract(year from pickup_datetime)=YYYY"
+    YELLOW_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE="SELECT DISTINCT 'yellow' as taxi_type,substring(pickup_datetime,0,10) as trip_date,extract(year from pickup_datetime) as trip_year,extract(month from pickup_datetime) as trip_month,extract(day from pickup_datetime) as trip_day,extract(hour from pickup_datetime) as trip_hour, extract(minute from pickup_datetime) as trip_minute,vendor_id as vendor_id, pickup_datetime as pickup_datetime, dropoff_datetime as dropoff_datetime, store_and_fwd_flag as store_and_forward, Rate_Code as rate_code, pickup_location_id as pickup_location_id, dropoff_location_id as dropoff_location_id, Passenger_Count as passenger_count, trip_distance, fare_amount, imp_surcharge as surcharge, mta_tax as mta_tax, tip_amount, tolls_amount,cast(null as numeric) as improvement_surcharge,total_amount,payment_type as payment_type_code,cast(null as numeric) as congestion_surcharge, cast(null as string) as trip_type,cast(null as numeric) as ehail_fee,date(pickup_datetime) as partition_date,cast(null as numeric) as distance_between_service,cast(null as integer) as time_between_service from yellow_taxi_trips where extract(year from pickup_datetime)=YYYY"
     print("YELLOW_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE: ")
     print(YELLOW_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE)
     
-    GREEN_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE="SELECT DISTINCT 'green' as taxi_type, extract(year from pickup_datetime) as trip_year, extract(month from pickup_datetime) as trip_month, extract(day from pickup_datetime) as trip_day, extract(hour from pickup_datetime) as trip_hour, extract(minute from pickup_datetime) as trip_minute, vendor_id as vendor_id, pickup_datetime as pickup_datetime, dropoff_datetime as dropoff_datetime, store_and_fwd_flag as store_and_forward, Rate_Code as rate_code, pickup_location_id as pickup_location_id, dropoff_location_id as dropoff_location_id, Passenger_Count as passenger_count, trip_distance , fare_amount, imp_surcharge as surcharge, mta_tax, tip_amount, tolls_amount, cast(null as numeric) as improvement_surcharge, total_amount, payment_type as payment_type_code, cast(null as numeric) as congestion_surcharge, trip_type, cast(Ehail_Fee as numeric) as ehail_fee, date(pickup_datetime) as partition_date, distance_between_service, time_between_service FROM green_taxi_trips WHERE extract(year from pickup_datetime)=YYYY"
+    GREEN_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE="SELECT DISTINCT 'green' as taxi_type,substring(pickup_datetime,0,10) as trip_date,extract(year from pickup_datetime) as trip_year, extract(month from pickup_datetime) as trip_month, extract(day from pickup_datetime) as trip_day, extract(hour from pickup_datetime) as trip_hour, extract(minute from pickup_datetime) as trip_minute, vendor_id as vendor_id, pickup_datetime as pickup_datetime, dropoff_datetime as dropoff_datetime, store_and_fwd_flag as store_and_forward, Rate_Code as rate_code, pickup_location_id as pickup_location_id, dropoff_location_id as dropoff_location_id, Passenger_Count as passenger_count, trip_distance , fare_amount, imp_surcharge as surcharge, mta_tax, tip_amount, tolls_amount, cast(null as numeric) as improvement_surcharge, total_amount, payment_type as payment_type_code, cast(null as numeric) as congestion_surcharge, trip_type, cast(Ehail_Fee as numeric) as ehail_fee, date(pickup_datetime) as partition_date, distance_between_service, time_between_service FROM green_taxi_trips WHERE extract(year from pickup_datetime)=YYYY"
     print("GREEN_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE: ")
     print(GREEN_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE)
 
@@ -69,30 +69,60 @@ def fnMain(logger, args):
             print(f"TRIP YEAR={taxi_trip_year}")
             
             # Read yellow taxi data, canonicalize the schema
+            # ...................................................................................
+
+            # ..Read from BQ
             yellowTaxiTripsDF = spark.read \
               .format('bigquery') \
               .load(f"bigquery-public-data.new_york_taxi_trips.tlc_yellow_trips_{taxi_trip_year}")
+
+            # ..Create a temp table
             yellowTaxiTripsDF.createOrReplaceTempView("yellow_taxi_trips")
-            yellowTaxiTripsHomogenizedDF=spark.sql(YELLOW_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE.replace("YYYY",str(taxi_trip_year)))
+
+            # ..Count
             yellowTripCount=yellowTaxiTripsHomogenizedDF.count()
             print(f"Yellow trip count=str({yellowTripCount})")
+
+            # ..Load a dataframe with yellow taxi trips in a canonical schema (common for yellow and green taxis)
+            yellowTaxiTripsHomogenizedDF=spark.sql(YELLOW_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE.replace("YYYY",str(taxi_trip_year)))
+
+
             
             
             # Read green taxi data, canonicalize the schema
+            # ...................................................................................
+
+            # ..Read from BQ
             greenTaxiTripsDF = spark.read \
               .format('bigquery') \
               .load(f"bigquery-public-data.new_york_taxi_trips.tlc_green_trips_{taxi_trip_year}")
+
+            # ..Create a temp table
             greenTaxiTripsDF.createOrReplaceTempView("green_taxi_trips")
-            greenTaxiTripsHomogenizedDF=spark.sql(GREEN_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE.replace("YYYY",str(taxi_trip_year)))
+
+            # ..Count
             greenTripCount=greenTaxiTripsHomogenizedDF.count()
             print(f"Green trip count=str({greenTripCount})")
+
+             # ..Load a dataframe with yellow taxi trips in a canonical schema (common for yellow and green taxis)
+            greenTaxiTripsHomogenizedDF=spark.sql(GREEN_TRIPS_HOMOGENIZED_SCHEMA_QUERY_BASE.replace("YYYY",str(taxi_trip_year)))
+
         
+            # Prepare to persist
+
+            # ..Union the two dataframes
             taxiTripsHomogenizedUnionedDF=yellowTaxiTripsHomogenizedDF.union(greenTaxiTripsHomogenizedDF)
+
+            # ..Add a unique key
+            taxiTripsHomogenizedKeyedDF=taxiTripsHomogenizedUnionedDF.withColumn("trip_id", monotonically_increasing_id())
+
+            # ..Count
             taxiTripsCountForTheYear=taxiTripsHomogenizedUnionedDF.count()
             print(f"Trip count for the year=str({taxiTripsCountForTheYear})")
         
+            # ..Persist
             print(f"Starting write for year {taxi_trip_year}...")
-            taxiTripsHomogenizedUnionedDF.write.partitionBy("trip_year","trip_month","trip_day").parquet(f"{peristencePath}", mode='append')
+            taxiTripsHomogenizedKeyedDF.write.partitionBy("trip_date").parquet(f"{peristencePath}", mode='append')
             print(f"Completed write for year {taxi_trip_year}...")
             print("==================================")
                
