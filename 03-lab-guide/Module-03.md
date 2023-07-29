@@ -2,10 +2,11 @@
 
 In this module we will generate Hudi (base) data for the lab, based off of the Parquet data from the previous module and we will persist to our data lake in Cloud Storage.
 
-We will do the data generation via a PySpark script that is pre-created and available in this repo, (and in your cloud storage code bucket), and then explore the Hudi dataset from a pre-created Dataproc Jupyter notebook attached to your cluster. The script also creates an external table defintion on the Hudi dataset in Dataproc Metastore (Apache Hive Metastore). There are some sample Spark SQL queries to explore the data in the notebook.
+We will do the data generation via a PySpark script that is pre-created and available in this repo, (and in your cloud storage code bucket), and then explore the Hudi dataset from a pre-created Dataproc Jupyter notebook attached to your cluster. The script also creates an external table defintion on the Hudi dataset in Dataproc Metastore (Apache Hive Metastore). There are some sample Spark SQL queries to explore the data in the notebook. We will generate two types of Hudi tables (datasets) - Copy on Write and Merge on Read - which we will get into in Module 9 notebooks. 
 
 **Prerequisite:** <br>
 Successful completion of prior module
+
 
 <hr>
 
@@ -24,7 +25,7 @@ Fundamentaly, this module covers creating a Hudi dataset of NYC taxi trip data a
 <br><br>
    
 ## Lab Module Duration 
-40 minutes or less.
+60 minutes or less.
 
 <hr>
 
@@ -80,11 +81,11 @@ Author's output: ~9 GB
 
 <hr>
 
-## 2. Generate a Hudi (CoW) dataset in Cloud Storage
+## 2. Generate a Hudi Copy-On-Write(CoW) dataset in Cloud Storage
 
 ### 2.1. Review the source code
 
-Review to the source code is available at this [link](../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_hudi.py)<br>
+Review the source code available at this [link](../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_hudi.py)<br>
 
 ### 2.2. Run the following script in Cloud Shell
 
@@ -311,6 +312,42 @@ Hudi dataset-
 +---------+------------+
 ```
 
+
+
+<hr>
+
+## 6. Generate a Hudi Merge-On-Read(MoR) dataset in Cloud Storage
+
+### 6.1. Review the source code
+
+The source code is available at this [link](../01-scripts/pyspark/nyc_taxi_trips/nyc_taxi_data_generator_hudi.py)<br>
+
+### 6.2. Run the following script in Cloud Shell
+
+This Dataproc can be tuned further for performance.
+```
+# Variables
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+UMSA_FQN="gaia-lab-sa@$PROJECT_ID.iam.gserviceaccount.com"
+DPGCE_CLUSTER_NM="gaia-dpgce-cpu-$PROJECT_NBR"
+CODE_BUCKET="gs://gaia_code_bucket-$PROJECT_NBR/pyspark/nyc_taxi_trips"
+DATA_BUCKET_PARQUET_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-parquet"
+DATA_BUCKET_HUDI_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-mor"
+DATAPROC_LOCATION="us-central1"
+
+# Delete any data from a prior run
+gsutil rm -r ${DATA_BUCKET_HUDI_FQP}/
+
+# Persist NYC Taxi trips to Cloud Storage in Parquet
+gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_hudi.py \
+--cluster $DPGCE_CLUSTER_NM \
+--id nyc_taxi_data_generator_hudi_$RANDOM \
+--region $DATAPROC_LOCATION \
+--project $PROJECT_ID \
+--properties "spark.executor.memory=6g" \
+--  --hudiTableType="mor" --peristencePathInput="$DATA_BUCKET_PARQUET_FQP" --peristencePathOutput="$DATA_BUCKET_HUDI_FQP" 
+```
 
 
 <hr>
