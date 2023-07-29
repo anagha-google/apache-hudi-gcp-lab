@@ -4,7 +4,7 @@
 # This script -
 # 1. Reads a Parquet dataset tables with NYC yellow & Green taxi trips and 
 # 2. Persists to GCS as Hudi in the 
-# 3. Hive partition scheme of trip_year=YYYY/trip_month=MM,/trip_day=DD
+# 3. Hive partition scheme of trip_date=YYYY-MM-DD
 # ............................................................
 
 
