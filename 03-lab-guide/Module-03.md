@@ -110,7 +110,7 @@ gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_hudi.py
 --region $DATAPROC_LOCATION \
 --project $PROJECT_ID \
 --properties "spark.executor.memory=6g" \
---  --peristencePathInput="$DATA_BUCKET_PARQUET_FQP" --peristencePathOutput="$DATA_BUCKET_HUDI_FQP" 
+--  --hudiTableType="cow" --peristencePathInput="$DATA_BUCKET_PARQUET_FQP" --peristencePathOutput="$DATA_BUCKET_HUDI_FQP" 
 ```
 
 
