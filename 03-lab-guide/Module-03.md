@@ -25,7 +25,7 @@ Fundamentaly, this module covers creating a Hudi dataset of NYC taxi trip data a
 <br><br>
    
 ## Lab Module Duration 
-60 minutes or less.
+60 minutes or less. Its a data generation module, and therefore just involves starting the two jobs one after the other and then monitoring through completion.
 
 <hr>
 
