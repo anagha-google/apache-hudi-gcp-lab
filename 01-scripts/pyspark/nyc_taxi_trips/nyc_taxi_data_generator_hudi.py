@@ -99,7 +99,7 @@ def fnMain(logger, args):
             'hoodie.datasource.write.table.name': TABLE_NAME,
             'hoodie.datasource.write.table.type': 'COPY_ON_WRITE',
             'hoodie.datasource.write.recordkey.field': 'trip_id',
-            'hoodie.datasource.write.partitionpath.field': 'partition_path',
+            'hoodie.datasource.write.partitionpath.field': 'trip_date',
             'hoodie.datasource.write.precombine.field': 'pickup_datetime',
             'hoodie.datasource.write.hive_style_partitioning': 'true',
             'hoodie.partition.metafile.use.base.format': 'true', 
@@ -114,12 +114,10 @@ def fnMain(logger, args):
             print("==================================")
             print(f"TRIP YEAR={taxi_trip_year}")
 
-            tripsYearScopedDF = spark.sql(f"SELECT *,substring(pickup_datetime,0,10) as partition_path FROM temp_trips where trip_year={taxi_trip_year}")
-            tripsYearScopedDF1= tripsYearScopedDF.withColumn("trip_id", monotonically_increasing_id())
+            tripsYearScopedDF = spark.sql(f"SELECT * FROM temp_trips where trip_year={taxi_trip_year}")
 
-            tripsYearScopedDF1.show(2,False)            
-
-            tripsYearScopedDF1.write.format("hudi"). \
+        
+            tripsYearScopedDF.write.format("hudi"). \
                 options(**hudi_options). \
                 mode("append"). \
                 save(HUDI_BASE_GCS_URI)
