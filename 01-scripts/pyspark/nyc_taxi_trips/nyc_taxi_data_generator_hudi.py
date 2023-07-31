@@ -53,7 +53,7 @@ def fnMain(logger, args):
     PARQUET_BASE_GCS_URI = args.peristencePathInput
     HUDI_BASE_GCS_URI = args.peristencePathOutput
     HOODIE_TABLE_TYPE_OPTION = "COPY_ON_WRITE"
-    if(HUDI_TABLE_TYPE=="cow"): 
+    if(HUDI_TABLE_TYPE=="mor"): 
         HOODIE_TABLE_TYPE_OPTION = "MERGE_ON_READ"
 
     print(f"HUDI_TABLE_TYPE: {HUDI_TABLE_TYPE}")
