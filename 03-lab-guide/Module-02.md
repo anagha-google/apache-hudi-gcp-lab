@@ -322,7 +322,7 @@ gcloud dataproc jobs submit pyspark $CODE_BUCKET/nyc_taxi_data_generator_parquet
 
 The application will persist yellow and green taxi trips data in a canonical schema to Cloud Storage as parquet with the Hive partitioning scheme as follows-
 ```
-trip_year=YYYY/trip_month=MM/trip_day=DD
+trip_date=YYYY-MM-DD
 ```
 
 ### 5.4. Review the executing job in the Dataproc jobs UI on the Cloud Console
