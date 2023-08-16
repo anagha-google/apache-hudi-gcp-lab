@@ -89,7 +89,7 @@ Review the source code available at this [link](../01-scripts/pyspark/nyc_taxi_t
 
 ### 2.2. Run the following script in Cloud Shell
 
-This Dataproc can be tuned further for performance.
+This Dataproc job can be tuned further for performance. Please feel free to contribute optimizations.
 ```
 # Variables
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
