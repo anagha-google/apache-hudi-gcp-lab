@@ -325,7 +325,7 @@ The application will persist yellow and green taxi trips data in a canonical sch
 trip_date=YYYY-MM-DD
 ```
 
-**Note:** This Spark application can be tuned on various fronts - for performance and file sizing. 
+**Note:** This Spark application can be tuned on various fronts - for performance (please feel free to contribute) and file sizing (deliberatley not tuned to show BigLake performance acceleration). 
 
 <hr>
 
