@@ -325,6 +325,10 @@ The application will persist yellow and green taxi trips data in a canonical sch
 trip_date=YYYY-MM-DD
 ```
 
+**Note:** This Spark application can be tuned on various fronts - for performance and file sizing. 
+
+<hr>
+
 ### 5.4. Review the executing job in the Dataproc jobs UI on the Cloud Console
 
 ![README](../04-images/m02-05.png)   
