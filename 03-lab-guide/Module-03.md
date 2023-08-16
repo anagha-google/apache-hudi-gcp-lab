@@ -25,7 +25,7 @@ Fundamentaly, this module covers creating a Hudi dataset of NYC taxi trip data a
 <br><br>
    
 ## Lab Module Duration 
-60 minutes or less. Its a data generation module, and therefore just involves starting the two jobs one after the other and then monitoring through completion.
+30 minutes or less. The Spark job can be tuned to complete faster (feel free to contribute optimizations), the dataset can also be reduced to have a smaller amount of data.
 
 <hr>
 
