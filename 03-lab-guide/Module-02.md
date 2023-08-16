@@ -354,11 +354,7 @@ trip_date=YYYY-MM-DD
 ![README](../04-images/m02-10.png)   
 <br><br>
 
-![README](../04-images/m02-11.png)   
-<br><br>
 
-![README](../04-images/m02-12.png)   
-<br><br>
 
 
 <hr>
