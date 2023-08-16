@@ -38,9 +38,7 @@ Involves just querying the external table.<br>
 
 ### 1.4. What is takes to use the tooling as it stands
 
-1. Build Hudi from source (requires Java 8)
-2. Copy/scp the same to a Dataproc cluster
-3. Run the Spark application that uses the BigQuerySyncTool
+Simply run the Spark application that uses the BigQuerySyncTool
 
 ### 1.5. Architectural considerations
 1. The tool syncs just one Hudi dataset/table
@@ -51,13 +49,12 @@ Involves just querying the external table.<br>
 6. If the Hudi dataset has deletes/updates, and if Parquet underneath the external tables gets deleted, the query will not fail, it will merely not reflect the data within the files that were deleted
 7. JFYI - predicate pushdowns are supported, partition pruning is supported whether you query via BigQuery SQL or via Apache Spark and using the BigQuery Spark connector
 8. When you query the external table, follow the typical best practices, such as explicitly calling out the columns you want to select, apply the partition keys for performance and such..
-9. The Dataproc cluster - latest version has Java 11, do not build Hudi (requires Java 8) on the Dataproc cluster. Changes you may make to build Hudi may potentially negatively impact other configuration on the cluster.
-10. Consider including exectuion of the BigQuerySyncTool as part of your data engineering pipelines
+9. Consider including exectuion of the BigQuerySyncTool as part of your data engineering pipelines
 
 
-### 1.6. What's coming in Dataproc
+### 1.6. Dataproc product update
 
-The BigQuerySyncTool will be included as part of the base Dataproc image. 
+As of August 5, 2023, the Dataproc on GCE cluster with optional component of Hudi includes Hudi 0.12.3 and the BigQuerySyncTool as part of installation of the component and therefore no longer requiring building Hudi from source.
 <br>
 
 <hr>
@@ -83,11 +80,11 @@ The BigQuerySyncTool will be included as part of the base Dataproc image.
 
 ## Software Versions in Dataproc on GCE
 
-Dataproc GCE cluster image: 2.1.14-debian11 <br>
+Dataproc GCE cluster image: 2.1.18-debian11 <br>
 Java: 11.0.19 <br>
 Spark: 3.3.0 <br>
 Scala: 2.12.14 <br>
-Hudi: 0.12.0 <br>
+Hudi: 0.12.3 <br>
 
 <hr>
    
@@ -96,45 +93,8 @@ Hudi: 0.12.0 <br>
 
 <hr>
 
-## 2. Building Hudi from source
 
-### 2.1. Prerequisite
-
-Java 8 and Maven
-
-### 2.2. Steps to build from source 
-
-```
-# ........................................................
-# Clone Apache Hudi locally
-git clone https://github.com/apache/hudi
-
-# ........................................................
-# Build from source
-cd hudi
-mvn clean package -DskipTests -Dspark3.3 -Dscala-2.12
-
-# ........................................................
-# Compress Hudi
-cd ..
-tar -cvzf hudi.tgz hudi
-```
-
-<hr>
-
-## 3. scp the tarball to the cluster
-
-Run the command to scp to the cluster
-```
-PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
-PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
-
-gcloud compute scp hudi.tgz --zone "us-central1-a" gaia-dpgce-cpu-$PROJECT_NBR-m:~/ --tunnel-through-iap --project "apache-hudi-lab"
-```
-
-<hr>
-
-## 4. SSH to the cluster master node
+## 2. SSH to the cluster master node
 
 ![README](../04-images/m04-01.png)   
 <br><br>
@@ -150,18 +110,9 @@ gcloud compute scp hudi.tgz --zone "us-central1-a" gaia-dpgce-cpu-$PROJECT_NBR-m
 
 <hr>
 
-## 5. Uncompress the Hudi tarball on the master node of the cluster
 
-While logged into the master node on Dataproc, uncompress the Hudi tarball.
 
-```
-cd ~
-tar -xvzf hudi.tgz
-```
-
-<hr>
-
-## 6. Create a properties file on the master node of the cluster
+## 3. Create a properties file on the master node of the cluster
 
 Run this on the master node-
 ```
@@ -172,11 +123,11 @@ echo spark.driver.extraClassPath=$HUDI_PATH >> gaia_hudi_conf
 echo spark.executor.extraClassPath=$HUDI_PATH >> gaia_hudi_conf
 ```
 
-This created a properties file to which we appended Hudi libraries to the Spark driver and executor extraClassPath.
+This created a properties file to which we appended Hudi libraries to the Spark driver and executor extraClassPath. Review and edit this as needed for your environment and workload.
 
 <hr>
 
-## 7. Run the BigQuerySyncTool  on the master node of the cluster
+## 4. Run the BigQuerySyncTool  on the master node of the cluster
 
 
 ```
@@ -184,21 +135,19 @@ PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
 PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
 LOCATION=us-central1
 
-cd ~
-
 spark-submit --master yarn \
 --properties-file gaia_hudi_conf \
 --packages com.google.cloud:google-cloud-bigquery:2.10.4  \
 --class org.apache.hudi.gcp.bigquery.BigQuerySyncTool  \
-hudi/packaging/hudi-gcp-bundle/target/hudi-gcp-bundle-0.14.0-SNAPSHOT.jar \
+/usr/lib/hudi/tools/bq-sync-tool/hudi-gcp-bundle-0.12.3.jar \
 --project-id $PROJECT_ID \
 --dataset-name gaia_product_ds \
 --dataset-location $LOCATION \
 --table nyc_taxi_trips_hudi_bigquery \
---source-uri gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/trip_year=*  \
+--source-uri gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/trip_date=*  \
 --source-uri-prefix gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/ \
 --base-path gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/ \
---partitioned-by trip_year,trip_month,trip_year \
+--partitioned-by trip_date \
 --use-bq-manifest-file
 
 ```
@@ -217,7 +166,7 @@ INFORMATIONAL
 
 <hr>
 
-## 8. The Hudi manifest file created by BigQuerySyncTool 
+## 5. The Hudi manifest file created by BigQuerySyncTool 
 
 A manifest file called latest-snapshot.csv gets created in the .hoodie directory of the Hudi dataset in Cloud Storage in a folder called manifest. It merely has a listing of all the files in the latest Hudi snapshot.<br>
 
@@ -247,14 +196,14 @@ gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2019/trip_m
 
 <hr>
 
-## 9. Entities created by BigQuerySyncTool in BigQuery
+## 6. Entities created by BigQuerySyncTool in BigQuery
 
-### 9.1. Review the table listing under the dataset gaia_product_ds in the BigQuery UI
+### 6.1. Review the table listing under the dataset gaia_product_ds in the BigQuery UI
 
 ![README](../04-images/m04-05.png)   
 <br><br>
 
-### 9.2. List the entities created by the sync tool
+### 6.2. List the entities created by the sync tool
 The following lists the entities created in BigQuery-
 ```
 bq ls \
@@ -276,7 +225,7 @@ INFORMATIONAL
 ```
 <hr>
 
-### 9.3. Review the DDL of the external table created by the Hudi BigQuerySyncTool
+### 6.3. Review the DDL of the external table created by the Hudi BigQuerySyncTool
 
 Run this query in the BigQuery UI and study the DDL- 
 ```
@@ -302,7 +251,7 @@ OPTIONS(
 
 <hr>
 
-## 10. Query the table & review the results
+## 7. Query the table & review the results
 
 Run this query in the BigQuery UI
 
@@ -313,9 +262,7 @@ SELECT
 FROM
   gaia_product_ds.nyc_taxi_trips_hudi_bigquery
 WHERE
-  trip_year=2021
-  AND trip_month=1
-  AND trip_day=31
+  trip_date='2021-12-31'
 GROUP BY
   taxi_type
 ```
@@ -326,19 +273,19 @@ GROUP BY
 
 <hr>
 
-## 11. Querying fresh data
+## 8. Querying fresh data
 
 This requires running the BigQuerySyncTool to generate the latest manifest. Once this manifest is updated, the queries will run against the latest snapshot of the data. 
 
-## 12. Consistency considerations
+## 9. Consistency considerations
 
 The BigQuerySyncTool merely creates a manifest file on a Hudi snapshot, and a BigQuery external table. The files in the manifest file can get deleted from record deletions, or compaction or for any number of reasons. Queries executed will not fail if files listed in the manifest are physically missing in the Hudi data lake; however, the data will be (understandingly) missing in the query results.
 
 <hr>
 
-## 13. Best practices
+## 10. Best practices
 
-1. Dataproc: Avoid connecting to the master node and running the utility, prefer using the Dataproc jobs API instead. This will be much easier when the default image includes Hudi in totality.
+1. Dataproc: Avoid connecting to the master node and running the utility, prefer using the Dataproc jobs API instead. 
 2. External tables: Prefer Biglake tables for query acceleration, and fine grained access control - row and column level and including masking
 
 
