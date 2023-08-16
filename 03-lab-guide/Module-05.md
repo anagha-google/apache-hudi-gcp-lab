@@ -106,7 +106,7 @@ HIVE_PARTITION_PREFIX="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-co
 MANIFEST_FQP="${HIVE_PARTITION_PREFIX}.hoodie/absolute-path-manifest/latest-snapshot.csv"
 
 
-DDL="CREATE OR REPLACE EXTERNAL TABLE gaia_product_ds.nyc_taxi_trips_hudi_biglake WITH PARTITION COLUMNS (trip_year string,trip_month string, trip_day string) WITH CONNECTION \`$PROJECT_NM.$BQ_CONNECTION_NM\` OPTIONS(uris=[\"$MANIFEST_FQP\"],hive_partition_uri_prefix =\"$HIVE_PARTITION_PREFIX\", format=\"PARQUET\",file_set_spec_type=\"NEW_LINE_DELIMITED_MANIFEST\",metadata_cache_mode=\"AUTOMATIC\",max_staleness=INTERVAL '1' DAY );"
+DDL="CREATE OR REPLACE EXTERNAL TABLE gaia_product_ds.nyc_taxi_trips_hudi_biglake WITH PARTITION COLUMNS (trip_date date) WITH CONNECTION \`$PROJECT_NM.$BQ_CONNECTION_NM\` OPTIONS(uris=[\"$MANIFEST_FQP\"],hive_partition_uri_prefix =\"$HIVE_PARTITION_PREFIX\", format=\"PARQUET\",file_set_spec_type=\"NEW_LINE_DELIMITED_MANIFEST\",metadata_cache_mode=\"AUTOMATIC\",max_staleness=INTERVAL '1' DAY );"
 echo $DDL
 ```
 
@@ -117,7 +117,7 @@ INFORMATIONAL - AUTHOR'S OUTPUT - will not work for you
 
 
 CREATE OR REPLACE EXTERNAL TABLE gaia_product_ds.nyc_taxi_trips_hudi_biglake
-WITH PARTITION COLUMNS (trip_year string,trip_month string, trip_day string)
+WITH PARTITION COLUMNS (trip_date date)
 WITH CONNECTION `apache-hudi-lab.us-central1.gaia_bq_connection`
 OPTIONS(
 uris=["gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/absolute-path-manifest/latest-snapshot.csv"],
