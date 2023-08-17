@@ -42,26 +42,21 @@ PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d'
 DATA_BUCKET_PARQUET_FQP="gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-parquet"
 
 # List some files to get a view of the hive paritioning scheme
-gsutil ls -r $DATA_BUCKET_PARQUET_FQP | head -20
+gsutil ls -r $DATA_BUCKET_PARQUET_FQP | head -10
 ```
 Author's output:
 ```
 INFORMATIONAL
-gsutil ls -r $DATA_BUCKET_PARQUET_FQP | head -20
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/:
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/_SUCCESS
 
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_date=2019-01-01/:
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_date=2019-01-01/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_date=2019-01-01/part-00000-48452727-9f07-44d4-88e9-566c88d27e3e.c000.snappy.parquet
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_date=2019-01-01/part-00001-48452727-9f07-44d4-88e9-566c88d27e3e.c000.snappy.parquet
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_date=2019-01-01/part-00002-48452727-9f07-44d4-88e9-566c88d27e3e.c000.snappy.parquet
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_date=2019-01-01/part-00003-48452727-9f07-44d4-88e9-566c88d27e3e.c000.snappy.parquet
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_date=2019-01-01/part-00004-48452727-9f07-44d4-88e9-566c88d27e3e.c000.snappy.parquet
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_date=2019-01-01/part-00005-48452727-9f07-44d4-88e9-566c88d27e3e.c000.snappy.parquet
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_date=2019-01-01/part-00006-48452727-9f07-44d4-88e9-566c88d27e3e.c000.snappy.parquet
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/....
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_date=2019-01-01/part-00000-ed4d251a-21ed-48a7-a894-7192e4a02244.c000.snappy.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_date=2019-01-01/part-00001-ed4d251a-21ed-48a7-a894-7192e4a02244.c000.snappy.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_date=2019-01-01/part-00002-ed4d251a-21ed-48a7-a894-7192e4a02244.c000.snappy.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-parquet/trip_date=2019-01-01/part-00003-ed4d251a-21ed-48a7-a894-7192e4a02244.c000.snappy.parquet
 ```
 
 ### 1.2. The number of files
@@ -70,11 +65,11 @@ Number of files
 gsutil ls -r $DATA_BUCKET_PARQUET_FQP | wc -l
 ```
 
-Author's output: 130,514
+Author's output: 137,105
 
 ### 1.3. The size of the data
 ```
-gsutil du -sh gs://gaia_data_bucket-$PROJECT_NBR
+gsutil du -sh $DATA_BUCKET_PARQUET_FQP 
 ```
 
 Author's output: ~9 GB 
@@ -91,7 +86,7 @@ Review the source code available at this [link](../01-scripts/pyspark/nyc_taxi_t
 
 This Dataproc job can be tuned further for performance. Please feel free to contribute optimizations.
 ```
-# Variables
+# Variables - modify as needed for your deployment region etc
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
 PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
 UMSA_FQN="gaia-lab-sa@$PROJECT_ID.iam.gserviceaccount.com"
@@ -138,13 +133,13 @@ Author's output:
 INFORMATIONAL
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/
 gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/.hoodie/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/partition_path=2019-01-01/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/partition_path=2019-01-02/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/partition_path=2019-01-03/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/partition_path=2019-01-04/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/partition_path=2019-01-05/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/partition_path=2019-01-06/
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/partition_path=2019-01-07/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-01/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-02/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-03/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-04/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-05/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-06/
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-07/
 ...
 ```
 
@@ -156,8 +151,8 @@ gsutil ls -r $DATA_BUCKET_HUDI_FQP | wc -l
 ```
 
 Author's output: 
-7832<br>
-(versus 130,514 for Parquet format)<br>
+7,829<br>
+(versus ~130K for Parquet format)<br>
 This is due to file-sizing done by Hudi out of the box, where it mitigates small files issue by aut-compacting while persisting.
 
 ### 3.3. The size of the data
@@ -324,7 +319,7 @@ The source code is available at this [link](../01-scripts/pyspark/nyc_taxi_trips
 
 ### 6.2. Run the following script in Cloud Shell
 
-This Dataproc can be tuned further for performance.
+This Dataproc can be tuned further for performance. Please feel free to contribute optimizations.
 ```
 # Variables
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
