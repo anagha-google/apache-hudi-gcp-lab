@@ -113,9 +113,9 @@ Hudi: 0.12.3 <br>
 <hr>
 
 
-## 3. Run the BigQuerySyncTool  on the master node of the cluster
+## 3. Run the BigQuerySyncTool on the master node of the cluster
 
-This is tactical testing. The strategic solution (using Dataproc Jobs API and submitting remotely to the cluster) to run the sync tool is detailed further in this module.
+This is a tactical solution to just explore using the HUDI BigQuerySyncTool. The strategic solution (using Dataproc Jobs API and submitting remotely to the cluster) to run the sync tool covered in teh next section and finally, further on, running via Airflow.
 
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
