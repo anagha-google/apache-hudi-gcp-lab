@@ -176,15 +176,23 @@ PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
 PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
 HUDI_DATA_LOCATION=gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow
 
-gsutil cat $HUDI_DATA_LOCATION/.hoodie/absolute-path-manifest/latest-snapshot.csv | head -2 
+gsutil cat $HUDI_DATA_LOCATION/.hoodie/absolute-path-manifest/latest-snapshot.csv | head -10 
 ```
 
 Author's output-
 ```
 INFORMATIONAL
 ....
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2019/trip_month=1/trip_day=1/a4db9264-cb81-4669-a27a-d671d14a0195-0_155-28-4482_20230710174218046.parquet
-gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_year=2019/trip_month=1/trip_day=1/d2f6bd7f-976f-45c1-a86f-8a7c5747ea6f-0_156-28-4483_20230710174218046.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-01/3adcbef0-4ca4-4832-af4f-709b7dd38b1b-0_548-19-9510_20230816235910590.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-01/067bef12-69ed-4980-8ce1-25d26bffe4d4-0_549-19-9511_20230816235910590.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-02/6fa562b1-edf0-4a08-a3eb-5f0e6e73fe8f-0_543-19-9505_20230816235910590.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-02/5f175fae-3cf8-40d6-85f0-b725e10e1d7a-0_544-19-9506_20230816235910590.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-03/f4c33c45-68c9-425f-8ef5-98b24d6593b1-0_545-19-9507_20230816235910590.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-03/59bbf3b6-9d84-45c7-9ada-ea3fb62229f5-0_546-19-9508_20230816235910590.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-03/a4405d42-ae41-4478-a61a-22468f1fffb7-0_547-19-9509_20230816235910590.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-04/6e08afe9-7e1d-4024-afe2-7c127d66bcda-0_539-19-9501_20230816235910590.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-04/637a66ff-98b1-4f67-862b-c5b56b37373b-0_537-19-9499_20230816235910590.parquet
+gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-04/78da0616-b8aa-4f51-b34f-f8938b04a477-0_538-19-9500_20230816235910590.parquet
 ```
 
 <hr>
