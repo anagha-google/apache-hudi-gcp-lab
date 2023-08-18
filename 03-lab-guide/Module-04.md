@@ -105,14 +105,12 @@ Hudi: 0.12.3 <br>
 ![README](../04-images/m04-03.png)   
 <br><br>
 
-![README](../04-images/m04-04.png)   
-<br><br>
-
 <hr>
 
 
 ## 3. Run the BigQuerySyncTool  on the master node of the cluster
 
+This is tactical testing. The strategic solution (using Dataproc Jobs API and submitting remotely to the cluster) to run the sync tool is detailed further in this module.
 
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
@@ -147,6 +145,12 @@ INFORMATIONAL
 23/07/10 20:50:38 INFO BigQuerySyncTool: Completed table nyc_taxi_trips_hudi_bigquery creation using the manifest file
 23/07/10 20:50:38 INFO BigQuerySyncTool: Sync table complete for nyc_taxi_trips_hudi_bigquery
 ```
+
+<hr>
+
+## 4. Run the BigQuerySyncTool via the Dataproc Jobs API
+
+### TODO for author
 
 <hr>
 
@@ -261,6 +265,8 @@ GROUP BY
 
 This requires running the BigQuerySyncTool to generate the latest manifest. Once this manifest is updated, the queries will run against the latest snapshot of the data. 
 
+<hr>
+
 ## 9. Consistency considerations
 
 The BigQuerySyncTool merely creates a manifest file on a Hudi snapshot, and a BigQuery external table. The files in the manifest file can get deleted from record deletions, or compaction or for any number of reasons. Queries executed will not fail if files listed in the manifest are physically missing in the Hudi data lake; however, the data will be (understandingly) missing in the query results.
@@ -272,6 +278,13 @@ The BigQuerySyncTool merely creates a manifest file on a Hudi snapshot, and a Bi
 1. Dataproc: Avoid connecting to the master node and running the utility, prefer using the Dataproc jobs API instead. 
 2. External tables: Prefer Biglake tables for query acceleration, and fine grained access control - row and column level and including masking
 
+## 11. Operationalizing for production - option 1: As part of Airflow Data Engineering DAGs
+
+### TODO for author
+
+## 12. Operationalizing for production - option 2: Offline syncing (outisde of the Airflow Data Engineering DAGs)
+
+### TODO for author
 
 <hr>
 
