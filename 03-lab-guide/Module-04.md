@@ -276,7 +276,7 @@ GROUP BY
 
 ## 8. Querying fresh data
 
-This requires running the BigQuerySyncTool to generate the latest manifest. Once this manifest is updated, the queries will run against the latest snapshot of the data. 
+This requires running the BigQuerySyncTool to generate the latest manifest which overwrites the manifest in GCS, the queries will run against the latest snapshot of the data. 
 
 <hr>
 
