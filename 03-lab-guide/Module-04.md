@@ -67,11 +67,16 @@ As of August 5, 2023, the Dataproc on GCE cluster with optional component of Hud
 
 ## Lab Module Solution Architecture 
 
+### 1. Running the BigQuerySyncTool - from prototype to production 
+
 ![README](../04-images/m04-00-2.png)   
 <br><br>
 
+### 2. What happens under the hood when the BigQuerySysncTool is run
 ![README](../04-images/m04-00-3.png)   
 <br><br>
+
+### 3. What else is covered in the lab
 
 ![README](../04-images/m04-00-4.png)   
 <br><br>
