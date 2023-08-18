@@ -315,9 +315,9 @@ The following is a stub that shows what the Airflow action looks like to execute
 
 <hr>
 
-## 12. Operationalizing for production - option 2: Offline syncing (outisde of the Airflow Data Engineering DAGs)
+## 12. Operationalizing for production - option 2: Offline syncing 
+When there are tight SLAs to be met, adding the syncing task into the Data Engineering DAG adds delays. In such cases, syncing can be done offline, async. This is a pictorial overview of a pattern (and there are many ways to design this) to run the BigQuerySyncTool in bulk when you have many tables to sync. The author has used config files to help externalize Hudi table listing (and associated sync parameters) and parallelize running the sync tool. Each config file will have a set Hudi tables and the sync parameters will have a Airflow task associated with it that makes repeated calls to the BugQuerySyncTool till all tables in the config file have been synced.
 
-This is a pictorial overview of a pattern (and there are many ways to design this) to run the BigQuerySyncTool in bulk when you have many tables to sync.
 
 ![README](../04-images/m04-01-13.png)   
 <br><br>
