@@ -54,7 +54,7 @@ Simply run the Spark application that uses the BigQuerySyncTool
 
 ### 1.6. Dataproc product update
 
-As of August 5, 2023, the Dataproc on GCE cluster with optional component of Hudi includes Hudi 0.12.3 and the BigQuerySyncTool as part of installation of the component and therefore no longer requiring building Hudi from source.
+As of August 5, 2023, the Dataproc on GCE cluster with optional component of Hudi includes Hudi 0.12.3 and the BigQuerySyncTool as part of installation of the component and therefore no longer requiring building Hudi from source. Refer to the [documentation](https://cloud.google.com/dataproc/docs/concepts/components/hudi) for the latest on versions - Dataproc, Spark, Hudi...
 <br>
 
 <hr>
