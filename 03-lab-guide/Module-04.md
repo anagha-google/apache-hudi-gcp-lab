@@ -291,6 +291,8 @@ The BigQuerySyncTool merely creates a manifest file on a Hudi snapshot, and a Bi
 1. Dataproc: Avoid connecting to the master node and running the utility, prefer using the Dataproc jobs API instead. 
 2. External tables: Prefer Biglake tables for query acceleration, and fine grained access control - row and column level and including masking
 
+<hr>
+
 ## 11. Operationalizing for production - option 1: As part of Airflow Data Engineering DAGs
 
 ### TODO for author
