@@ -295,11 +295,32 @@ The BigQuerySyncTool merely creates a manifest file on a Hudi snapshot, and a Bi
 
 ## 11. Operationalizing for production - option 1: As part of Airflow Data Engineering DAGs
 
-### TODO for author
+### 11.1. Operationalizing - what's involved
+For each Hudi table you want to run analytics on in BigQuery, you need to run the BigQuerySyncTool. The following is a pictorial overview of a basic DAG involving one Hudi table, and shows Dataproc cluster creation and deletion just to run the tool. This may not be required if the pipeline already has an ephemeral Dataproc job-scoped cluster. 
+
+![README](../04-images/m04-01-11.png)   
+<br><br>
+
+### 11.2. Airflow stub
+The following is a stub that shows what the Airflow action looks like to execute the BigQuerySyncTool-
+
+### TODO
+![README](../04-images/m04-01-12.png)   
+<br><br>
+
+### 11.3. Lab exercise: Review and run the Airflow DAG provided below
+
+### TODO by author
+
+
+<hr>
 
 ## 12. Operationalizing for production - option 2: Offline syncing (outisde of the Airflow Data Engineering DAGs)
 
-### TODO for author
+This is a pictorial overview of a pattern (and there are many ways to design this) to run the BigQuerySyncTool in bulk when you have many tables to sync.
+
+![README](../04-images/m04-01-13.png)   
+<br><br>
 
 <hr>
 
