@@ -111,23 +111,7 @@ Hudi: 0.12.3 <br>
 <hr>
 
 
-
-## 3. Create a properties file on the master node of the cluster
-
-Run this on the master node-
-```
-cd ~
-cp /etc/spark/conf/spark-defaults.conf gaia_hudi_conf
-HUDI_PATH=~/hudi/*
-echo spark.driver.extraClassPath=$HUDI_PATH >> gaia_hudi_conf
-echo spark.executor.extraClassPath=$HUDI_PATH >> gaia_hudi_conf
-```
-
-This created a properties file to which we appended Hudi libraries to the Spark driver and executor extraClassPath. Review and edit this as needed for your environment and workload.
-
-<hr>
-
-## 4. Run the BigQuerySyncTool  on the master node of the cluster
+## 3. Run the BigQuerySyncTool  on the master node of the cluster
 
 
 ```
