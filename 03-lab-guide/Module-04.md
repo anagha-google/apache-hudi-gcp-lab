@@ -293,7 +293,7 @@ This requires running the BigQuerySyncTool to generate the latest manifest which
 
 ## 10. Run the BigQuerySyncTool via the Dataproc Jobs API
 
-In the section 3, we connected to the Dataproc Master Node over SSH and ran the BigQuerySysncTool. To automate the BigQuerySyncTool, we need to be able to run the job remotely. The first step is to get the BigQuerySyncTool running via Dataproc Jobs API. <br>
+In the section 3, we connected to the Dataproc Master Node over SSH and ran the BigQuerySysncTool, as ourselves. To automate the BigQuerySyncTool, we need to be able to run the job remotely, and as a user managed service account. The first step is to get the BigQuerySyncTool running via Dataproc Jobs API, as demonstrated below and then to automate the same with your orchestration engine of preference. The author has covered Apache Airflow based orchestration in the next section. <br>
 
 Lets run the below command via Cloud Shell-
 ```
@@ -311,7 +311,7 @@ HUDI_PARTITION_KEY=trip_date
 
 BQ_DATASET_NAME=gaia_product_ds
 BQ_DATASET_LOCATION="us-central1"
-BQ_TABLE_NAME=${HUDI_TABLE_NAME}
+BQ_TABLE_NAME=nyc_taxi_trips_hudi_cow
 
 gcloud dataproc jobs submit spark \
   --cluster=$DPGCE_CLUSTER_NM \
