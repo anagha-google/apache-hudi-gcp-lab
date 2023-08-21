@@ -94,7 +94,7 @@ Hudi: 0.12.3 <br>
 <hr>
    
 ## Lab Module Duration 
-15 minutes or less.
+30 minutes or less.
 
 <hr>
 
