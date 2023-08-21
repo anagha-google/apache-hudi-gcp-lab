@@ -72,7 +72,7 @@ As of August 5, 2023, the Dataproc on GCE cluster with optional component of Hud
 ![README](../04-images/m04-00-2.png)   
 <br><br>
 
-### 2. What happens under the hood when the BigQuerySysncTool is run
+### 2. RECAP: What happens under the hood when the BigQuerySysncTool is run
 ![README](../04-images/m04-00-3.png)   
 <br><br>
 
