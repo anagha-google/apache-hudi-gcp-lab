@@ -358,7 +358,7 @@ In the next section, we will learn to run the BigQuerySyncTool from Apache Airfl
 Where freshness of data availability for analytics via BigQuery/BigLake is imperative at the end of data engineering pipeline, it makes sense to run the BigQuerySyncTool as part of a pipeline synchronously. This section covers how to.
 
 ### 11.1. Operationalizing - what's involved
-For each Hudi table you want to run analytics on in BigQuery, you need to run the BigQuerySyncTool. The following is a pictorial overview of a basic DAG involving one Hudi table, and shows Dataproc cluster creation and deletion just to run the tool. This may not be required if the pipeline already has an ephemeral Dataproc job-scoped cluster. 
+For each Hudi table you want to run analytics on in BigQuery, you need to run the BigQuerySyncTool. The following is a pictorial overview of a basic DAG involving one Hudi table, and shows Dataproc cluster creation and deletion just to run the tool. This cluster may not be required if the pipeline already has an ephemeral Dataproc job-scoped cluster that can be used.  
 
 ![README](../04-images/m04-01-11.png)   
 <br><br>
