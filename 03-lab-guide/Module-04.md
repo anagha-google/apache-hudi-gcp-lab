@@ -339,14 +339,14 @@ The results should be the same as with running from Dataproc master node.
 Here is how to monitor through completion across Cloud Shell and the Dataproc jobs GUI.
 
 
-![README](../04-images/m04-01-14.png)   
+![README](../04-images/m04-1-14.png)   
 <br><br>
 
 
-![README](../04-images/m04-01-15.png)   
+![README](../04-images/m04-1-15.png)   
 <br><br>
 
-![README](../04-images/m04-01-16.png)   
+![README](../04-images/m04-1-16.png)   
 <br><br>
 
 In the next section, we will learn to run the BigQuerySyncTool from Apache Airflow.
