@@ -153,13 +153,9 @@ INFORMATIONAL
 
 <hr>
 
-## 4. Run the BigQuerySyncTool via the Dataproc Jobs API
 
-### TODO for author
 
-<hr>
-
-## 5. The Hudi manifest file created by BigQuerySyncTool 
+## 4. The Hudi manifest file created by BigQuerySyncTool 
 
 A manifest file called latest-snapshot.csv gets created in the .hoodie directory of the Hudi dataset in Cloud Storage in a folder called manifest. It merely has a listing of all the files in the latest Hudi snapshot.<br>
 
@@ -197,14 +193,14 @@ gs://gaia_data_bucket-623600433888/nyc-taxi-trips-hudi-cow/trip_date=2019-01-04/
 
 <hr>
 
-## 6. Entities created by BigQuerySyncTool in BigQuery
+## 5. Entities created by BigQuerySyncTool in BigQuery
 
-### 6.1. Review the table listing under the dataset gaia_product_ds in the BigQuery UI
+### 5.1. Review the table listing under the dataset gaia_product_ds in the BigQuery UI
 
 ![README](../04-images/m04-05.png)   
 <br><br>
 
-### 6.2. List the entities created by the sync tool
+### 5.2. List the entities created by the sync tool
 The following lists the entities created in BigQuery-
 ```
 bq ls \
@@ -226,7 +222,7 @@ INFORMATIONAL
 ```
 <hr>
 
-### 6.3. Review the DDL of the external table created by the Hudi BigQuerySyncTool
+### 5.3. Review the DDL of the external table created by the Hudi BigQuerySyncTool
 
 Run this query in the BigQuery UI and study the DDL- 
 ```
@@ -252,7 +248,7 @@ OPTIONS(
 
 <hr>
 
-## 7. Query the table & review the results
+## 6. Query the table & review the results
 
 Run this query in the BigQuery UI
 
@@ -274,22 +270,66 @@ GROUP BY
 
 <hr>
 
-## 8. Querying fresh data
+## 7. Querying fresh data
 
 This requires running the BigQuerySyncTool to generate the latest manifest which overwrites the manifest in GCS, the queries will run against the latest snapshot of the data. 
 
 <hr>
 
-## 9. Consistency considerations
+## 8. Consistency considerations
 
 The BigQuerySyncTool merely creates a manifest file on a Hudi snapshot, and a BigQuery external table. The files in the manifest file can get deleted from record deletions, or compaction or for any number of reasons. Queries executed will not fail if files listed in the manifest are physically missing in the Hudi data lake; however, the data will be (understandingly) missing in the query results.
 
 <hr>
 
-## 10. Best practices
+## 9. Best practices
 
 1. Dataproc: Avoid connecting to the master node and running the utility, prefer using the Dataproc jobs API instead. 
 2. External tables: Prefer Biglake tables for query acceleration, and fine grained access control - row and column level and including masking
+
+<hr>
+
+## 10. Run the BigQuerySyncTool via the Dataproc Jobs API
+
+In the section 3, we connected to the Dataproc Master Node over SSH and ran the BigQuerySysncTool. To automate the BigQuerySyncTool, we need to be able to run the job remotely. The first step is to get the BigQuerySyncTool running via Dataproc Jobs API. <br>
+
+Lets run the below command via Cloud Shell-
+```
+# Variables
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+UMSA_FQN="gaia-lab-sa@$PROJECT_ID.iam.gserviceaccount.com"
+DPGCE_CLUSTER_NM="gaia-dpgce-cpu-$PROJECT_NBR"
+DATAPROC_LOCATION="us-central1"
+
+HUDI_TABLE_NAME=nyc-taxi-trips-hudi-cow
+HUDI_BASE_PATH=gs://gaia_data_bucket-$PROJECT_NBR/$HUDI_TABLE_NAME/
+HUDI_TABLE_SOURCE_URI=${HUDI_BASE_PATH}/trip_date=* 
+HUDI_PARTITION_KEY=trip_date
+
+BQ_DATASET_NAME=gaia_product_ds
+BQ_DATASET_LOCATION="us-central1"
+BQ_TABLE_NAME=${HUDI_TABLE_NAME}
+
+gcloud dataproc jobs submit spark \
+  --cluster=$DPGCE_CLUSTER_NM \
+  --region=$DATAPROC_LOCATION \
+  --properties spark.jars.packages=com.google.cloud:google-cloud-bigquery:2.10.4,spark.driver.userClassPathFirst=true,spark.executor.userClassPathFirst=true \
+  --class org.apache.hudi.gcp.bigquery.BigQuerySyncTool \
+  --jars file:///usr/lib/hudi/tools/bq-sync-tool/hudi-gcp-bundle-0.12.3.jar \
+  --impersonate-service-account $UMSA_FQN \
+  --id=BigQuerySyncTool-$HUDI_TABLE_NAME-$RANDOM \
+  -- \
+   --project-id "${PROJECT_ID}" \
+  --dataset-name "${BQ_DATASET_NAME}" \
+  --dataset-location "${BQ_DATASET_LOCATION}" \
+  --table "${HUDI_TABLE_NAME}" \
+  --source-uri "${HUDI_TABLE_SOURCE_URI}" \
+  --source-uri-prefix "${HUDI_BASE_PATH}" \
+  --base-path "${HUDI_BASE_PATH}" \
+  --partitioned-by "${HUDI_PARTITION_KEY}" \
+  --use-bq-manifest-file
+```
 
 <hr>
 
