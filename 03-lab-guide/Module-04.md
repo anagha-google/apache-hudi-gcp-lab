@@ -352,9 +352,9 @@ In the next section, we will learn to run the BigQuerySyncTool from Apache Airfl
 
 <hr>
 
-## 11. Run the Hudi BigQuerySyncTool via the Dataproc Jobs REST API - WORK IN PROGRESS
+## 11. Run the Hudi BigQuerySyncTool via the Dataproc Jobs REST API 
 
-This is a sample to run the Hudi BigQuerySyncTool via the Dataproc Jobs REST API-
+This is a sample to run the Hudi BigQuerySyncTool via the Dataproc Jobs REST API, in case such is your preference-
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
 PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
@@ -371,12 +371,23 @@ BQ_DATASET_NAME=gaia_product_ds
 BQ_DATASET_LOCATION="us-central1"
 BQ_TABLE_NAME=nyc_taxi_trips_hudi_cow
 
+cd ~
+JOB_ID=$RANDOM
+cp ~/apache-hudi-gcp-lab/01-scripts/conf/HudiBigQuerySyncToolRESTRequestTemplate.json HudiBigQuerySyncToolRESTRequest-$JOB_ID.json
+
+sed -i s/YOUR_PROJECT_ID/$PROJECT_ID/g ~/HudiBigQuerySyncToolRESTRequest-$JOB_ID.json
+sed -i s/YOUR_PROJECT_NUMBER/$PROJECT_NBR/g ~/HudiBigQuerySyncToolRESTRequest-$JOB_ID.json
+sed -i s/YOUR_CLUSTER_NAME/$DPGCE_CLUSTER_NM/g ~/HudiBigQuerySyncToolRESTRequest-$JOB_ID.json
+sed -i s/YOUR_DATASET_LOCATION/$BQ_DATASET_LOCATION/g ~/HudiBigQuerySyncToolRESTRequest-$JOB_ID.json
+sed -i s/YOUR_JOB_ID/BigQuerySyncTool-nyc-taxi-trips-hudi-cow-$JOB_ID/g ~/HudiBigQuerySyncToolRESTRequest-$JOB_ID.json
+
 
 curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
     -H "Content-Type: application/json; charset=utf-8" \
 "https://dataproc.googleapis.com/v1/projects/apache-hudi-lab/regions/us-central1/jobs:submit" \
---data "{\"job\": {\"reference\": {\"projectId\":\"apache-hudi-lab\",\"jobId\":\"BigQuerySyncTool-nyc-taxi-trips-hudi-cow-$RANDOM\"},placement: {clusterName:\"gaia-dpgce-cpu-$PROJECT_NBR\"},sparkJob: {mainClass:\"org.apache.hudi.gcp.bigquery.BigQuerySyncTool\",\"properties\":{\"spark.jars.packages\":\"com.google.cloud:google-cloud-bigquery:2.10.4\", \"spark.driver.userClassPathFirst\":\"true\",\"spark.executor.userClassPathFirst\":\"true\"}, 
-\"jarFileUris\":[\"file:///usr/lib/hudi/tools/bq-sync-tool/hudi-gcp-bundle-0.12.3.jar\"],\"args\":[\"--project-id $PROJECT_ID\",\"--dataset-name $BQ_DATASET_NAME\",\"--dataset-location $BQ_DATASET_LOCATION\",\"--table $BQ_TABLE_NAME\",\"--source-uri gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/trip_date=*\",\"--source-uri-prefix gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/\",\"--base-path gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/\",\"--partitioned-by trip_date\",\"--use-bq-manifest-file\"]}}}"
+--data @HudiBigQuerySyncToolRESTRequest-$JOB_ID.json
+
+rm ~/HudiBigQuerySyncToolRESTRequest-$JOB_ID.json
 ```
 
 In the next section, we will learn to run the BigQuerySyncTool from Apache Airflow.
