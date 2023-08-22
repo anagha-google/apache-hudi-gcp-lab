@@ -380,7 +380,7 @@ sed -i s/YOUR_PROJECT_NUMBER/$PROJECT_NBR/g ~/HudiBigQuerySyncToolRESTRequest-$J
 sed -i s/YOUR_CLUSTER_NAME/$DPGCE_CLUSTER_NM/g ~/HudiBigQuerySyncToolRESTRequest-$JOB_ID.json
 sed -i s/YOUR_DATASET_LOCATION/$BQ_DATASET_LOCATION/g ~/HudiBigQuerySyncToolRESTRequest-$JOB_ID.json
 sed -i s/YOUR_JOB_ID/BigQuerySyncTool-nyc-taxi-trips-hudi-cow-$JOB_ID/g ~/HudiBigQuerySyncToolRESTRequest-$JOB_ID.json
-
+sed -i s/YOUR_USER_MANAGED_SERVICE_ACCOUNT_EMAIL/$UMSA_FQN/g ~/HudiBigQuerySyncToolRESTRequest-$JOB_ID.json
 
 curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
     -H "Content-Type: application/json; charset=utf-8" \
