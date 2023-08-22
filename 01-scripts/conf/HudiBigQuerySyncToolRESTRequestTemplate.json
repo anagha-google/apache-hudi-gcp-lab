@@ -1,0 +1,21 @@
+{
+	"job": {
+		"reference": {
+			"projectId": "YOUR_PROJECT_ID",
+			"jobId": "YOUR_JOB_ID"
+		},
+		"placement": {
+			"clusterName": "YOUR_CLUSTER_NAME"
+		},
+		"sparkJob": {
+			"mainClass": "org.apache.hudi.gcp.bigquery.BigQuerySyncTool",
+			"jarFileUris": ["file:///usr/lib/hudi/tools/bq-sync-tool/hudi-gcp-bundle-0.12.3.jar"],
+			"properties": {
+				"spark.jars.packages": "com.google.cloud:google-cloud-bigquery:2.10.4",
+				"spark.driver.userClassPathFirst": "true",
+				"spark.executor.userClassPathFirs": "true"
+			},
+			"args": ["--project-id", "YOUR_PROJECT_ID", "--dataset-name", "gaia_product_ds", "--dataset-location", "YOUR_DATASET_LOCATION", "--table", "nyc_taxi_trips_hudi_cow", "--source-uri", "gs://gaia_data_bucket-YOUR_PROJECT_NUMBER/nyc-taxi-trips-hudi-cow//trip_date=*", "--source-uri-prefix", "gs://gaia_data_bucket-YOUR_PROJECT_NUMBER/nyc-taxi-trips-hudi-cow/", "--base-path", "gs://gaia_data_bucket-YOUR_PROJECT_NUMBER/nyc-taxi-trips-hudi-cow/", "--partitioned-by", "trip_date", "--use-bq-manifest-file"]
+		}
+	}
+}
