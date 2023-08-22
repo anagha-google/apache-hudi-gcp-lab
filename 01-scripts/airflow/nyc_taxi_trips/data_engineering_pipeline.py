@@ -138,7 +138,7 @@ with models.DAG(
             "software_config": {
                 "image_version": dpgce_cluster_image_version,
                 "properties": phs_conf,
-                "optional_component": "HUDI"
+                "optional_components": ["HUDI"]
             },
             "lifecycle_config": {
                 "idle_delete_ttl": duration,
