@@ -117,7 +117,7 @@ with models.DAG(
         task_id="Create_Dataproc_GCE_Cluster",
         project_id=project_id,
         cluster_name=dpgce_cluster_name,
-        region=dpgce_cluster_region,
+        region=dataproc_location,
         cluster_config={
             "gce_cluster_config" : {
                 "service_account": umsa_fqn,
