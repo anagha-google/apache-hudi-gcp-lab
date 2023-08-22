@@ -87,9 +87,9 @@ HUDI_BQ_SYNC_TOOL_ARGS = ["--project-id", project_id, "--dataset-name", bq_datas
 NYC_TAXI_HUDI_TO_BQ_SYNC_TOOL_EXEC_CONF = {
     "reference": {"job_id": job_id_prefix,"project_id": project_id},
     "placement": {"cluster_name": dpgce_cluster_name},
+    "impersonate_service_account": umsa_fqn,
     "spark_job": {
         "jar_file_uris": ["file:///usr/lib/hudi/tools/bq-sync-tool/hudi-gcp-bundle-0.12.3.jar"],
-        "impersonate_service_account": umsa_fqn,
         "main_class": "org.apache.hudi.gcp.bigquery.BigQuerySyncTool",
         "properties": {"spark.jars.packages":"com.google.cloud:google-cloud-bigquery:2.10.4","spark.driver.userClassPathFirst":"true","spark.executor.userClassPathFirst":"true"}
     },
