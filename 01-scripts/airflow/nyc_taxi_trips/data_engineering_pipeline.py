@@ -90,9 +90,9 @@ NYC_TAXI_HUDI_TO_BQ_SYNC_TOOL_EXEC_CONF = {
     "spark_job": {
         "jar_file_uris": ["file:///usr/lib/hudi/tools/bq-sync-tool/hudi-gcp-bundle-0.12.3.jar"],
         "main_class": "org.apache.hudi.gcp.bigquery.BigQuerySyncTool",
-        "properties": {"spark.jars.packages":"com.google.cloud:google-cloud-bigquery:2.10.4","spark.driver.userClassPathFirst":"true","spark.executor.userClassPathFirst":"true"}
+        "properties": {"spark.jars.packages":"com.google.cloud:google-cloud-bigquery:2.10.4","spark.driver.userClassPathFirst":"true","spark.executor.userClassPathFirst":"true"},
+        "args": HUDI_BQ_SYNC_TOOL_ARGS
     },
-   "args": HUDI_BQ_SYNC_TOOL_ARGS,
 }
 
 with models.DAG(
