@@ -128,7 +128,7 @@ with models.DAG(
         region=dpgce_cluster_region,
         cluster_config={
             "gce_cluster_config" : {
-                "service_account": umsa + "@" + project_id + ".iam.gserviceaccount.com",
+                "service_account": umsa_fqn,
                 "subnetwork_uri": subnet_uri,
                 "service_account_scopes": ["https://www.googleapis.com/auth/cloud-platform"],
                 "internal_ip_only": True
