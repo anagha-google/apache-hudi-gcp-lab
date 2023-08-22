@@ -123,7 +123,6 @@ PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d'
 LOCATION=us-central1
 
 spark-submit --master yarn \
---properties-file gaia_hudi_conf \
 --packages com.google.cloud:google-cloud-bigquery:2.10.4  \
 --class org.apache.hudi.gcp.bigquery.BigQuerySyncTool  \
 /usr/lib/hudi/tools/bq-sync-tool/hudi-gcp-bundle-0.12.3.jar \
@@ -398,12 +397,10 @@ For each Hudi table you want to run analytics on in BigQuery, you need to run th
 ![README](../04-images/m04-01-11.png)   
 <br><br>
 
-### 11.2. Airflow stub
+### 11.2. Airflow DAG - WORK IN PROGRESS
 The following is a stub that shows what the Airflow action looks like to execute the BigQuerySyncTool-
 
-### TODO
-![README](../04-images/m04-01-12.png)   
-<br><br>
+[DAG Sample](https://github.com/anagha-google/apache-hudi-gcp-lab/blob/master/01-scripts/airflow/nyc_taxi_trips/data_engineering_pipeline.py)
 
 ### 11.3. Lab exercise: Review and run the Airflow DAG provided below
 
