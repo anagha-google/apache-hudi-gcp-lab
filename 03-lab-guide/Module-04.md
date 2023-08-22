@@ -394,29 +394,29 @@ In the next section, we will learn to run the BigQuerySyncTool from Apache Airfl
 
 <hr>
 
-## 11. Operationalizing for production - option 1: As part of Airflow Data Engineering DAGs
+## 12. Operationalizing for production - option 1: As part of Airflow Data Engineering DAGs
 
 Where freshness of data availability for analytics via BigQuery/BigLake is imperative at the end of data engineering pipeline, it makes sense to run the BigQuerySyncTool as part of a pipeline synchronously. This section covers how to.
 
-### 11.1. Operationalizing - what's involved
+### 12.1. Operationalizing - what's involved
 For each Hudi table you want to run analytics on in BigQuery, you need to run the BigQuerySyncTool. The following is a pictorial overview of a basic DAG involving one Hudi table, and shows Dataproc cluster creation and deletion just to run the tool. This cluster may not be required if the pipeline already has an ephemeral Dataproc job-scoped cluster that can be used.  
 
 ![README](../04-images/m04-01-11.png)   
 <br><br>
 
-### 11.2. Airflow DAG - WORK IN PROGRESS
+### 12.2. Airflow DAG - WORK IN PROGRESS
 The following is a stub that shows what the Airflow action looks like to execute the BigQuerySyncTool-
 
 [DAG Sample](https://github.com/anagha-google/apache-hudi-gcp-lab/blob/master/01-scripts/airflow/nyc_taxi_trips/data_engineering_pipeline.py)
 
-### 11.3. Lab exercise: Review and run the Airflow DAG provided below
+### 12.3. Lab exercise: Review and run the Airflow DAG provided below
 
 ### TODO by author
 
 
 <hr>
 
-## 12. Operationalizing for production - option 2: Offline syncing 
+## 13. Operationalizing for production - option 2: Offline syncing 
 When there are tight SLAs to be met, adding the syncing task into the Data Engineering DAG adds delays. In such cases, syncing can be done offline, async. This is a pictorial overview of a pattern (and there are many ways to design this) to run the BigQuerySyncTool in bulk when you have many tables to sync. The author has used config files to help externalize Hudi table listing (and associated sync parameters) and parallelize running the sync tool. Each config file will have a set Hudi tables and the sync parameters will have a Airflow task associated with it that makes repeated calls to the BugQuerySyncTool till all tables in the config file have been synced.
 
 
