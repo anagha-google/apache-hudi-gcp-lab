@@ -81,25 +81,17 @@ ran = ''.join(random.choices(string.digits, k = S))
 
 job_id_prefix = "hudi-nyc-taxi-bq-sync-tool-exec-"+str(ran)
 
-HUDI_BQ_SYNC_TOOL_ARGS = [f"--project-id={pipelineID}", \
-        f"--dataset-name={bq_dataset_name}", \
-        f"--dataset-location={bq_dataset_location}", \
-        f"--table={bq_table_name}", \
-        f"--source-uri={hudi_table_source_uri}", \ 
-        f"--source-uri-prefix={hudi_base_path}",  \
-        f"--base-path={hudi_base_path}",  \
-        f"--base-path={hudi_base_path}", \ 
-        "--partitioned-by=trip_date", \
-        "--use-bq-manifest-file"]
+HUDI_BQ_SYNC_TOOL_ARGS = ["--project-id", project_id, "--dataset-name", bq_dataset_name, "--dataset-location", bq_dataset_location, "--table", bq_table_name, "--source-uri", hudi_table_source_uri, "--source-uri-prefix", hudi_base_path, "--base-path", hudi_base_path, "--partitioned-by", "trip_date", "--use-bq-manifest-file"]
+
 
 NYC_TAXI_HUDI_TO_BQ_SYNC_TOOL_EXEC_CONF = {
     "reference": {"job_id": job_id_prefix,"project_id": project_id},
     "placement": {"cluster_name": dpgce_cluster_name},
     "spark_job": {
         "jar_file_uris": ["file:///usr/lib/hudi/tools/bq-sync-tool/hudi-gcp-bundle-0.12.3.jar"],
+        "impersonate_service_account": umsa_fqn,
         "main_class": "org.apache.hudi.gcp.bigquery.BigQuerySyncTool",
         "properties": {"spark.jars.packages":"com.google.cloud:google-cloud-bigquery:2.10.4","spark.driver.userClassPathFirst":"true","spark.executor.userClassPathFirst":"true"}
-        
     },
    "args": HUDI_BQ_SYNC_TOOL_ARGS,
 }
