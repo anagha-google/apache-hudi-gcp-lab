@@ -151,7 +151,7 @@ with models.DAG(
     exec_bq_sync_tool_nyc_taxi_cow = DataprocSubmitJobOperator(
         task_id="Exec-HudiBigQueryTool-NYCTaxi_Cow",
         project_id=project_id,
-        region=region,
+        region=dpgce_cluster_region,
         job=NYC_TAXI_HUDI_TO_BQ_SYNC_TOOL_EXEC_CONF,
     )
   
