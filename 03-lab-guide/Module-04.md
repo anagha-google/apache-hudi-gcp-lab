@@ -322,10 +322,10 @@ gcloud dataproc jobs submit spark \
   --impersonate-service-account $UMSA_FQN \
   --id=BigQuerySyncTool-$HUDI_TABLE_NAME-$RANDOM \
   -- \
-   --project-id "${PROJECT_ID}" \
+  --project-id "${PROJECT_ID}" \
   --dataset-name "${BQ_DATASET_NAME}" \
   --dataset-location "${BQ_DATASET_LOCATION}" \
-  --table "${HUDI_TABLE_NAME}" \
+  --table "${BQ_TABLE_NAME}" \
   --source-uri "${HUDI_TABLE_SOURCE_URI}" \
   --source-uri-prefix "${HUDI_BASE_PATH}" \
   --base-path "${HUDI_BASE_PATH}" \
@@ -348,6 +348,41 @@ Here is how to monitor through completion across Cloud Shell and the Dataproc jo
 
 ![README](../04-images/m04-1-16.png)   
 <br><br>
+
+In the next section, we will learn to run the BigQuerySyncTool from Apache Airflow.
+
+<hr>
+
+## 11. Run the Hudi BigQuerySyncTool via the Dataproc Jobs REST API - WORK IN PROGRESS
+
+This is a sample to run the Hudi BigQuerySyncTool via the Dataproc Jobs REST API-
+```
+PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
+PROJECT_NBR=`gcloud projects describe $PROJECT_ID | grep projectNumber | cut -d':' -f2 |  tr -d "'" | xargs`
+UMSA_FQN="gaia-lab-sa@$PROJECT_ID.iam.gserviceaccount.com"
+DPGCE_CLUSTER_NM="gaia-dpgce-cpu-$PROJECT_NBR"
+DATAPROC_LOCATION="us-central1"
+
+HUDI_TABLE_NAME=nyc-taxi-trips-hudi-cow
+HUDI_BASE_PATH=gs://gaia_data_bucket-$PROJECT_NBR/$HUDI_TABLE_NAME/
+HUDI_TABLE_SOURCE_URI=${HUDI_BASE_PATH}/trip_date=* 
+HUDI_PARTITION_KEY=trip_date
+
+BQ_DATASET_NAME=gaia_product_ds
+BQ_DATASET_LOCATION="us-central1"
+BQ_TABLE_NAME=nyc_taxi_trips_hudi_cow
+
+JOB_ARGS=["--project-id=$PROJECT_ID","--dataset-name=$BQ_DATASET_NAME","--dataset-location=$BQ_DATASET_LOCATION","--table=$BQ_TABLE_NAME","--source-uri=gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/trip_date=*","--source-uri-prefix=gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/","--base-path=gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/","--partitioned-by=trip_date","--use-bq-manifest-file"]
+
+echo $JOB_ARGS
+
+curl -X POST -H "Authorization: Bearer $(gcloud auth print-access-token)" -H "x-goog-user-project: $PROJECT_ID" \
+    -H "Content-Type: application/json; charset=utf-8" \
+'https://dataproc.googleapis.com/v1/projects/apache-hudi-lab/regions/us-central1/jobs:submit' \
+--data "{\"job\": {\"reference\": {\"projectId\": \"apache-hudi-lab\", \"jobId\": \"BigQuerySyncTool-nyc-taxi-trips-hudi-cow-$RANDOM\"}, \"placement\": {\"clusterName\": \"gaia-dpgce-cpu-$PROJECT_NBR\"}, \"sparkJob\": {\"mainClass\": \"org.apache.hudi.gcp.bigquery.BigQuerySyncTool\", \"properties\": {\"spark.jars.packages\":\"com.google.cloud:google-cloud-bigquery:2.10.4\", \"spark.driver.userClassPathFirst\": \"true\", \"spark.executor.userClassPathFirst\": \"true\"}, \"jarFileUris\": [\"file:///usr/lib/hudi/tools/bq-sync-tool/hudi-gcp-bundle-0.12.3.jar\"],\"args\":$JOB_ARGS}}}" \
+  --compressed
+
+```
 
 In the next section, we will learn to run the BigQuerySyncTool from Apache Airflow.
 
