@@ -153,6 +153,7 @@ with models.DAG(
         project_id=project_id,
         region=dpgce_cluster_region,
         job=NYC_TAXI_HUDI_TO_BQ_SYNC_TOOL_EXEC_CONF,
+        impersonation_chain=umsa_fqn
     )
   
     delete_cluster=DataprocDeleteClusterOperator(
