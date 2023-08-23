@@ -43,7 +43,7 @@ Navigate to BigQuery and follw the screenshots below to create a Data Profiing S
 
 ### 1.2. Refresh the page to view the results
 
-Run the Data Profile Scan, as shown below. It takes about 10 minutes to complete.
+Review the results presented in the GUI-
 
 ![README](../04-images/m07-07.png)   
 <br><br>
@@ -63,8 +63,6 @@ Run the Data Profile Scan, as shown below. It takes about 10 minutes to complete
 <br>
 
 ### 1.4. Run again & observe navigation into Dataplex GUI and how results are persisted across reruns
-
-### 1.4. Run the scan again
 
 8. Run the scan again, notice how the navigation takes you into Dataplex Data Profiling UI. Follow the steps below. Study the results in BigQuery.
 
