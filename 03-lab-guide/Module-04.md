@@ -310,7 +310,7 @@ HUDI_PARTITION_KEY=trip_date
 
 BQ_DATASET_NAME=gaia_product_ds
 BQ_DATASET_LOCATION="us-central1"
-BQ_TABLE_NAME=nyc_taxi_trips_hudi_cow
+BQ_TABLE_NAME=nyc_taxi_trips_hudi_bigquery
 
 gcloud dataproc jobs submit spark \
   --cluster=$DPGCE_CLUSTER_NM \
@@ -369,7 +369,7 @@ HUDI_PARTITION_KEY=trip_date
 
 BQ_DATASET_NAME=gaia_product_ds
 BQ_DATASET_LOCATION="us-central1"
-BQ_TABLE_NAME=nyc_taxi_trips_hudi_cow
+BQ_TABLE_NAME=nyc_taxi_trips_hudi_bigquery
 
 cd ~
 JOB_ID=$RANDOM

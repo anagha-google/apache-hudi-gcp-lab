@@ -59,7 +59,7 @@ dpgce_cluster_name="dpgce-cluster-ephemeral-"+project_nbr
 dpgce_cluster_bucket_name="gaia_dataproc_bucket-"+project_nbr
 dpgce_cluster_region=dataproc_location
 dpgce_cluster_master_type='n1-standard-4'
-dpgce_cluster_worker_type='n2-standard-4'
+dpgce_cluster_worker_type='n1-standard-4'
 dpgce_cluster_image_version='2.1.20-debian11'
 phs_bucket_name="gaia-phs-"+project_nbr
 phs_conf = {"spark:spark.history.fs.logDirectory": "gs://"+phs_bucket_name+"/*/spark-job-history",
@@ -89,11 +89,10 @@ NYC_TAXI_HUDI_TO_BQ_SYNC_TOOL_EXEC_CONF = {
     "placement": {"cluster_name": dpgce_cluster_name},
     "spark_job": {
         "jar_file_uris": ["file:///usr/lib/hudi/tools/bq-sync-tool/hudi-gcp-bundle-0.12.3.jar"],
-        "impersonate_service_account": umsa_fqn,
         "main_class": "org.apache.hudi.gcp.bigquery.BigQuerySyncTool",
-        "properties": {"spark.jars.packages":"com.google.cloud:google-cloud-bigquery:2.10.4","spark.driver.userClassPathFirst":"true","spark.executor.userClassPathFirst":"true"}
+        "properties": {"spark.jars.packages":"com.google.cloud:google-cloud-bigquery:2.10.4","spark.driver.userClassPathFirst":"true","spark.executor.userClassPathFirst":"true"},
+        "args": HUDI_BQ_SYNC_TOOL_ARGS
     },
-   "args": HUDI_BQ_SYNC_TOOL_ARGS,
 }
 
 with models.DAG(
@@ -137,7 +136,8 @@ with models.DAG(
             },
             "software_config": {
                 "image_version": dpgce_cluster_image_version,
-                "properties": phs_conf
+                "properties": phs_conf,
+                "optional_components": ["HUDI"]
             },
             "lifecycle_config": {
                 "idle_delete_ttl": duration,
@@ -151,8 +151,9 @@ with models.DAG(
     exec_bq_sync_tool_nyc_taxi_cow = DataprocSubmitJobOperator(
         task_id="Exec-HudiBigQueryTool-NYCTaxi_Cow",
         project_id=project_id,
-        region=region,
+        region=dpgce_cluster_region,
         job=NYC_TAXI_HUDI_TO_BQ_SYNC_TOOL_EXEC_CONF,
+        impersonation_chain=umsa_fqn
     )
   
     delete_cluster=DataprocDeleteClusterOperator(
