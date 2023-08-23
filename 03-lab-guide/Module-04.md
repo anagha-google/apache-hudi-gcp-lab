@@ -124,6 +124,8 @@ LOCATION=us-central1
 
 spark-submit --master yarn \
 --packages com.google.cloud:google-cloud-bigquery:2.10.4  \
+--conf spark.driver.userClassPathFirst=true \
+--conf spark.executor.userClassPathFirst=true \
 --class org.apache.hudi.gcp.bigquery.BigQuerySyncTool  \
 /usr/lib/hudi/tools/bq-sync-tool/hudi-gcp-bundle-0.12.3.jar \
 --project-id $PROJECT_ID \
@@ -135,7 +137,6 @@ spark-submit --master yarn \
 --base-path gs://gaia_data_bucket-$PROJECT_NBR/nyc-taxi-trips-hudi-cow/ \
 --partitioned-by trip_date \
 --use-bq-manifest-file
-
 ```
 
 Author's output-
