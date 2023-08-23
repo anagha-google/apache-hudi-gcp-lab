@@ -149,67 +149,27 @@ Create the BigLake table by running the DDL in the BigQuery UI.
 ### 2.1. Execute the query
 Run the following query in the BigQuery UI-
 ```
-SELECT trip_year,trip_month,trip_day, AVG(tip_amount) as avg_tips
+SELECT trip_date, AVG(tip_amount) as avg_tips
 FROM
   gaia_product_ds.nyc_taxi_trips_hudi_biglake
+WHERE trip_date in ('2019-12-31','2020-12-31','2021-12-31')
 GROUP BY
-  trip_year,trip_month,trip_day
+  trip_date
 ORDER BY
-  trip_year,trip_month,trip_day
+  trip_date
 ```
 
-![README](../04-images/m05-04.png)   
-<br><br>
-
-### 2.2. Review the execution details
-
-Click on the execution details tab.
-
-![README](../04-images/m05-05.png)   
-<br><br>
-
-### 2.3. Review the execution graph
-
-Click on the execution details tab.
-
-![README](../04-images/m05-06.png)   
-<br><br>
+Run various queries to see the response time, slots, bytes scanned. Repeat the exercise with the bigquery table, after disabling cache settings.
 
 <hr>
 
-## 3. Run the same query against the Hudi snapshot (plain old) BigQuery (not BigLake) external table
+## 3. The BigLake metadata cache
 
-### 3.1. Execute the query
-Run the following query in the BigQuery UI-
-```
-SELECT trip_year,trip_month,trip_day, AVG(tip_amount) as avg_tips
-FROM
-  gaia_product_ds.nyc_taxi_trips_hudi_bigquery
-GROUP BY
-  trip_year,trip_month,trip_day
-ORDER BY
-  trip_year,trip_month,trip_day
-```
-
-![README](../04-images/m05-07.png)   
-<br><br>
-
-### 3.2. Review the execution details
-
-Click on the execution details tab.
-
-![README](../04-images/m05-08.png)   
-<br><br>
-
-<hr>
-
-## 4. The BigLake metadata cache
-
-### 4.1. Understand the metadata cache related architectural considerations
+### 3.1. Understand the metadata cache related architectural considerations
 
 Read the documentation [here](https://cloud.google.com/bigquery/docs/biglake-intro#metadata_caching_for_performance).
 
-### 4.2. Reviewing the metadata cache refresh schedule
+### 3.2. Reviewing the metadata cache refresh schedule
 
 Run the query below in the BigQuery UI to see the refresh schedule-
 ```
@@ -224,7 +184,7 @@ LIMIT 10;
 ![README](../04-images/m05-09.png)   
 <br><br>
 
-### 4.3. Triggering metadata cache refresh manually
+### 3.3. Triggering metadata cache refresh manually
 
 If you have unpredictble needs for data freshness, you may be best served with on-demand metadata cache refresh, versus AUTOMATIC as demonstrated in the lab above. 
 You can do so with the following command-
@@ -234,7 +194,7 @@ CALL BQ.REFRESH_EXTERNAL_TABLE_CACHE('project-id.my_dataset.my_table')
 
 Note that this can be executed only if the metadata cache refresh is NOT set to AUTOMATIC.
 
-#### 4.3.1. Generate the metadata cache refresh command
+#### 3.3.1. Generate the metadata cache refresh command
 Let's build the command to execute the refresh (you can also manually substitute values). Paste the below in Cloud Shell-
 ```
 PROJECT_ID=`gcloud config list --format "value(core.project)" 2>/dev/null`
@@ -247,18 +207,18 @@ Grab the command displayed in Cloud Shell.
 ![README](../04-images/m05-10.png)   
 <br><br>
 
-#### 4.3.2. Execute the metadata cache refresh, manually, in BigQuery UI
+#### 3.3.2. Execute the metadata cache refresh, manually, in BigQuery UI
 Paste this and run, in the BigQuery UI-
 ![README](../04-images/m05-11.png)   
 <br><br>
 
 <hr>
 
-## 5. Understand the performance benefits of BigLake
+## 4. Understand the performance benefits of BigLake
 
 While the difference in the performance in the results above is not material, the performance benefits of Biglake - like all big data solutions, can be reaped at scale. Note the metadata caching possible (performance with staleness tradeoff).
 
-## 6. Query the Hudi snapshot BigLake table from Apache Spark, with the BigQuery Apache Spark connector
+## 5. Query the Hudi snapshot BigLake table from Apache Spark, with the BigQuery Apache Spark connector
 
 The BigQuery Spark connector supports full BigQuery SQL pushdown (predicate, projection) and uses the BigQuery compute for execution and returns only the results. Learn more about the connector, [here](https://github.com/GoogleCloudDataproc/spark-bigquery-connector).<br>
 
