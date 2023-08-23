@@ -96,88 +96,105 @@ This concludes the unit on Data Profiling. Proceed to the unit on Data Quality.
 
 ## Lab Unit 2: Auto Data Quality
 
-### 2.1. Navigate to Auto Data Quality in Dataplex UI
+### 2.1. Navigate to the BigLake table in the BigQuery UI and cick on Data Quality
 
-![README](../04-images/m07-12.png)   
+![README](../04-images/m07-12-a.png)   
+<br><br>
+
+![README](../04-images/m07-12-b.png)   
+<br><br>
+
+![README](../04-images/m07-12-c.png)   
 <br><br>
 
 <hr>
 
-### 2.2. Create a Data Quality Scan
+### 2.2. Start with defining a Data Quality Scan
 
-Follow the steps below, where we will use Dataplex recommendations for Data Quality rules based off of the profile scan we ran and create Data Quality scan.
+Follow the steps below, and create Data Quality scan & execute it.
 
-![README](../04-images/m07-12.png)   
+![README](../04-images/m07-12-c.png)   
 <br><br>
 
-![README](../04-images/m07-13.png)   
+![README](../04-images/m07-12-d.png)   
 <br><br>
 
-![README](../04-images/m07-14.png)   
-<br><br>
-
-![README](../04-images/m07-15.png)   
-<br><br>
-
-![README](../04-images/m07-16.png)   
-<br><br>
-
-![README](../04-images/m07-17.png)   
-<br><br>
-
-![README](../04-images/m07-18.png)   
+![README](../04-images/m07-12-e.png)   
 <br><br>
 
 
-![README](../04-images/m07-19.png)   
+
+<hr>
+
+### 2.3. Define Data Quality rules
+
+![README](../04-images/m07-12-f.png)   
 <br><br>
 
-![README](../04-images/m07-20.png)   
+![README](../04-images/m07-12-g.png)   
 <br><br>
 
-![README](../04-images/m07-21.png)   
-<br><br>
 
-![README](../04-images/m07-22.png)   
-<br><br>
-
-![README](../04-images/m07-23.png)   
+![README](../04-images/m07-12-h.png)   
 <br><br>
 
 <hr>
 
-### 2.3. Execute the Data Quality Scan
+### 2.3. Execute the Data Quality Scan & wait for results
 
 Follow the steps below, where we will execute the Data Quality scan we created.
 
 
-![README](../04-images/m07-24.png)   
+![README](../04-images/m07-12-i.png)   
 <br><br>
 
-
-![README](../04-images/m07-25.png)   
-<br><br>
-
-![README](../04-images/m07-26.png)   
+![README](../04-images/m07-12-j.png)   
 <br><br>
 
 <hr>
 
 ### 2.4. Review the Data Quality Results in the Dataplex Auto Data Quality UI
 
-![README](../04-images/m07-27.png)   
+![README](../04-images/m07-12-k.png)   
 <br><br>
 
-
-![README](../04-images/m07-28.png)   
+![README](../04-images/m07-12-l.png)   
 <br><br>
 
 <hr>
 
-### 2.5. Persisting the results to a BigQuery dataset
+### 2.5. How to view history
 
-This feature is on the roadmap. Follow the author's [Dataplex Quickstart labs](https://github.com/GoogleCloudPlatform/dataplex-labs/tree/main/dataplex-quickstart-labs) for tutorials on the latest product updates.
+![README](../04-images/m07-12-m.png)   
+<br><br>
 
+![README](../04-images/m07-12-n.png)   
+<br><br>
+
+
+
+<hr>
+
+### 2.6. Review results in the BigQuery dataset
+
+![README](../04-images/m07-12-o.png)   
+<br><br>
+
+![README](../04-images/m07-12-p.png)   
+<br><br>
+
+![README](../04-images/m07-12-q.png)   
+<br><br>
+
+<hr>
+
+### 2.7. Run Auto Data Quality again and review the results in the GUI and in BigQuery
+
+![README](../04-images/m07-12-r.png)   
+<br><br>
+
+Note that each run has its own ID and you can see historically all the runs that were executed and review trends over time.
+![README](../04-images/m07-12-s.png)   
 <br><br>
 
 <hr>
