@@ -3,7 +3,7 @@
 This module covers Data Profiling and Auto Data Quality in Dataplex on BigLake tables - which in our case happens to be based on Hudi snapshots.<br>
 
 
-# Lab Unit 1: Data Profiling
+## Lab Unit 1: Data Profiling
 
 Dataplex offers a data profiling feature and this lab showcases the same.
 
