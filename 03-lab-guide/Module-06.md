@@ -31,9 +31,6 @@ Navigate to BigQuery and follw the screenshots below to create a Data Profiing S
 ![README](../04-images/m07-04.png)   
 <br><br>
 
-![README](../04-images/m07-04.png)   
-<br><br>
-
 ![README](../04-images/m07-05.png)   
 <br><br>
 
@@ -51,6 +48,8 @@ Run the Data Profile Scan, as shown below. It takes about 10 minutes to complete
 ![README](../04-images/m07-07.png)   
 <br><br>
 
+<hr>
+
 ### 1.3. Review the results persisted to BigQuery
 
 ![README](../04-images/m07-08.png)   
@@ -58,6 +57,39 @@ Run the Data Profile Scan, as shown below. It takes about 10 minutes to complete
 
 ![README](../04-images/m07-09.png)   
 <br><br>
+
+<hr>
+
+<br>
+
+### 1.4. Run again & observe navigation into Dataplex GUI and how results are persisted across reruns
+
+### 1.4. Run the scan again
+
+8. Run the scan again, notice how the navigation takes you into Dataplex Data Profiling UI. Follow the steps below. Study the results in BigQuery.
+
+![README](../04-images/m07-10.png)   
+<br><br>
+
+![README](../04-images/m07-10-a.png)   
+<br><br>
+
+![README](../04-images/m07-10-b.png)   
+<br><br>
+
+![README](../04-images/m07-10-c.png)   
+<br><br>
+
+![README](../04-images/m07-10-d.png)   
+<br><br>
+
+![README](../04-images/m07-10-e.png)   
+<br><br>
+
+![README](../04-images/m07-10-f.png)   
+<br><br>
+
+This concludes the unit on Data Profiling. Proceed to the unit on Data Quality.
 
 <hr>
 
