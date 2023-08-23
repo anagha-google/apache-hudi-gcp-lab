@@ -64,7 +64,7 @@ Review the results presented in the GUI-
 
 ### 1.4. Run again & observe navigation into Dataplex GUI and how results are persisted across reruns
 
-8. Run the scan again, notice how the navigation takes you into Dataplex Data Profiling UI. Follow the steps below. Study the results in BigQuery.
+Run the scan again, notice how the navigation takes you into Dataplex Data Profiling UI. Follow the steps below. Study the results in BigQuery.
 
 ![README](../04-images/m07-10.png)   
 <br><br>
