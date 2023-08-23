@@ -17,7 +17,7 @@ Among other benefits, the results of profiling can ALSO be leveraged by Dataplex
 
 ### 1.1. Create a Data Profile Scan on the Hudi snapshot BigLake table
 
-Navigate to Dataplex and create a Data Profile scan as shown below, while logged in as yourself-
+Navigate to BigQuery and follw the screenshots below to create a Data Profiing Scan and run it, and persist results to BigQuery.
 
 ![README](../04-images/m07-01.png)   
 <br><br>
@@ -31,13 +31,8 @@ Navigate to Dataplex and create a Data Profile scan as shown below, while logged
 ![README](../04-images/m07-04.png)   
 <br><br>
 
-<hr>
-
-<br>
-
-### 1.2. Run the Data Profile Scan on the Hudi snapshot BigLake table
-
-Run the Data Profile Scan, as shown below. It takes about 10 minutes to complete.
+![README](../04-images/m07-04.png)   
+<br><br>
 
 ![README](../04-images/m07-05.png)   
 <br><br>
@@ -45,32 +40,30 @@ Run the Data Profile Scan, as shown below. It takes about 10 minutes to complete
 ![README](../04-images/m07-06.png)   
 <br><br>
 
+<hr>
+
+<br>
+
+### 1.2. Refresh the page to view the results
+
+Run the Data Profile Scan, as shown below. It takes about 10 minutes to complete.
+
 ![README](../04-images/m07-07.png)   
 <br><br>
+
+### 1.3. Review the results persisted to BigQuery
 
 ![README](../04-images/m07-08.png)   
 <br><br>
 
-<hr>
-
-<br>
-
-### 1.3. Review the results
-
-Review the results in the Dataplex Profile UI, as shown below, and understand the feature and think about areas where profiling can help you with your workloads-
-
 ![README](../04-images/m07-09.png)   
 <br><br>
 
-![README](../04-images/m07-10.png)   
-<br><br>
-
-![README](../04-images/m07-11.png)   
-<br><br>
-
 <hr>
 
 <br>
+
+
 
 ## 2. Lab: Auto Data Quality
 
