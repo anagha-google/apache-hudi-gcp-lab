@@ -3,7 +3,7 @@
 This module covers Data Profiling and Auto Data Quality in Dataplex on BigLake tables - which in our case happens to be based on Hudi snapshots.<br>
 
 
-# Lab: Data Profiling
+# Lab Unit 1: Data Profiling
 
 Dataplex offers a data profiling feature and this lab showcases the same.
 
@@ -64,8 +64,7 @@ Run the Data Profile Scan, as shown below. It takes about 10 minutes to complete
 <br>
 
 
-
-## 2. Lab: Auto Data Quality
+## Lab Unit 2: Auto Data Quality
 
 ### 2.1. Navigate to Auto Data Quality in Dataplex UI
 
