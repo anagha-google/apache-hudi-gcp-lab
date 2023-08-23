@@ -397,23 +397,63 @@ In the next section, we will learn to run the BigQuerySyncTool from Apache Airfl
 
 ## 12. Operationalizing for production - option 1: As part of Airflow Data Engineering DAGs
 
-Where freshness of data availability for analytics via BigQuery/BigLake is imperative at the end of data engineering pipeline, it makes sense to run the BigQuerySyncTool as part of a pipeline synchronously. This section covers how to.
+In use cases where freshness of data availability for analytics via BigQuery/BigLake is imperative at the end of data engineering pipeline, run the BigQuerySyncTool as part of the pipeline synchronously. This section demonstrates how to with a minimum viable sample.
 
 ### 12.1. Operationalizing - what's involved
-For each Hudi table you want to run analytics on in BigQuery, you need to run the BigQuerySyncTool. The following is a pictorial overview of a basic DAG involving one Hudi table, and shows Dataproc cluster creation and deletion just to run the tool. This cluster may not be required if the pipeline already has an ephemeral Dataproc job-scoped cluster that can be used.  
+For each Hudi table you want to run analytics on in BigQuery, you need to run the BigQuerySyncTool. The following is a pictorial overview of a basic DAG involving one Hudi table, and shows Dataproc cluster creation and deletion just to run the tool. This cluster may not be required if the pipeline already has an ephemeral Dataproc job-scoped cluster that can be used.   
 
 ![README](../04-images/m04-01-11.png)   
 <br><br>
 
-### 12.2. Airflow DAG - WORK IN PROGRESS
-The following is a stub that shows what the Airflow action looks like to execute the BigQuerySyncTool-
+### 12.2. Airflow DAG 
 
-[DAG Sample](https://github.com/anagha-google/apache-hudi-gcp-lab/blob/master/01-scripts/airflow/nyc_taxi_trips/data_engineering_pipeline.py)
+A sample Airflow DAG has been created and uploaded as part of the Terraform scripts to the Cloud Composer environment DAG bucket. Navigate to Cloyd Composer and run the DAG as shown below.
+
 
 ### 12.3. Lab exercise: Review and run the Airflow DAG provided below
 
-### TODO by author
+1. [Review the DAG code](../01-scripts/airflow/nyc_taxi_trips/data_engineering_pipeline.py).
+2. Then follow the screenshots below and run the Airflow DAG in your Cloud Composer environment.
+3. Before you start the DAG, delete the BigQuery table from the prior exercise (section 10-11).
+4. Navigate to Cloud Composer and peruse the environment
 
+![README](../04-images/m04-02-01.png)   
+<br><br>
+
+![README](../04-images/m04-02-02.png)   
+<br><br>
+
+![README](../04-images/m04-02-03.png)   
+<br><br>
+
+5. Note the Airflow variables
+
+![README](../04-images/m04-02-04.png)   
+<br><br>
+
+6. Notice how a User Managed Service Account is used to run Cloud Composer - this is a production best practice.
+
+![README](../04-images/m04-02-05.png)   
+<br><br>
+
+7. Launch the Airflow UI
+
+![README](../04-images/m04-02-06.png)   
+<br><br>
+
+8. Click on the hudi DAG
+
+![README](../04-images/m04-02-07.png)   
+<br><br>
+
+9. Run the DAG
+
+![README](../04-images/m04-02-08.png)   
+<br><br>
+
+10. Once the DAG completes, review the results.
+
+This concludes this section. Review section #13 and then proceed to the next module.
 
 <hr>
 
