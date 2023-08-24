@@ -1,5 +1,5 @@
 
-# Module 6a: Fine Grained Row Level Access Control powered by BigLake 
+# Module 7a: Fine Grained Row Level Access Control on Hudi Snapshot Tables powered by BigLake 
 
 This module showcases Row Level Security made possible with BigLake on your Hudi snapshots sitting in Cloud Storage. In the next module, we will learn Column Level Security
 
